@@ -26,9 +26,9 @@ Throughout the game, players will encounter various random tools placed in the a
 - ### Tools
     Random tools are scattered throughout the arena to help you outplay your opponent.
 
-    | ***Tools***    | ***Effects*** |
-    |----------------|---------------|
-    | Tools A        | Do Something  |
+    | ***Tools***     |          ***Effects***           |
+    |-----------------|----------------------------------|
+    | Adrenaline Shot | Periodically Increase Move Speed |
 
 ## Demo
 ![Main Menu](resources/mainMenu.png)
