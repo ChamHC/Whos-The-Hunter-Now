@@ -41,12 +41,18 @@ Throughout the game, players will encounter various random tools placed in the a
 We would like to thank our professor for their guidance and support throughout the development of this project. Additionally, we acknowledge our collaboration with other students in testing and providing feedback on the game.
 
 ## References
-- Phaser framework: [https://phaser.io/](https://phaser.io/)
-- Phaser documentations: [https://newdocs.phaser.io/](https://newdocs.phaser.io/)
-- Game assets from Itch.io: [https://itch.io/game-assets/](https://itch.io/game-assets/)
+- Phaser Framework: [https://phaser.io/](https://phaser.io/)
+- Phaser Documentations: [https://newdocs.phaser.io/](https://newdocs.phaser.io/)
+- Game Assets from Itch.io: [https://itch.io/game-assets/](https://itch.io/game-assets/)
+- Markdown Documentations: [https://www.markdownguide.org/basic-syntax/](https://www.markdownguide.org/basic-syntax/)
+
+## Credits
+- **[SimpleKeys](https://beamedeighth.itch.io/simplekeys-animated-pixel-keyboard-keys)** by ***beamedeighth***
 
 ## Group Members
 ### 1. Cham Hao Cheng (1211304951)
-    - Added ???
+    - Write Documentations (README.md)
+    - ???
 ### 2. Muhammad Lutfi Bin Mohd Izzat (1201100521)
-    - Added ???
+    - Find Game Assets (Itch.io)
+    - ???
