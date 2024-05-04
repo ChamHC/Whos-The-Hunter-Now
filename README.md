@@ -1,5 +1,5 @@
-# Whose-The-Hunter-Now
-Whose The Hunter Now? is a local multiplayer 2D platformer game revolves around the concept of Chase Tagging, where players alternate between being the hunter and the hunted.
+# Who's The Hunter Now?
+Who's The Hunter Now? is a local multiplayer 2D platformer game revolves around the concept of Chase Tagging, where players alternate between being the hunter and the hunted.
 
 ## Overview
 Player navigates through an arena, trying to reach his goal while being relentlessly hunted by his opponent. Upon reaching the goal, the player switches role and become the hunter. 
@@ -30,7 +30,7 @@ Throughout the game, players will encounter various random tools placed in the a
     |-----------------------|----------------------------------|
     | Dad's Belt            | Knockback The Opponent           |
     | Dashy Feather         | Dash Forward                     |
-    | Slimy Boots           | Launch Player Upwards            |
+    | Slimy Boot            | Launch Player Upwards            |
     | Suspicious Mushroom   | Flip Opponent's Controls         |
     | Wooden Buckler        | Block 1 Attack                   |
     | Worn Hat              | Stun The Oppponent               |
