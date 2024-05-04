@@ -29,5 +29,3 @@ class Player extends Phaser.GameObjects.Sprite {
 
     }
 }
-
-export default Player;

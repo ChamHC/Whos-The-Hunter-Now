@@ -1,3 +1,5 @@
+import GameScene from './scripts/scenes/GameScene.js';
+
 const config = {
   type: Phaser.AUTO,
   width: 1400,

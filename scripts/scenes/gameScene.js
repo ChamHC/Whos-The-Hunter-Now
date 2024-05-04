@@ -8,6 +8,7 @@ class GameScene extends Phaser.Scene {
   }
 
   create(){
+    const config = this.sys.game.config;  // Get the game config from Game.js
     const bgImg = this.add.image(0, 0, "bg"); // Add the background image to the scene
     bgImg.setPosition(config.width / 2, config.height / 2); // Center the background image
     bgImg.displayHeight = config.height;  // Set the height of the image to the height of the game
@@ -18,3 +19,4 @@ class GameScene extends Phaser.Scene {
 
   }
 }
+export default GameScene;
