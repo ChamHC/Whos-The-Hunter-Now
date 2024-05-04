@@ -1,5 +1,3 @@
-import AdrenalineShot from "./tools/adrenalineShot";
-
 class Player extends Phaser.GameObjects.Sprite {
     constructor(scene, x, y, texture, playerName) {
         super(scene, x, y, texture);
