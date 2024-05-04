@@ -82,17 +82,29 @@ export default class Player{
         this.enterSlideState = new EnterSlideState(this);    // Create stand state
         this.slideState = new SlideState(this);    // Create slide state
         this.changeState(this.runState);   // Set initial state to idle state
-
-        // Set sprite origin to be center of the sprite
-        this.sprite.setOrigin(0.5, 0.5);
-        // Change collision box size
-        this.sprite.body.setSize(15, 37);
     }
 
     update(){
         if(this.currentState)  // If the current state is not null, update the current state
             this.currentState.stateUpdate();
 
+        this.dynamicColliderSize();  // Change the collider size to fit the sprite [NOTE: REMOVE IF USING STANDARDIZED DIMENSIONS]
+        this.displayColliderOrigin();    // Display the collider origin [NOTE: FOR DEBUGGING ONLY]
+    }
+
+    changeState(state){ // Change the state of the player
+        //console.log("Changing state to " + state.constructor.name);
+        this.currentState = state;  // Set the current state to the new state
+        this.currentState.stateEnter(); // Enter the new state
+    }
+
+    dynamicColliderSize(){
+        // Change collider size to fit the sprite
+        this.sprite.setOrigin(0.5, 1);
+        this.sprite.body.setSize(this.sprite.anims.width, this.sprite.anims.height);
+    }
+
+    displayColliderOrigin(){
         // Draw indicator for player collision box
         if (this.graphics)
             this.graphics.clear();
@@ -103,13 +115,6 @@ export default class Player{
         // Draw a red dots on sprite origin
         this.graphics.fillStyle(0xff0000, 1);
         this.graphics.fillCircle(this.sprite.x, this.sprite.y, 3);
-
-    }
-
-    changeState(state){ // Change the state of the player
-        //console.log("Changing state to " + state.constructor.name);
-        this.currentState = state;  // Set the current state to the new state
-        this.currentState.stateEnter(); // Enter the new state
     }
 }
 
