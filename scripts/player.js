@@ -139,6 +139,11 @@ class State{    // Create a state class to handle the player states
 class IdleState extends State{  // Create an idle state class that extends the state class
     stateEnter(){
         this.player.sprite.anims.play('idle', true);
+
+        if (this.player.playerType == "PlayerA")
+            this.player.sprite.flipX = false;
+        else
+            this.player.sprite.flipX = true;
     }
 
     stateUpdate(){
