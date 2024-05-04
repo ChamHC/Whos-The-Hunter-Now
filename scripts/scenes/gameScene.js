@@ -30,18 +30,20 @@ class GameScene extends Phaser.Scene {
   }
 
   create(){
-    /*
+    
     const config = this.sys.game.config;  // Get the game config from Game.js
     const bgImg = this.add.image(0, 0, "bg"); // Add the background image to the scene
     bgImg.setPosition(config.width / 2, config.height / 2); // Center the background image
     bgImg.displayHeight = config.height;  // Set the height of the image to the height of the game
     bgImg.scaleX = bgImg.scaleY;  // Scale the width of the image to the height of the image
-    */
-    this.player = new Player(this, 100, 450, "PlayerA");
+    
+    this.playerA = new Player(this, 100, 450, "PlayerA");
+    this.playerB = new Player(this, 1300, 450, "PlayerB");
   }
 
   update(){
-    this.player.update();
+    this.playerA.update();
+    this.playerB.update();
   }
 }
 export default GameScene;
