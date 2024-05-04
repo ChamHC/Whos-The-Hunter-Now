@@ -26,9 +26,14 @@ Throughout the game, players will encounter various random tools placed in the a
 - ### Tools
     Random tools are scattered throughout the arena to help you outplay your opponent.
 
-    | ***Tools***     |          ***Effects***           |
-    |-----------------|----------------------------------|
-    | Adrenaline Shot | Periodically Increase Move Speed |
+    | ***Tools***           |          ***Effects***           |
+    |-----------------------|----------------------------------|
+    | Dad's Belt            | Knockback The Opponent           |
+    | Dashy Feather         | Dash Forward                     |
+    | Slimy Boots           | Launch Player Upwards            |
+    | Suspicious Mushroom   | Flip Opponent's Controls         |
+    | Wooden Buckler        | Block 1 Attack                   |
+    | Worn Hat              | Stun The Oppponent               |
 
 ## Demo
 ![Main Menu](resources/mainMenu.png)
@@ -38,7 +43,7 @@ Throughout the game, players will encounter various random tools placed in the a
 [Watch Gameplay](https://google.com)
 
 ## Acknowledgement
-We would like to thank our professor for their guidance and support throughout the development of this project. Additionally, we acknowledge our collaboration with other students in testing and providing feedback on the game.
+We would like to thank our lecturer for their guidance and support throughout the development of this project.
 
 ## References
 - Phaser Framework: [https://phaser.io/](https://phaser.io/)
@@ -48,11 +53,32 @@ We would like to thank our professor for their guidance and support throughout t
 
 ## Credits
 - **[SimpleKeys](https://beamedeighth.itch.io/simplekeys-animated-pixel-keyboard-keys)** by ***beamedeighth***
+- **[Free Pixel Art Forest](https://edermunizz.itch.io/free-pixel-art-forest)** by ***edermunizz***
+- **[Oak Woods — Environment Asset 🍂](https://brullov.itch.io/oak-woods)** by ***brullov***
+- **[Animated Pixel Adventurer](https://rvros.itch.io/animated-pixel-hero)** by ***rvros***
+- **[Pixel Art Icon Pack RPG](https://cainos.itch.io/pixel-art-icon-pack-rpg)** by ***Cainos***
+
 
 ## Group Members
 ### 1. Cham Hao Cheng (1211304951)
     - Write Documentations (README.md)
-    - ???
+    - Main Menu (Play, Option, How To Play)
+    - End Screen (Winner Name, Game Duration, Cycle Count, Back To Menu, Restart)
+    - Player Behaviours (Move, Jump, Slide, Crouch, Use Tools)
+    - Elimination Mechanics (Out of Screen, Tagging)
+    - Camera Orientation (Follow Player)
+    - Tools:
+        - Dad's Belt
+        - Dashy Feather
+        - Wooden Buckler
 ### 2. Muhammad Lutfi Bin Mohd Izzat (1201100521)
     - Find Game Assets (Itch.io)
-    - ???
+    - SFX Design (Sound Effect and Ambient Sound)
+    - Level Design (Parallax Background, Platform Layout, Collision Boxes)
+    - Core Mechanics (Goal, Role Switch, Tools Spawner)
+    - Player UI (Equipped Tools, Control Keys) 
+    - Tools:
+        - Slimy Boots
+        - Suspicious Mushroom
+        - Worn Hat
+
