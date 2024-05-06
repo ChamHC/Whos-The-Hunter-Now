@@ -1,6 +1,6 @@
 import Player from "../Player.js";
-import Background from "../background.js";
-import Platform from "../platform.js";
+import Background from "../Background.js";
+import Platform from "../Platform.js";
 
 class GameScene extends Phaser.Scene {
   constructor() {
