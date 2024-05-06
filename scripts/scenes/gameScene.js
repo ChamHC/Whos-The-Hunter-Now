@@ -40,14 +40,12 @@ class GameScene extends Phaser.Scene {
   }
 
   create(){
-    
     const config = this.sys.game.config; 
     
     this.playerA = new Player(this, 200, 450, "PlayerA");
     this.background = new Background(this, this.playerA); // creates background and updates movement based on player parsed
     this.platform = new Platform(this, this.playerA); // creates platform and sets collision with player parsed
     
-
     const cameraX = this.cameras.main.scrollX;
     const cameraY = this.cameras.main.scrollY;
 
@@ -56,10 +54,12 @@ class GameScene extends Phaser.Scene {
 
     console.log(this.background.bgImages[0].x, this.background.bgImages[0].y);
 
-    
     //this.cameras.main.startFollow(this.background);
     //athis.cameras.main.startFollow(this.playerA, true, 0.08, 0.08);
     //this.playerB = new Player(this, 1300, 450, "PlayerB");
+
+      
+    this.cameras.main.fadeIn(1000, 0, 0, 0);  //Tween entire screen tint black to white
   }
 
   update() {
