@@ -23,7 +23,7 @@ export default class Player{
 
         // Create the player sprite
         this.sprite = this.scene.physics.add.sprite(this.x, this.y, 'playerIdle');    // Add the player sprite to the scene
-        this.sprite.setScale(4);    // Scale the player sprite
+        this.sprite.setScale(0.6);    // Scale the player sprite
 
         this.scene.physics.world.enable(this.sprite);  // Enable physics for the player sprite
         this.sprite.body.setCollideWorldBounds(true);   // Set the player sprite to collide with the world bounds
@@ -32,7 +32,7 @@ export default class Player{
         this.scene.anims.create({   // Create the idle animation
             key: 'idle',    
             frames: this.scene.anims.generateFrameNumbers('playerIdle', { start: 0, end: 3 }),
-            frameRate: 10,
+            frameRate: 7,
             repeat: -1
         });
         this.scene.anims.create({   // Create the run animation
@@ -44,31 +44,31 @@ export default class Player{
         this.scene.anims.create({
             key: 'jump',
             frames: this.scene.anims.generateFrameNumbers('playerJump', { start: 0, end: 3 }),
-            frameRate: 10,
+            frameRate: 15,
             repeat: 0
         })
         this.scene.anims.create({
             key: 'fall',
             frames: this.scene.anims.generateFrameNumbers('playerFall', { start: 0, end: 1 }),
-            frameRate: 10,
+            frameRate: 15,
             repeat: 0
         })
         this.scene.anims.create({
             key: 'crouch',
             frames: this.scene.anims.generateFrameNumbers('PlayerCrouch', { start: 0, end: 3 }),
-            frameRate: 10,
+            frameRate: 15,
             repeat: -1
         })
         this.scene.anims.create({
             key: 'stand',
             frames: this.scene.anims.generateFrameNumbers('PlayerStand', { start: 0, end: 2 }),
-            frameRate: 10,
+            frameRate: 15,
             repeat: 0
         })
         this.scene.anims.create({
             key: 'slide',
             frames: this.scene.anims.generateFrameNumbers('PlayerSlide', { start: 0, end: 1 }),
-            frameRate: 10,
+            frameRate: 15,
             repeat: -1
         })
 
