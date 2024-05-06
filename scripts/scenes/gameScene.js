@@ -1,4 +1,6 @@
 import Player from "../Player.js";
+import Background from "../background.js";
+import Platform from "../platform.js";
 
 class GameScene extends Phaser.Scene {
   constructor() {
@@ -6,16 +8,24 @@ class GameScene extends Phaser.Scene {
   }
 
   preload(){
-    this.load.image("bg", "resources/controls/JumboLightMaster.png"); // Load the background image
+    // Load the background images
+    for (let i = 1; i <= 12; i++) {
+        this.load.image(`bg${i}`, `resources/background/layer${12 - i}.png`);
+    }
+
+    // Load the platform map
+    this.load.image('tiles', 'resources/tileset/oak_woods_tileset.png');
+    this.load.tilemapTiledJSON('platform_map', 'resources/tileset/HunterPlatformer.json');
+
 
     // Load the player spritesheets based on their own dimensions
-    this.load.spritesheet('playerIdle', 'resources/player/idle/adventurer-idle-spritesheet-21x30.png', { frameWidth: 21, frameHeight: 30 });
-    this.load.spritesheet('playerRun', 'resources/player/run/adventurer-run-spritesheet-24x29.png', { frameWidth: 24, frameHeight: 29 });
-    this.load.spritesheet('playerJump', 'resources/player/jump/adventurer-jump-spritesheet-22x27.png', { frameWidth: 22, frameHeight: 27 });
-    this.load.spritesheet('playerFall', 'resources/player/fall/adventurer-fall-spritesheet-17x31.png', { frameWidth: 17, frameHeight: 31 });
-    this.load.spritesheet('PlayerCrouch', 'resources/player/crouch/adventurer-crouch-spritesheet-20x22.png', { frameWidth: 20, frameHeight: 22 });
-    this.load.spritesheet('PlayerStand', 'resources/player/stand/adventurer-stand-spritesheet-30x17.png', { frameWidth: 30, frameHeight: 17 });
-    this.load.spritesheet('PlayerSlide', 'resources/player/slide/adventurer-slide-spritesheet-34x15.png', { frameWidth: 34, frameHeight: 15 });
+    this.load.spritesheet('playerIdle', 'resources/player/idle/adventurer-idle-spritesheet-21x30.png', { frameWidth: 63, frameHeight: 90 });
+    this.load.spritesheet('playerRun', 'resources/player/run/adventurer-run-spritesheet-24x29.png', { frameWidth: 72, frameHeight: 87 });
+    this.load.spritesheet('playerJump', 'resources/player/jump/adventurer-jump-spritesheet-22x27.png', { frameWidth: 66, frameHeight: 81 });
+    this.load.spritesheet('playerFall', 'resources/player/fall/adventurer-fall-spritesheet-17x31.png', { frameWidth: 51, frameHeight: 93 });
+    this.load.spritesheet('PlayerCrouch', 'resources/player/crouch/adventurer-crouch-spritesheet-20x22.png', { frameWidth: 60, frameHeight: 66 });
+    this.load.spritesheet('PlayerStand', 'resources/player/stand/adventurer-stand-spritesheet-30x17.png', { frameWidth: 90, frameHeight: 51 });
+    this.load.spritesheet('PlayerSlide', 'resources/player/slide/adventurer-slide-spritesheet-34x15.png', { frameWidth: 102, frameHeight: 45 });
     
     // Load the player spritesheets with standardized dimensions
     /*
@@ -31,19 +41,36 @@ class GameScene extends Phaser.Scene {
 
   create(){
     
-    const config = this.sys.game.config;  // Get the game config from Game.js
-    const bgImg = this.add.image(0, 0, "bg"); // Add the background image to the scene
-    bgImg.setPosition(config.width / 2, config.height / 2); // Center the background image
-    bgImg.displayHeight = config.height;  // Set the height of the image to the height of the game
-    bgImg.scaleX = bgImg.scaleY;  // Scale the width of the image to the height of the image
+    const config = this.sys.game.config; 
     
-    this.playerA = new Player(this, 100, 450, "PlayerA");
-    this.playerB = new Player(this, 1300, 450, "PlayerB");
+    this.playerA = new Player(this, 200, 450, "PlayerA");
+    this.background = new Background(this, this.playerA); // creates background and updates movement based on player parsed
+    this.platform = new Platform(this, this.playerA); // creates platform and sets collision with player parsed
+    
+
+    const cameraX = this.cameras.main.scrollX;
+    const cameraY = this.cameras.main.scrollY;
+
+    console.log("Camera position:", cameraX, cameraY);
+    this.initialCameraX = this.cameras.main.scrollX;
+
+    console.log(this.background.bgImages[0].x, this.background.bgImages[0].y);
+
+    
+    //this.cameras.main.startFollow(this.background);
+    //athis.cameras.main.startFollow(this.playerA, true, 0.08, 0.08);
+    //this.playerB = new Player(this, 1300, 450, "PlayerB");
   }
 
-  update(){
+  update() {
+
+    this.background.update();
+    // Update the player
     this.playerA.update();
-    this.playerB.update();
+    this.platform.update();
+    //this.playerB.update();
+    
   }
+
 }
 export default GameScene;
