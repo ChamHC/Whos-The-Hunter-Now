@@ -57,7 +57,9 @@ We would like to thank our lecturer for their guidance and support throughout th
 - **[Oak Woods — Environment Asset 🍂](https://brullov.itch.io/oak-woods)** by ***brullov***
 - **[Animated Pixel Adventurer](https://rvros.itch.io/animated-pixel-hero)** by ***rvros***
 - **[Pixel Art Icon Pack RPG](https://cainos.itch.io/pixel-art-icon-pack-rpg)** by ***Cainos***
-
+- **[Fantasy UI Borders](https://kenney-assets.itch.io/fantasy-ui-borders)** by ***Kenney***
+- **[Free Pixel Font - Thaleah](https://tinyworlds.itch.io/free-pixel-font-thaleah)** by ***Tiny Worlds***
+- **[Pixel Dimensional Portal 32x32](https://pixelnauta.itch.io/pixel-dimensional-portal-32x32)** by ***Pixelnauta***
 
 ## Group Members
 ### 1. Cham Hao Cheng (1211304951)
