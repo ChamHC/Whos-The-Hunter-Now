@@ -17,7 +17,6 @@ class GameScene extends Phaser.Scene {
     this.load.image('tiles', 'resources/tileset/oak_woods_tileset.png');
     this.load.tilemapTiledJSON('platform_map', 'resources/tileset/HunterPlatformer.json');
 
-
     // Load the hunted spritesheets
     this.load.spritesheet('HuntedIdle', 'resources/player/idle/adventurer-idle-spritesheet-21x30.png', { frameWidth: 63, frameHeight: 90 });
     this.load.spritesheet('HuntedRun', 'resources/player/run/adventurer-run-spritesheet-24x29.png', { frameWidth: 72, frameHeight: 87 });
@@ -35,6 +34,10 @@ class GameScene extends Phaser.Scene {
     this.load.spritesheet('HunterCrouch', 'resources/player/crouch/adventurer-invert-crouch-spritesheet-20x22.png', { frameWidth: 60, frameHeight: 66 });
     this.load.spritesheet('HunterStand', 'resources/player/stand/adventurer-invert-stand-spritesheet-30x17.png', { frameWidth: 90, frameHeight: 51 });
     this.load.spritesheet('HunterSlide', 'resources/player/slide/adventurer-invert-slide-spritesheet-34x15.png', { frameWidth: 102, frameHeight: 45 });
+  
+    // Load Misc
+    this.loadFont('ThaleahFat', 'resources/font/ThaleahFat.ttf');
+    this.load.image('Arrow', 'resources/ui/Play.png');
   }
 
   create(){
@@ -75,9 +78,17 @@ class GameScene extends Phaser.Scene {
     // Update the player
     this.playerA.update();
     this.platform.update();
-    //this.playerB.update();
+    this.playerB.update();
     
   }
 
+  loadFont(name, url){
+    const newFont = new FontFace(name, `url(${url})`);
+    newFont.load().then(function(loadedFont){
+        document.fonts.add(loadedFont);
+    }).catch(function(error){
+        return error;
+    });
+  }
 }
 export default GameScene;

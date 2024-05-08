@@ -50,20 +50,6 @@ class MenuScene extends Phaser.Scene{
         this.createButton(this.config.width / 2 + this.config.width + 150, this.config.height / 2 + 230, 'Next', this.nextButtonClicked, this);
         this.createButton(this.config.width / 2 + this.config.width*2, this.config.height / 2 + 230, 'Back', this.howToPlayButtonClicked, this);
         
-        /*
-        Roles:
-        One player is designated as The Hunter, while the other is The Hunted.
-        The Hunter's objective is to capture The Hunted.
-        The Hunted's objective is to escape from The Hunter's view.
-
-        Role Switch:
-        As The Hunted, reach a designated goal to switch roles.
-        The Hunter now becomes The Hunted, and vice versa.
-
-        Tools:
-        Random tools will appear throughout the arena.
-        Use these tools strategically to turn the tide of the chase.
-        */
         this.anims.create({   // Create the idle animation
             key: 'idle',    
             frames: this.anims.generateFrameNumbers('playerIdle', { start: 0, end: 3 }),

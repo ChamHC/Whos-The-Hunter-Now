@@ -28,96 +28,133 @@ export default class Player{
             this.sprite = this.scene.physics.add.sprite(this.x, this.y, 'HuntedIdle');    // Add the player sprite to the scene
         
         this.sprite.setScale(0.6);    // Scale the player sprite
+        // Add Arrow Image above Player Sprite
+        this.arrow = this.scene.add.image(this.x, this.y, 'Arrow').setOrigin(0.5);
+        this.arrow.setRotation(90 * (Math.PI / 180));
+        this.arrow.setScale(0.2);
+        // Add Player Name Text above Player Sprite
+        this.playerNameParse = this.playerName.replace(/([a-z])([A-Z])/g, '$1 $2');
+        this.text = this.scene.add.text(this.x, this.y, this.playerNameParse, {
+            fontSize: 24,
+            fontFamily: "ThaleahFat",
+            color: '#ffffff',
+            stroke: '#000000',
+            strokeThickness: 4,
+            align: 'center'
+        }).setOrigin(0.5);
+        // Tween the scale of arrow and text
+        this.scene.tweens.add({
+            targets: this.text,
+            scale: 0.9,
+            duration: 500,
+            yoyo: true,
+            repeat: -1
+        });
 
         this.scene.physics.world.enable(this.sprite);  // Enable physics for the player sprite
         this.sprite.body.setCollideWorldBounds(true);   // Set the player sprite to collide with the world bounds
 
         // Create the animations for the Hunter
-        this.scene.anims.create({   // Create the idle animation
-            key: 'hunterIdle',    
-            frames: this.scene.anims.generateFrameNumbers('HunterIdle', { start: 0, end: 3 }),
-            frameRate: 7,
-            repeat: -1
-        });
-        this.scene.anims.create({   // Create the run animation
-            key: 'hunterRun',
-            frames: this.scene.anims.generateFrameNumbers('HunterRun', { start: 0, end: 5 }),
-            frameRate: 10,
-            repeat: -1
-        });
-        this.scene.anims.create({
-            key: 'hunterJump',
-            frames: this.scene.anims.generateFrameNumbers('HunterJump', { start: 0, end: 3 }),
-            frameRate: 15,
-            repeat: 0
-        })
-        this.scene.anims.create({
-            key: 'hunterFall',
-            frames: this.scene.anims.generateFrameNumbers('HunterFall', { start: 0, end: 1 }),
-            frameRate: 15,
-            repeat: 0
-        })
-        this.scene.anims.create({
-            key: 'hunterCrouch',
-            frames: this.scene.anims.generateFrameNumbers('HunterCrouch', { start: 0, end: 3 }),
-            frameRate: 15,
-            repeat: -1
-        })
-        this.scene.anims.create({
-            key: 'hunterStand',
-            frames: this.scene.anims.generateFrameNumbers('HunterStand', { start: 0, end: 2 }),
-            frameRate: 15,
-            repeat: 0
-        })
-        this.scene.anims.create({
-            key: 'hunterSlide',
-            frames: this.scene.anims.generateFrameNumbers('HunterSlide', { start: 0, end: 1 }),
-            frameRate: 15,
-            repeat: -1
-        })
+        // Check if animation is created
+        if (!this.scene.anims.exists('hunterIdle'))
+            this.scene.anims.create({   // Create the idle animation
+                key: 'hunterIdle',    
+                frames: this.scene.anims.generateFrameNumbers('HunterIdle', { start: 0, end: 3 }),
+                frameRate: 7,
+                repeat: -1
+            });
+        if (!this.scene.anims.exists('hunterRun'))
+            this.scene.anims.create({   // Create the run animation
+                key: 'hunterRun',
+                frames: this.scene.anims.generateFrameNumbers('HunterRun', { start: 0, end: 5 }),
+                frameRate: 10,
+                repeat: -1
+            });
+        if (!this.scene.anims.exists('hunterJump'))
+            this.scene.anims.create({
+                key: 'hunterJump',
+                frames: this.scene.anims.generateFrameNumbers('HunterJump', { start: 0, end: 3 }),
+                frameRate: 15,
+                repeat: 0
+            })
+        if (!this.scene.anims.exists('hunterFall'))
+            this.scene.anims.create({
+                key: 'hunterFall',
+                frames: this.scene.anims.generateFrameNumbers('HunterFall', { start: 0, end: 1 }),
+                frameRate: 15,
+                repeat: 0
+            })
+        if (!this.scene.anims.exists('hunterCrouch'))
+            this.scene.anims.create({
+                key: 'hunterCrouch',
+                frames: this.scene.anims.generateFrameNumbers('HunterCrouch', { start: 0, end: 3 }),
+                frameRate: 5,
+                repeat: -1
+            })
+        if (!this.scene.anims.exists('hunterStand'))
+            this.scene.anims.create({
+                key: 'hunterStand',
+                frames: this.scene.anims.generateFrameNumbers('HunterStand', { start: 0, end: 2 }),
+                frameRate: 15,
+                repeat: 0
+            })
+        if (!this.scene.anims.exists('hunterSlide'))
+            this.scene.anims.create({
+                key: 'hunterSlide',
+                frames: this.scene.anims.generateFrameNumbers('HunterSlide', { start: 0, end: 1 }),
+                frameRate: 15,
+                repeat: -1
+            })
         // Create the animations for the Hunted
-        this.scene.anims.create({
-            key: 'huntedIdle',
-            frames: this.scene.anims.generateFrameNumbers('HuntedIdle', { start: 0, end: 3 }),
-            frameRate: 7,
-            repeat: -1
-        });
-        this.scene.anims.create({
-            key: 'huntedRun',
-            frames: this.scene.anims.generateFrameNumbers('HuntedRun', { start: 0, end: 5 }),
-            frameRate: 10,
-            repeat: -1
-        });
-        this.scene.anims.create({
-            key: 'huntedJump',
-            frames: this.scene.anims.generateFrameNumbers('HuntedJump', { start: 0, end: 3 }),
-            frameRate: 15,
-            repeat: 0
-        })
-        this.scene.anims.create({
-            key: 'huntedFall',
-            frames: this.scene.anims.generateFrameNumbers('HuntedFall', { start: 0, end: 1 }),
-            frameRate: 15,
-            repeat: 0
-        })
-        this.scene.anims.create({
-            key: 'huntedCrouch',
-            frames: this.scene.anims.generateFrameNumbers('HuntedCrouch', { start: 0, end: 3 }),
-            frameRate: 15,
-            repeat: -1
-        })
-        this.scene.anims.create({
-            key: 'huntedStand',
-            frames: this.scene.anims.generateFrameNumbers('HuntedStand', { start: 0, end: 2 }),
-            frameRate: 15,
-            repeat: 0
-        })
-        this.scene.anims.create({
-            key: 'huntedSlide',
-            frames: this.scene.anims.generateFrameNumbers('HuntedSlide', { start: 0, end: 1 }),
-            frameRate: 15,
-            repeat: -1
-        })
+            if (!this.scene.anims.exists('huntedIdle'))
+            this.scene.anims.create({
+                key: 'huntedIdle',
+                frames: this.scene.anims.generateFrameNumbers('HuntedIdle', { start: 0, end: 3 }),
+                frameRate: 7,
+                repeat: -1
+            });
+        if (!this.scene.anims.exists('huntedRun'))
+            this.scene.anims.create({
+                key: 'huntedRun',
+                frames: this.scene.anims.generateFrameNumbers('HuntedRun', { start: 0, end: 5 }),
+                frameRate: 10,
+                repeat: -1
+            });
+        if (!this.scene.anims.exists('huntedJump'))
+            this.scene.anims.create({
+                key: 'huntedJump',
+                frames: this.scene.anims.generateFrameNumbers('HuntedJump', { start: 0, end: 3 }),
+                frameRate: 15,
+                repeat: 0
+            })
+        if (!this.scene.anims.exists('huntedFall'))
+            this.scene.anims.create({
+                key: 'huntedFall',
+                frames: this.scene.anims.generateFrameNumbers('HuntedFall', { start: 0, end: 1 }),
+                frameRate: 15,
+                repeat: 0
+            })
+        if (!this.scene.anims.exists('huntedCrouch'))
+            this.scene.anims.create({
+                key: 'huntedCrouch',
+                frames: this.scene.anims.generateFrameNumbers('HuntedCrouch', { start: 0, end: 3 }),
+                frameRate: 5,
+                repeat: -1
+            })
+        if (!this.scene.anims.exists('huntedStand'))
+            this.scene.anims.create({
+                key: 'huntedStand',
+                frames: this.scene.anims.generateFrameNumbers('HuntedStand', { start: 0, end: 2 }),
+                frameRate: 15,
+                repeat: 0
+            })
+        if (!this.scene.anims.exists('huntedSlide'))
+            this.scene.anims.create({
+                key: 'huntedSlide',
+                frames: this.scene.anims.generateFrameNumbers('HuntedSlide', { start: 0, end: 1 }),
+                frameRate: 15,
+                repeat: -1
+            })
 
         // Create the state machine for the player
         this.currentState = null;  // Set current state to null
@@ -134,6 +171,11 @@ export default class Player{
     update(){
         if(this.currentState)  // If the current state is not null, update the current state
             this.currentState.stateUpdate();
+
+        this.arrow.x = this.sprite.x;
+        this.arrow.y = this.sprite.y - this.sprite.body.height - 10;
+        this.text.x = this.sprite.x;
+        this.text.y = this.sprite.y - this.sprite.body.height - 30;
 
         this.dynamicColliderSize();  // Change the collider size to fit the sprite [NOTE: REMOVE IF USING STANDARDIZED DIMENSIONS]
         this.displayColliderOrigin();    // Display the collider origin [NOTE: FOR DEBUGGING ONLY]
