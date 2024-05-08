@@ -28,6 +28,10 @@ class MenuScene extends Phaser.Scene{
         this.load.image('suspiciousMushroom', 'resources/icons/Food/Mushroom.png');
         this.load.image('woodenBuckler', 'resources/icons/Weapon & Tool/Wooden Shield.png');
         this.load.image('wornHat', 'resources/icons/Equipment/Wizard Hat.png');
+        // Load Player Spritesheets
+        this.load.spritesheet('playerIdle', 'resources/player/idle/adventurer-idle-spritesheet-21x30.png', { frameWidth: 63, frameHeight: 90 });
+        this.load.spritesheet('playerIdleInvert', 'resources/player/idle/adventurer-invert-idle-spritesheet-21x30.png', { frameWidth: 63, frameHeight: 90 });
+        this.load.spritesheet('portal', 'resources/portal/Portal-spritesheet.png', { frameWidth: 18, frameHeight: 32 });
     }
 
     create(){
@@ -45,9 +49,73 @@ class MenuScene extends Phaser.Scene{
         this.createButton(this.config.width / 2 + this.config.width - 150, this.config.height / 2 + 230, 'Back', this.backButtonClicked, this);
         this.createButton(this.config.width / 2 + this.config.width + 150, this.config.height / 2 + 230, 'Next', this.nextButtonClicked, this);
         this.createButton(this.config.width / 2 + this.config.width*2, this.config.height / 2 + 230, 'Back', this.howToPlayButtonClicked, this);
+        
+        /*
+        Roles:
+        One player is designated as The Hunter, while the other is The Hunted.
+        The Hunter's objective is to capture The Hunted.
+        The Hunted's objective is to escape from The Hunter's view.
 
-        // Create How To Play Objectives Description
-        this.writeText(this.config.width + 150, 100, 'Objectives', 60, 'ThaleahFat', '#ffffff', 0);
+        Role Switch:
+        As The Hunted, reach a designated goal to switch roles.
+        The Hunter now becomes The Hunted, and vice versa.
+
+        Tools:
+        Random tools will appear throughout the arena.
+        Use these tools strategically to turn the tide of the chase.
+        */
+        this.anims.create({   // Create the idle animation
+            key: 'idle',    
+            frames: this.anims.generateFrameNumbers('playerIdle', { start: 0, end: 3 }),
+            frameRate: 10,
+            repeat: -1
+        });
+        this.anims.create({   // Create the idle animation
+            key: 'idleInvert',    
+            frames: this.anims.generateFrameNumbers('playerIdleInvert', { start: 0, end: 3 }),
+            frameRate: 10,
+            repeat: -1
+        });
+        this.anims.create({   // Create the idle animation
+            key: 'portal',    
+            frames: this.anims.generateFrameNumbers('portal', { start: 0, end: 5 }),
+            frameRate: 10,
+            repeat: -1
+        });
+        const spriteHunter = {x : 250 + this.config.width, y : 100};
+        this.spriteAHunter = this.add.sprite(spriteHunter.x + 0, spriteHunter.y + 0, 'playerIdleInvert');
+        this.spriteBHunter = this.add.sprite(spriteHunter.x + 290, spriteHunter.y + 0, 'playerIdle');
+        this.spriteAHunter.anims.play('idleInvert');
+        this.spriteBHunter.anims.play('idleInvert');
+        this.spriteBHunter.flipX = true;
+        this.writeText(spriteHunter.x + 50, spriteHunter.y + 0, 'The Hunter', 40, 'ThaleahFat', '#ffffff', 0);
+        this.writeText(spriteHunter.x - 50, spriteHunter.y + 50, 'Objective: Capture The Hunted', 30, 'ThaleahFat', '#ffffff', 0);
+
+        const spriteHunted = {x : 850 + this.config.width, y : 100};
+        this.spriteAHunted = this.add.sprite(spriteHunted.x + 0, spriteHunted.y + 0, 'playerIdle');
+        this.spriteBHunted = this.add.sprite(spriteHunted.x + 290, spriteHunted.y + 0, 'playerIdle');
+        this.spriteAHunted.anims.play('idle');
+        this.spriteBHunted.anims.play('idle');
+        this.spriteBHunted.flipX = true;
+        this.writeText(spriteHunted.x + 50, spriteHunted.y + 0, 'The Hunted', 40, 'ThaleahFat', '#ffffff', 0);
+        this.writeText(spriteHunted.x - 85, spriteHunted.y + 50, 'Objective: Escape The Hunter\'s View', 30, 'ThaleahFat', '#ffffff', 0);
+
+        const spriteTools = {x : 250 + this.config.width, y : 300};
+        this.createToolsIcon(spriteTools.x + 0, spriteTools.y + 0, 'dadsBelt');
+        this.createToolsIcon(spriteTools.x + 290, spriteTools.y + 0, 'dashyFeather');
+        this.writeText(spriteTools.x + 90, spriteTools.y + 0, 'Tools', 40, 'ThaleahFat', '#ffffff', 0);
+        this.writeText(spriteTools.x - 60, spriteTools.y + 50, 'Use Tools in the arena to turn\nthe tides of the chase', 30, 'ThaleahFat', '#ffffff', 0);
+
+        const spritePortal = {x : 850 + this.config.width, y : 300};
+        this.portalA = this.add.sprite(spritePortal.x, spritePortal.y, 'portal');
+        this.portalB = this.add.sprite(spritePortal.x + 290, spritePortal.y, 'portal')
+        this.portalA.anims.play('portal');
+        this.portalB.anims.play('portal');
+        this.portalA.setScale(3);
+        this.portalB.setScale(3);
+        this.writeText(spritePortal.x + 50, spritePortal.y - 40, 'Role Switch', 40, 'ThaleahFat', '#ffffff', 0);
+        this.writeText(spritePortal.x + 90, spritePortal.y + 0, 'Portal', 40, 'ThaleahFat', '#ffffff', 0);
+        this.writeText(spritePortal.x - 60, spritePortal.y + 50, 'Reach the portal as The Hunted\n to switch roles', 30, 'ThaleahFat', '#ffffff', 0);
 
         // Create How To Play Controls and Tools Icon
         const playerA = this.playerAKeys(this.config.width*2 + 150, 170);
@@ -125,7 +193,8 @@ class MenuScene extends Phaser.Scene{
             fontFamily: family,
             color: clr,
             stroke: '#000000',
-            strokeThickness: 4
+            strokeThickness: 4,
+            align: 'center'
         }).setOrigin(origin);
     }
 
