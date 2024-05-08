@@ -1,7 +1,8 @@
 export default class Player{
-    constructor(scene, x, y, playerType){
+    constructor(scene, x, y, playerName, playerRole){
         this.scene = scene; // Store the scene in the player class
-        this.playerType = playerType;   // Store the player type
+        this.playerName = playerName;   // Store the player name
+        this.playerRole = playerRole;    // Set the player role
         this.x = x; // Store the x position of the player
         this.y = y; // Store the y position of the player
         this.create();  // Call the create method
@@ -11,63 +12,109 @@ export default class Player{
         this.slideFriction = 0.2;   // Set the slide friction of the player
         this.slideMultiplier = 2;   // Set the slide multiplier of the player
         this.slideThreshold = 500;    // Set the run to slide threshold of the player in ms
-
     }
 
     create(){
         // Create the keys for the player
-        this.moveLeftKey = this.playerType == "PlayerA" ? this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A) : this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
-        this.moveRightKey = this.playerType == "PlayerA" ? this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D) : this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
-        this.jumpKey = this.playerType == "PlayerA" ? this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W) : this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
-        this.crouchKey = this.playerType == "PlayerA" ? this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S) : this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
+        this.moveLeftKey = this.playerName == "PlayerA" ? this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A) : this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
+        this.moveRightKey = this.playerName == "PlayerA" ? this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D) : this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
+        this.jumpKey = this.playerName == "PlayerA" ? this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W) : this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
+        this.crouchKey = this.playerName == "PlayerA" ? this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S) : this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
 
         // Create the player sprite
-        this.sprite = this.scene.physics.add.sprite(this.x, this.y, 'playerIdle');    // Add the player sprite to the scene
+        if (this.playerRole == "Hunter")
+            this.sprite = this.scene.physics.add.sprite(this.x, this.y, 'HunterIdle');    // Add the player sprite to the scene
+        else
+            this.sprite = this.scene.physics.add.sprite(this.x, this.y, 'HuntedIdle');    // Add the player sprite to the scene
+        
         this.sprite.setScale(0.6);    // Scale the player sprite
 
         this.scene.physics.world.enable(this.sprite);  // Enable physics for the player sprite
         this.sprite.body.setCollideWorldBounds(true);   // Set the player sprite to collide with the world bounds
 
-        // Create the animations for the player
+        // Create the animations for the Hunter
         this.scene.anims.create({   // Create the idle animation
-            key: 'idle',    
-            frames: this.scene.anims.generateFrameNumbers('playerIdle', { start: 0, end: 3 }),
+            key: 'hunterIdle',    
+            frames: this.scene.anims.generateFrameNumbers('HunterIdle', { start: 0, end: 3 }),
             frameRate: 7,
             repeat: -1
         });
         this.scene.anims.create({   // Create the run animation
-            key: 'run',
-            frames: this.scene.anims.generateFrameNumbers('playerRun', { start: 0, end: 5 }),
+            key: 'hunterRun',
+            frames: this.scene.anims.generateFrameNumbers('HunterRun', { start: 0, end: 5 }),
             frameRate: 10,
             repeat: -1
         });
         this.scene.anims.create({
-            key: 'jump',
-            frames: this.scene.anims.generateFrameNumbers('playerJump', { start: 0, end: 3 }),
+            key: 'hunterJump',
+            frames: this.scene.anims.generateFrameNumbers('HunterJump', { start: 0, end: 3 }),
             frameRate: 15,
             repeat: 0
         })
         this.scene.anims.create({
-            key: 'fall',
-            frames: this.scene.anims.generateFrameNumbers('playerFall', { start: 0, end: 1 }),
+            key: 'hunterFall',
+            frames: this.scene.anims.generateFrameNumbers('HunterFall', { start: 0, end: 1 }),
             frameRate: 15,
             repeat: 0
         })
         this.scene.anims.create({
-            key: 'crouch',
-            frames: this.scene.anims.generateFrameNumbers('PlayerCrouch', { start: 0, end: 3 }),
+            key: 'hunterCrouch',
+            frames: this.scene.anims.generateFrameNumbers('HunterCrouch', { start: 0, end: 3 }),
             frameRate: 15,
             repeat: -1
         })
         this.scene.anims.create({
-            key: 'stand',
-            frames: this.scene.anims.generateFrameNumbers('PlayerStand', { start: 0, end: 2 }),
+            key: 'hunterStand',
+            frames: this.scene.anims.generateFrameNumbers('HunterStand', { start: 0, end: 2 }),
             frameRate: 15,
             repeat: 0
         })
         this.scene.anims.create({
-            key: 'slide',
-            frames: this.scene.anims.generateFrameNumbers('PlayerSlide', { start: 0, end: 1 }),
+            key: 'hunterSlide',
+            frames: this.scene.anims.generateFrameNumbers('HunterSlide', { start: 0, end: 1 }),
+            frameRate: 15,
+            repeat: -1
+        })
+        // Create the animations for the Hunted
+        this.scene.anims.create({
+            key: 'huntedIdle',
+            frames: this.scene.anims.generateFrameNumbers('HuntedIdle', { start: 0, end: 3 }),
+            frameRate: 7,
+            repeat: -1
+        });
+        this.scene.anims.create({
+            key: 'huntedRun',
+            frames: this.scene.anims.generateFrameNumbers('HuntedRun', { start: 0, end: 5 }),
+            frameRate: 10,
+            repeat: -1
+        });
+        this.scene.anims.create({
+            key: 'huntedJump',
+            frames: this.scene.anims.generateFrameNumbers('HuntedJump', { start: 0, end: 3 }),
+            frameRate: 15,
+            repeat: 0
+        })
+        this.scene.anims.create({
+            key: 'huntedFall',
+            frames: this.scene.anims.generateFrameNumbers('HuntedFall', { start: 0, end: 1 }),
+            frameRate: 15,
+            repeat: 0
+        })
+        this.scene.anims.create({
+            key: 'huntedCrouch',
+            frames: this.scene.anims.generateFrameNumbers('HuntedCrouch', { start: 0, end: 3 }),
+            frameRate: 15,
+            repeat: -1
+        })
+        this.scene.anims.create({
+            key: 'huntedStand',
+            frames: this.scene.anims.generateFrameNumbers('HuntedStand', { start: 0, end: 2 }),
+            frameRate: 15,
+            repeat: 0
+        })
+        this.scene.anims.create({
+            key: 'huntedSlide',
+            frames: this.scene.anims.generateFrameNumbers('HuntedSlide', { start: 0, end: 1 }),
             frameRate: 15,
             repeat: -1
         })
@@ -138,12 +185,10 @@ class State{    // Create a state class to handle the player states
 
 class IdleState extends State{  // Create an idle state class that extends the state class
     stateEnter(){
-        this.player.sprite.anims.play('idle', true);
-
-        if (this.player.playerType == "PlayerA")
-            this.player.sprite.flipX = false;
+        if (this.player.playerRole == "Hunter")
+            this.player.sprite.anims.play('hunterIdle', true);
         else
-            this.player.sprite.flipX = true;
+            this.player.sprite.anims.play('huntedIdle', true);
     }
 
     stateUpdate(){
@@ -169,7 +214,11 @@ class IdleState extends State{  // Create an idle state class that extends the s
 
 class RunState extends State{   // Create a run state class that extends the state class
     stateEnter(){
-        this.player.sprite.anims.play('run', true);
+        if (this.player.playerRole == "Hunter")
+            this.player.sprite.anims.play('hunterRun', true);
+        else
+            this.player.sprite.anims.play('huntedRun', true);
+
         this.startTime = this.player.scene.time.now;
     }
 
@@ -204,7 +253,10 @@ class RunState extends State{   // Create a run state class that extends the sta
 
 class JumpState extends State{  // Create a jump state class that extends the state class
     stateEnter(){
-        this.player.sprite.anims.play('jump', true);
+        if (this.player.playerRole == "Hunter")
+            this.player.sprite.anims.play('hunterJump', true);
+        else
+            this.player.sprite.anims.play('huntedJump', true);
     }
 
     stateUpdate(){
@@ -234,7 +286,10 @@ class JumpState extends State{  // Create a jump state class that extends the st
 
 class FallState extends State {
     stateEnter() {
-        this.player.sprite.anims.play('fall', true);
+        if (this.player.playerRole == "Hunter")
+            this.player.sprite.anims.play('hunterFall', true);
+        else
+            this.player.sprite.anims.play('huntedFall', true);
     }
 
     stateUpdate() {
@@ -261,7 +316,10 @@ class FallState extends State {
 
 class CrouchState extends State {
     stateEnter() {
-        this.player.sprite.anims.play('crouch', true);
+        if (this.player.playerRole == "Hunter")
+            this.player.sprite.anims.play('hunterCrouch', true);
+        else
+            this.player.sprite.anims.play('huntedCrouch', true);
     }
 
     stateUpdate() {
@@ -278,7 +336,10 @@ class CrouchState extends State {
 
 class EnterSlideState extends State {
     stateEnter() {
-        this.player.sprite.anims.play('stand', true);
+        if (this.player.playerRole == "Hunter")
+            this.player.sprite.anims.play('hunterStand', true);
+        else
+            this.player.sprite.anims.play('huntedStand', true);
     }
 
     stateUpdate() {
@@ -302,7 +363,11 @@ class EnterSlideState extends State {
 
 class SlideState extends State {
     stateEnter() {
-        this.player.sprite.anims.play('slide', true);
+        if (this.player.playerRole == "Hunter")
+            this.player.sprite.anims.play('hunterSlide', true);
+        else
+            this.player.sprite.anims.play('huntedSlide', true);
+        
         this.defaultVelocity = this.player.sprite.body.velocity.x;
         this.player.sprite.setVelocityX(this.defaultVelocity * this.player.slideMultiplier);
     }
