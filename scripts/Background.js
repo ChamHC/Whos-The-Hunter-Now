@@ -37,6 +37,7 @@ export default class Background {
                 const bgImg = this.bgImages[i];
                 const speed = bgSpeeds[i];
                 bgImg.tilePositionX -= speed;
+                bgImg.x -= 0.5 // 0.5 is the constant speed of the background to catch up with the camera movement
             }
         } 
         else if (this.player.sprite.body.velocity.x > 0) {
@@ -44,6 +45,7 @@ export default class Background {
                 const bgImg = this.bgImages[i];
                 const speed = bgSpeeds[i];
                 bgImg.tilePositionX += speed;
+                bgImg.x += 0.5 // 0.5 is the constant speed of the background to catch up with the camera movement
             }
         }
     }
