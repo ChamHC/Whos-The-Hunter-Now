@@ -1,6 +1,9 @@
 import Player from "../Player.js";
 import Background from "../Background.js";
 import Platform from "../Platform.js";
+import Spawner from "../Spawner.js";
+import Camera from "../Camera.js";
+import Goal from "../Goal.js";
 
 class GameScene extends Phaser.Scene {
   constructor() {
@@ -34,6 +37,12 @@ class GameScene extends Phaser.Scene {
     this.load.spritesheet('HunterCrouch', 'resources/player/crouch/adventurer-invert-crouch-spritesheet-20x22.png', { frameWidth: 60, frameHeight: 66 });
     this.load.spritesheet('HunterStand', 'resources/player/stand/adventurer-invert-stand-spritesheet-30x17.png', { frameWidth: 90, frameHeight: 51 });
     this.load.spritesheet('HunterSlide', 'resources/player/slide/adventurer-invert-slide-spritesheet-34x15.png', { frameWidth: 102, frameHeight: 45 });
+
+    //load the portal spritesheet
+    this.load.spritesheet('portal', 'resources/portal/Portal-spritesheet.png', { frameWidth: 18, frameHeight: 32 });
+
+    //load tools icon
+    this.load.image('Worn Hat', 'resources/icons/Equipment/Wizard Hat.png');
   
     // Load Misc
     this.loadFont('ThaleahFat', 'resources/font/ThaleahFat.ttf');
@@ -48,21 +57,25 @@ class GameScene extends Phaser.Scene {
     const randomRole = Phaser.Math.Between(0, 1);
     const playerRole = Roles[randomRole];
     const playerRole2 = Roles[(randomRole + 1) % 2];
-    this.playerA = new Player(this, 200, 450, "PlayerA", playerRole);
-    this.playerB = new Player(this, 1300, 450, "PlayerB", playerRole2);
+    this.playerA = new Player(this, 400, 450, "PlayerA", playerRole);
+    this.playerB = new Player(this, 1000, 450, "PlayerB", playerRole2);
     console.log("Player A is the", playerRole);
     console.log("Player B is the", playerRole2);
 
     this.background = new Background(this, this.playerA); // creates background and updates movement based on player parsed
-    this.platform = new Platform(this, this.playerA); // creates platform and sets collision with player parsed
-    
-    const cameraX = this.cameras.main.scrollX;
-    const cameraY = this.cameras.main.scrollY;
+    this.platform = new Platform(this, this.playerA, this.playerB); // creates platform and sets collision with player parsed
+    this.waypoints =  this.platform.getWaypoints();
+    this.camera = new Camera(this, this.playerA); // camera only follows playerA
+    this.spawner = new Spawner(this, this.waypoints, this.platform);
+    this.goal = new Goal(this, this.playerA, this.playerB); // creates the goal portal
 
-    console.log("Camera position:", cameraX, cameraY);
-    this.initialCameraX = this.cameras.main.scrollX;
 
-    console.log(this.background.bgImages[0].x, this.background.bgImages[0].y);
+
+    for (let i = 0; i < this.waypoints.length; i++) {
+      console.log(this.waypoints[i].x + " " + this.waypoints[i].y);
+    }
+
+
 
     //this.cameras.main.startFollow(this.background);
     //athis.cameras.main.startFollow(this.playerA, true, 0.08, 0.08);
@@ -73,12 +86,12 @@ class GameScene extends Phaser.Scene {
   }
 
   update() {
-
     this.background.update();
     // Update the player
     this.playerA.update();
     this.platform.update();
     this.playerB.update();
+    this.camera.update();
     
   }
 
