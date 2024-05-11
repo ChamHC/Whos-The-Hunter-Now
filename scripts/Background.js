@@ -16,8 +16,7 @@ export default class Background {
   
       // Create and position background images
       for (let i = 0; i < 12; i++) {
-        const bgImg = this.scene.add.tileSprite(0, 0, config.width, config.height + 400, `bg${i + 1}`);
-        bgImg.setPosition(config.width / 2, config.height / 2);
+        const bgImg = this.scene.add.tileSprite(config.width / 2, config.height / 2 - 10, config.width * 5, config.height + 400, `bg${i + 1}`);
         bgImg.displayHeight = config.height;
         bgImg.scaleX = scale;
         bgImg.scaleY = scale;
