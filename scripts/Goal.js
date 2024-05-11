@@ -8,7 +8,7 @@ export default class Goal {
       this.platforms = platform;
 
       this.duration = 0;
-      this.rounds = 0;
+      this.roleSwitchCounter = 0;
       this.create();
     }
 
@@ -57,6 +57,8 @@ export default class Goal {
 
             // Change player B animation to hunted
             this.playerB.sprite.anims.play(`${this.playerB.sprite.anims.currentAnim.key.replace('hunter', 'hunted')}`, true);
+
+            this.roleSwitchCounter++;
         }
     }
 
@@ -73,12 +75,16 @@ export default class Goal {
 
             // Change player A animation to hunted
             this.playerA.sprite.anims.play(`${this.playerA.sprite.anims.currentAnim.key.replace('hunter', 'hunted')}`, true);
+
+            this.roleSwitchCounter++;
         }
     }
 
 
     endScene(outOfRange = false){ 
         this.elapsed = (new Date() - this.duration) / 1000;
+
+        this.rounds = Math.floor(this.roleSwitchCounter / 2);
 
         if(outOfRange ? this.playerA.playerRole == "Hunted" : this.playerA.playerRole == "Hunter"){
             // Player A wins
