@@ -19,8 +19,8 @@ class MenuScene extends Phaser.Scene{
         this.load.image('leftKey', 'resources/controls/Single PNGs/ARROWLEFT.png');
         this.load.image('downKey', 'resources/controls/Single PNGs/ARROWDOWN.png');
         this.load.image('rightKey', 'resources/controls/Single PNGs/ARROWRIGHT.png');
-        this.load.image('leftShiftKey', 'resources/controls/Single PNGs/SHIFT.png');
-        this.load.image('rightShiftKey', 'resources/controls/Single PNGs/SHIFTALTERNATIVE.png');
+        this.load.image('spaceKey', 'resources/controls/Single PNGs/SPACE.png');
+        this.load.image('enterKey', 'resources/controls/Single PNGs/ENTER.png');
         // Load How To Play tools images
         this.load.image('dadsBelt', 'resources/icons/Equipment/Belt.png');
         this.load.image('dashyFeather', 'resources/icons/Monster Part/Feather.png');
@@ -106,11 +106,11 @@ class MenuScene extends Phaser.Scene{
         // Create How To Play Controls and Tools Icon
         const playerA = this.playerAKeys(this.config.width*2 + 150, 170);
         this.writeText(playerA.x - 70, playerA.y - 150, 'Player A Controls', 60, 'ThaleahFat', '#ffffff', 0);
-        this.writeText(playerA.x + 100, playerA.y - 85, 'A: Move Left', 40, 'ThaleahFat', '#ffffff', 0);
-        this.writeText(playerA.x + 100, playerA.y - 45, 'D: Move Right', 40, 'ThaleahFat', '#ffffff', 0);
-        this.writeText(playerA.x + 100, playerA.y - 5, 'W: Jump', 40, 'ThaleahFat', '#ffffff', 0);
-        this.writeText(playerA.x + 100, playerA.y + 35, 'S: Crouch / Slide', 40, 'ThaleahFat', '#ffffff', 0);
-        this.writeText(playerA.x + 100, playerA.y + 75, 'LShift: Use Tool', 40, 'ThaleahFat', '#ffffff', 0);
+        this.writeText(playerA.x + 130, playerA.y - 85, 'A: Move Left', 40, 'ThaleahFat', '#ffffff', 0);
+        this.writeText(playerA.x + 130, playerA.y - 45, 'D: Move Right', 40, 'ThaleahFat', '#ffffff', 0);
+        this.writeText(playerA.x + 130, playerA.y - 5, 'W: Jump', 40, 'ThaleahFat', '#ffffff', 0);
+        this.writeText(playerA.x + 130, playerA.y + 35, 'S: Crouch / Slide', 40, 'ThaleahFat', '#ffffff', 0);
+        this.writeText(playerA.x + 130, playerA.y + 75, 'Spacebar: Use Tool', 40, 'ThaleahFat', '#ffffff', 0);
 
         const playerB = this.playerBKeys(this.config.width*2 + 850, 170);
         this.writeText(playerB.x - 70, playerB.y - 150, 'Player B Controls', 60, 'ThaleahFat', '#ffffff', 0);
@@ -118,7 +118,7 @@ class MenuScene extends Phaser.Scene{
         this.writeText(playerB.x + 100, playerB.y - 45, 'Down: Move Right', 40, 'ThaleahFat', '#ffffff', 0);
         this.writeText(playerB.x + 100, playerB.y - 5, 'Left: Jump', 40, 'ThaleahFat', '#ffffff', 0);
         this.writeText(playerB.x + 100, playerB.y + 35, 'Right: Crouch / Slide', 40, 'ThaleahFat', '#ffffff', 0);
-        this.writeText(playerB.x + 100, playerB.y + 75, 'RShift: Use Tool', 40, 'ThaleahFat', '#ffffff', 0);
+        this.writeText(playerB.x + 100, playerB.y + 75, 'Enter: Use Tool', 40, 'ThaleahFat', '#ffffff', 0);
         
         const tools = this.toolsIcons(this.config.width*2 + 80, 350);
         this.writeText(tools.x + 60, tools.y - 30, 'Dad\'s Belt', 40, 'ThaleahFat', '#ffffff', 0);
@@ -277,19 +277,19 @@ class MenuScene extends Phaser.Scene{
         });
     }
     playerAKeys(x, y){
-        this.createControlKeys(x, y - 25, 'wKey');
-        this.createControlKeys(x, y + 25, 'sKey');
-        this.createControlKeys(x - 50, y + 25, 'aKey');
-        this.createControlKeys(x + 50, y + 25, 'dKey');
-        this.createControlKeys(x, y + 75, 'leftShiftKey');
+        this.createControlKeys(x, y - 35, 'wKey');
+        this.createControlKeys(x, y + 15, 'sKey');
+        this.createControlKeys(x - 50, y + 15, 'aKey');
+        this.createControlKeys(x + 50, y + 15, 'dKey');
+        this.createControlKeys(x, y + 75, 'spaceKey');
         return { x: x, y: y };
     }
     playerBKeys(x, y){
-        this.createControlKeys(x, y - 25, 'upKey');
-        this.createControlKeys(x, y + 25, 'downKey');
-        this.createControlKeys(x - 50, y + 25, 'leftKey');
-        this.createControlKeys(x + 50, y + 25, 'rightKey');
-        this.createControlKeys(x, y + 75, 'rightShiftKey');
+        this.createControlKeys(x, y - 35, 'upKey');
+        this.createControlKeys(x, y + 15, 'downKey');
+        this.createControlKeys(x - 50, y + 15, 'leftKey');
+        this.createControlKeys(x + 50, y + 15, 'rightKey');
+        this.createControlKeys(x, y + 85, 'enterKey');
         return { x: x, y: y };
     }
     
