@@ -22,7 +22,7 @@ Throughout the game, players will encounter various random tools placed in the a
     | Move Right     | D             | Right Arrow   |
     | Jump           | W             | Up Arrow      |
     | Crouch / Slide | S             | Down Arrow    |
-    | Use Tools      | Left Shift    | Right Shift   |
+    | Use Tools      | Spacebar      | Enter         |
 - ### Tools
     Random tools are scattered throughout the arena to help you outplay your opponent.
 
