@@ -133,6 +133,8 @@ class MenuScene extends Phaser.Scene{
         this.writeText(tools.x + 960, tools.y, 'Block Opponent\'s Attack', 30, 'ThaleahFat', '#ffffff', 0);
         this.writeText(tools.x + 960, tools.y + 70, 'Worn Hat', 40, 'ThaleahFat', '#ffffff', 0);
         this.writeText(tools.x + 960, tools.y + 100, 'Stun Opponent', 30, 'ThaleahFat', '#ffffff', 0);
+
+        this.cameras.main.fadeIn(1000, 0, 0, 0);  //Tween entire screen tint black to white
     }
 
     update(){
