@@ -1,24 +1,28 @@
 export default class Camera {
-    constructor(scene, player) {
-      this.scene = scene;
-      this.player = player;
-      this.create();
+    constructor(scene, playerA, playerB, background) {
+        this.scene = scene;
+        this.playerA = playerA;
+        this.playerB = playerB;
+        this.background = background;
+        this.create();
     }
     
     
     create(){
+        this.config = this.scene.sys.game.config;
+        const leftX = this.background.bgImages[0].x - this.background.bgImages[0].width / 2;
+        const rightX = this.background.bgImages[0].width;
+        this.scene.cameras.main.startFollow(this.playerA.sprite, true, 0.08, 0.08);
 
+        this.scene.cameras.main.setBounds(leftX, 0, rightX, this.config.height);
     }
 
-
     update(){
-        if (this.player.sprite.body.velocity.x > 0) {
-            const cameraSpeed = 0.5; // Adjust the camera speed as needed, if change this, also change in background.js please. change bmgImg.x += 0.5 to the same value
-            this.scene.cameras.main.scrollX += cameraSpeed;
+        if (this.playerA.playerRole == "Hunted" && this.scene.cameras.main._follow === this.playerB.sprite) {
+            this.scene.cameras.main.startFollow(this.playerA.sprite, true, 0.08, 0.08);
         }
-            if (this.player.sprite.body.velocity.x < 0) {
-            const cameraSpeed = 0.5; // Adjust the camera speed as needed, same here
-            this.scene.cameras.main.scrollX -= cameraSpeed;
+        else if (this.playerB.playerRole == "Hunted" && this.scene.cameras.main._follow === this.playerA.sprite){
+            this.scene.cameras.main.startFollow(this.playerB.sprite, true, 0.08, 0.08);
         }
     }
 }

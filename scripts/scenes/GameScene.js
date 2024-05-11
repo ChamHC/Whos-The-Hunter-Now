@@ -65,7 +65,7 @@ class GameScene extends Phaser.Scene {
     this.background = new Background(this, this.playerA); // creates background and updates movement based on player parsed
     this.platform = new Platform(this, this.playerA, this.playerB); // creates platform and sets collision with player parsed
     this.waypoints =  this.platform.getWaypoints();
-    this.camera = new Camera(this, this.playerA); // camera only follows playerA
+    this.camera = new Camera(this, this.playerA, this.playerB, this.background); // camera only follows playerA
     this.spawner = new Spawner(this, this.waypoints, this.platform);
     this.goal = new Goal(this, this.playerA, this.playerB); // creates the goal portal
 
@@ -74,13 +74,6 @@ class GameScene extends Phaser.Scene {
     for (let i = 0; i < this.waypoints.length; i++) {
       console.log(this.waypoints[i].x + " " + this.waypoints[i].y);
     }
-
-
-
-    //this.cameras.main.startFollow(this.background);
-    //athis.cameras.main.startFollow(this.playerA, true, 0.08, 0.08);
-    //this.playerB = new Player(this, 1300, 450, "PlayerB");
-
       
     this.cameras.main.fadeIn(1000, 0, 0, 0);  //Tween entire screen tint black to white
   }
@@ -89,10 +82,10 @@ class GameScene extends Phaser.Scene {
     this.background.update();
     // Update the player
     this.playerA.update();
-    this.platform.update();
     this.playerB.update();
+
+    this.platform.update();
     this.camera.update();
-    
   }
 
   loadFont(name, url){
