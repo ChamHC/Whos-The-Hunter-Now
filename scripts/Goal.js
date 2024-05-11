@@ -1,9 +1,14 @@
+import {setWinner, setDuration, setRounds} from './GameStats.js';
+
 export default class Goal {
     constructor(scene, playerA, playerB, platform) {
       this.scene = scene;
       this.playerA = playerA;
       this.playerB = playerB;
       this.platforms = platform;
+
+      this.duration = 0;
+      this.rounds = 0;
       this.create();
     }
 
@@ -29,6 +34,8 @@ export default class Goal {
         
         //end scene if playerA and playerB overlap each other
         this.scene.physics.add.overlap(this.playerA.sprite, this.playerB.sprite, this.endScene, null, this);
+
+        this.duration = new Date();
     }
 
     update(){
@@ -69,14 +76,19 @@ export default class Goal {
 
 
     endScene(){ // bring to endScene
+        // Calculate the time elapsed in seconds
+        this.elapsed = (new Date() - this.duration) / 1000;
 
         //if the player is the hunter, then that player wins
         if(this.playerA.playerRole == "Hunter"){
-            console.log("Player A wins");
+            // Player A wins
+            setWinner("Player A");
         }
         else{
-            console.log("Player B wins");
+            setWinner("Player B");
         }
-        //this.scene.scene.start('EndScene');
+        setDuration(this.elapsed.toFixed(1));
+        setRounds(this.rounds);
+        this.scene.scene.start('EndScene');
     }
 }
