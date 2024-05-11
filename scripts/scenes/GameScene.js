@@ -43,7 +43,13 @@ class GameScene extends Phaser.Scene {
 
     //load tools icon
     this.load.image('Worn Hat', 'resources/icons/Equipment/Wizard Hat.png');
-  
+    this.load.image('Dad Belt', 'resources/icons/Equipment/Belt.png');
+    this.load.image('Suspicious Mushroom', 'resources/icons/Food/Mushroom.png');
+    this.load.image('Dashy Feather', 'resources/icons/Monster Part/Feather.png');
+    this.load.image('Wooden Buckler', 'resources/icons/Weapon & Tool/Wooden Shield.png');
+    this.load.image('Slimy Boot', 'resources/icons/Equipment/Iron Boot.png');
+    
+
     // Load Misc
     this.loadFont('ThaleahFat', 'resources/font/ThaleahFat.ttf');
     this.load.image('Arrow', 'resources/ui/Play.png');
@@ -66,10 +72,8 @@ class GameScene extends Phaser.Scene {
     this.platform = new Platform(this, this.playerA, this.playerB); // creates platform and sets collision with player parsed
     this.waypoints =  this.platform.getWaypoints();
     this.camera = new Camera(this, this.playerA, this.playerB, this.background); // camera only follows playerA
-    this.spawner = new Spawner(this, this.waypoints, this.platform);
-    this.goal = new Goal(this, this.playerA, this.playerB); // creates the goal portal
-
-
+    this.spawner = new Spawner(this, this.waypoints, this.platform, this.playerA, this.playerB);
+    this.goal = new Goal(this, this.playerA, this.playerB, this.platform); // creates the goal portal
 
     for (let i = 0; i < this.waypoints.length; i++) {
       console.log(this.waypoints[i].x + " " + this.waypoints[i].y);

@@ -12,6 +12,8 @@ export default class Player{
         this.slideFriction = 0.2;   // Set the slide friction of the player
         this.slideMultiplier = 2;   // Set the slide multiplier of the player
         this.slideThreshold = 500;    // Set the run to slide threshold of the player in ms
+
+        this.powerup;   // Store the powerup of the player
     }
 
     create(){
@@ -20,6 +22,7 @@ export default class Player{
         this.moveRightKey = this.playerName == "PlayerA" ? this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D) : this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
         this.jumpKey = this.playerName == "PlayerA" ? this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W) : this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
         this.crouchKey = this.playerName == "PlayerA" ? this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S) : this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
+        //this.powerupKey = this.playerName == "PlayerA" ? this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT_SHIFT) : this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT_SHIFT);
 
         // Create the player sprite
         if (this.playerRole == "Hunter")
@@ -204,6 +207,38 @@ export default class Player{
         this.graphics.fillStyle(0xff0000, 1);
         this.graphics.fillCircle(this.sprite.x, this.sprite.y, 3);
     }
+
+    applyPowerup(powerup){
+        this.powerup = powerup;
+        console.log(this.playerName + " has received the powerup: " + this.powerup);
+    }
+
+
+    // castPowerup(){
+    //     if (this.powerup == "Worn Hat"){
+    //         //function to cast powerup
+
+    //     }
+    //     else if (this.powerup == "Belt"){
+    //     }
+    //     else if (this.powerup == "mushroom"){
+    //     }
+    //     else if (this.powerup == "Feather"){
+    //     }
+    //     else if (this.powerup == "Wooden Buckler"){
+    //     }
+    //     else if (this.powerup == "Iron Boot"){
+    //     }
+
+    //     this.destroyPowerup();
+    // }
+
+    destroyPowerup(){
+        this.powerup = null;
+        console.log(this.playerName + " has used the powerup");
+    }
+
+
 }
 
 class State{    // Create a state class to handle the player states
