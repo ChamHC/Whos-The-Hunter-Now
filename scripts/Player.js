@@ -52,7 +52,6 @@ export default class Player{
         });
 
         this.scene.physics.world.enable(this.sprite);  // Enable physics for the player sprite
-        this.sprite.body.setCollideWorldBounds(true);   // Set the player sprite to collide with the world bounds
 
         // Create the animations for the Hunter
         // Check if animation is created
