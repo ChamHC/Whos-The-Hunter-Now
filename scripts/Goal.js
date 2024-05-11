@@ -33,13 +33,15 @@ export default class Goal {
         this.scene.physics.add.collider(this.portalA, this.platforms.platforms);
         
         //end scene if playerA and playerB overlap each other
-        this.scene.physics.add.overlap(this.playerA.sprite, this.playerB.sprite, this.endScene, null, this);
+        this.scene.physics.add.overlap(this.playerA.sprite, this.playerB.sprite, ()=> this.endScene(false), null, this);
 
         this.duration = new Date();
     }
 
     update(){
-
+        if (Phaser.Math.Distance.Between(this.playerA.sprite.x, this.playerA.sprite.y, this.playerB.sprite.x, this.playerB.sprite.y) > 750){
+            this.endScene(true);
+        }
     }
 
     playerAhunter(playerASprite, portalB){
@@ -75,12 +77,10 @@ export default class Goal {
     }
 
 
-    endScene(){ // bring to endScene
-        // Calculate the time elapsed in seconds
+    endScene(outOfRange = false){ 
         this.elapsed = (new Date() - this.duration) / 1000;
 
-        //if the player is the hunter, then that player wins
-        if(this.playerA.playerRole == "Hunter"){
+        if(outOfRange ? this.playerA.playerRole == "Hunted" : this.playerA.playerRole == "Hunter"){
             // Player A wins
             setWinner("Player A");
         }

@@ -90,6 +90,7 @@ class GameScene extends Phaser.Scene {
 
     this.platform.update();
     this.camera.update();
+    this.goal.update();
   }
 
   loadFont(name, url){
