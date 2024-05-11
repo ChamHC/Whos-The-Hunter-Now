@@ -46,21 +46,23 @@ export default class Spawner {
 
     collectItemA(sprite, player) {
         // esnsure a player can only have one powerup at a time
-        if (this.playerA.powerup == null) {
+        if (this.playerA.tools == null) {
 
             sprite.destroy();
             // Get the powerup based on the item name
             const powerup = sprite.texture.key;
             // Apply the powerup to the player
-            this.playerA.applyPowerup(powerup);
+            this.playerA.tools = powerup;
+            console.log("Player A picked up " + this.playerA.tools);
         }
     }
 
     collectItemB(sprite, player) {
-        if (this.playerB.powerup == null) {
+        if (this.playerB.tools == null) {
             sprite.destroy();
             const powerup = sprite.texture.key;
-            this.playerB.applyPowerup(powerup);
+            this.playerB.tools = powerup;
+            console.log("Player B picked up " + this.playerB.tools);
         }
     }
 

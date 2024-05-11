@@ -1,3 +1,5 @@
+import { Tools, DadBelt, DashyFeather, SlimyBoot, SuspiciousMushroom, WoodenBuckler, WornHat } from './Tools.js';
+
 export default class Player{
     constructor(scene, x, y, playerName, playerRole){
         this.scene = scene; // Store the scene in the player class
@@ -12,8 +14,6 @@ export default class Player{
         this.slideFriction = 0.2;   // Set the slide friction of the player
         this.slideMultiplier = 2;   // Set the slide multiplier of the player
         this.slideThreshold = 500;    // Set the run to slide threshold of the player in ms
-
-        this.powerup;   // Store the powerup of the player
     }
 
     create(){
@@ -22,7 +22,7 @@ export default class Player{
         this.moveRightKey = this.playerName == "PlayerA" ? this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D) : this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
         this.jumpKey = this.playerName == "PlayerA" ? this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W) : this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
         this.crouchKey = this.playerName == "PlayerA" ? this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S) : this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
-        //this.powerupKey = this.playerName == "PlayerA" ? this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT_SHIFT) : this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT_SHIFT);
+        this.castKey = this.playerName == "PlayerA" ? this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE) : this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER);
 
         // Create the player sprite
         if (this.playerRole == "Hunter")
@@ -107,6 +107,21 @@ export default class Player{
                 frameRate: 15,
                 repeat: -1
             })
+        if (!this.scene.anims.exists('hunterCast'))
+            this.scene.anims.create({
+                key: 'hunterCast',
+                frames: this.scene.anims.generateFrameNumbers('HunterCast', { start: 0, end: 3 }),
+                frameRate: 15,
+                repeat: 0
+            })
+        if (!this.scene.anims.exists('hunterUse'))
+            this.scene.anims.create({
+                key: 'hunterUse',
+                frames: this.scene.anims.generateFrameNumbers('HunterUse', { start: 0, end: 2 }),
+                frameRate: 15,
+                repeat: 0
+            })
+
         // Create the animations for the Hunted
             if (!this.scene.anims.exists('huntedIdle'))
             this.scene.anims.create({
@@ -157,6 +172,20 @@ export default class Player{
                 frameRate: 15,
                 repeat: -1
             })
+        if (!this.scene.anims.exists('huntedCast'))
+            this.scene.anims.create({
+                key: 'huntedCast',
+                frames: this.scene.anims.generateFrameNumbers('HuntedCast', { start: 0, end: 3 }),
+                frameRate: 15,
+                repeat: 0
+            })
+        if (!this.scene.anims.exists('huntedUse'))
+            this.scene.anims.create({
+                key: 'huntedUse',
+                frames: this.scene.anims.generateFrameNumbers('HuntedUse', { start: 0, end: 2 }),
+                frameRate: 15,
+                repeat: 0
+            })
 
         // Create the state machine for the player
         this.currentState = null;  // Set current state to null
@@ -167,7 +196,10 @@ export default class Player{
         this.crouchState = new CrouchState(this);    // Create crouch state
         this.enterSlideState = new EnterSlideState(this);    // Create stand state
         this.slideState = new SlideState(this);    // Create slide state
+        this.castState = new CastState(this);    // Create cast state   
         this.changeState(this.runState);   // Set initial state to idle state
+        this.tools = null;
+        this.activeTools = [];
     }
 
     update(){
@@ -181,6 +213,14 @@ export default class Player{
 
         this.dynamicColliderSize();  // Change the collider size to fit the sprite [NOTE: REMOVE IF USING STANDARDIZED DIMENSIONS]
         this.displayColliderOrigin();    // Display the collider origin [NOTE: FOR DEBUGGING ONLY]
+        
+        if (this.activeTools) {
+            this.activeTools.forEach(tool => {
+                tool.update();
+                if (tool.isCompleted)
+                    this.activeTools.splice(this.activeTools.indexOf(tool), 1);
+            });
+        }
     }
 
     changeState(state){ // Change the state of the player
@@ -207,38 +247,6 @@ export default class Player{
         this.graphics.fillStyle(0xff0000, 1);
         this.graphics.fillCircle(this.sprite.x, this.sprite.y, 3);
     }
-
-    applyPowerup(powerup){
-        this.powerup = powerup;
-        console.log(this.playerName + " has received the powerup: " + this.powerup);
-    }
-
-
-    // castPowerup(){
-    //     if (this.powerup == "Worn Hat"){
-    //         //function to cast powerup
-
-    //     }
-    //     else if (this.powerup == "Belt"){
-    //     }
-    //     else if (this.powerup == "mushroom"){
-    //     }
-    //     else if (this.powerup == "Feather"){
-    //     }
-    //     else if (this.powerup == "Wooden Buckler"){
-    //     }
-    //     else if (this.powerup == "Iron Boot"){
-    //     }
-
-    //     this.destroyPowerup();
-    // }
-
-    destroyPowerup(){
-        this.powerup = null;
-        console.log(this.playerName + " has used the powerup");
-    }
-
-
 }
 
 class State{    // Create a state class to handle the player states
@@ -283,7 +291,11 @@ class IdleState extends State{  // Create an idle state class that extends the s
             this.player.changeState(this.player.fallState);
         }
         if (this.player.crouchKey.isDown) {
+            console.log("Crouching");
             this.player.changeState(this.player.crouchState);
+        }
+        if (this.player.castKey.isDown && this.player.tools != null) {
+            this.player.changeState(this.player.castState);
         }
     }
 }
@@ -324,6 +336,9 @@ class RunState extends State{   // Create a run state class that extends the sta
         if (this.player.crouchKey.isDown && elapsedTime >= this.player.slideThreshold) {
             this.player.changeState(this.player.enterSlideState);
         }
+        if (this.player.castKey.isDown && this.player.tools != null) {
+            this.player.changeState(this.player.castState);
+        }
     }
 }
 
@@ -346,6 +361,9 @@ class JumpState extends State{  // Create a jump state class that extends the st
         }
         if (this.player.jumpKey.isDown && this.player.sprite.body.onFloor()) {
             this.player.sprite.setVelocityY(-this.player.jumpHeight * 100);
+        }
+        if (this.player.castKey.isDown && this.player.tools != null) {
+            this.player.changeState(this.player.castState);
         }
         this.checkCriteria();
     }
@@ -376,6 +394,9 @@ class FallState extends State {
         if (this.player.moveRightKey.isDown) {
             this.player.sprite.setVelocityX(this.player.moveSpeed * 100);
             this.player.sprite.flipX = false;
+        }
+        if (this.player.castKey.isDown && this.player.tools != null) {
+            this.player.changeState(this.player.castState);
         }
         this.checkCriteria();
     }
@@ -413,9 +434,13 @@ class CrouchState extends State {
 class EnterSlideState extends State {
     stateEnter() {
         if (this.player.playerRole == "Hunter")
-            this.player.sprite.anims.play('hunterStand', true);
+            this.animation = this.player.sprite.anims.play('hunterStand', true);
         else
-            this.player.sprite.anims.play('huntedStand', true);
+            this.animation = this.player.sprite.anims.play('huntedStand', true);
+
+        this.animation.on('animationcomplete', () => {
+            this.player.changeState(this.player.slideState);
+        });
     }
 
     stateUpdate() {
@@ -431,9 +456,7 @@ class EnterSlideState extends State {
     }
 
     checkCriteria() {
-        if (this.player.sprite.anims.currentFrame.isLast) {
-            this.player.changeState(this.player.slideState);
-        }
+
     }
 }
 
@@ -468,5 +491,59 @@ class SlideState extends State {
         if (this.player.jumpKey.isDown) {
             this.player.changeState(this.player.jumpState);
         }
+    }
+}
+
+class CastState extends State {
+    stateEnter() {
+        this.animation = null;
+        this.activateTools();
+
+        this.animation.on('animationcomplete', () => {
+            this.player.scene.time.delayedCall(100, () => {
+                this.player.tools = null;
+                this.player.changeState(this.player.idleState);
+            });
+        });
+    }
+
+    stateUpdate() {
+        if(this.player.sprite.body.onFloor()){
+            this.player.sprite.setVelocityX(0);
+        }
+        this.checkCriteria();
+    }
+
+    activateTools(){
+        switch (this.player.tools) {
+            case 'Dad Belt':
+                this.animation = this.player.playerRole == "Hunter" ? this.player.sprite.anims.play('hunterCast', true) : this.player.sprite.anims.play('huntedCast', true);
+                this.player.activeTools.push(new DadBelt(this.player.scene, this.player.sprite.x, this.player.sprite.y));
+                break;
+            case 'Dashy Feather':
+                this.animation = this.player.playerRole == "Hunter" ? this.player.sprite.anims.play('hunterUse', true) : this.player.sprite.anims.play('huntedUse', true);
+                this.player.activeTools.push(new DashyFeather(this.player.scene, this.player.sprite.x, this.player.sprite.y));
+                break;
+            case 'Slimy Boot':
+                this.animation = this.player.playerRole == "Hunter" ? this.player.sprite.anims.play('hunterUse', true) : this.player.sprite.anims.play('huntedUse', true);
+                this.player.activeTools.push(new SlimyBoot(this.player.scene, this.player.sprite.x, this.player.sprite.y));
+                break;
+            case 'Suspicious Mushroom':
+                this.animation = this.player.playerRole == "Hunter" ? this.player.sprite.anims.play('hunterCast', true) : this.player.sprite.anims.play('huntedCast', true);
+                this.player.activeTools.push(new SuspiciousMushroom(this.player.scene, this.player.sprite.x, this.player.sprite.y));
+                break;
+            case 'Wooden Buckler':
+                this.animation = this.player.playerRole == "Hunter" ? this.player.sprite.anims.play('hunterUse', true) : this.player.sprite.anims.play('huntedUse', true);
+                this.player.activeTools.push(new WoodenBuckler(this.player.scene, this.player.sprite.x, this.player.sprite.y));
+                break;
+            case 'Worn Hat':
+                this.animation = this.player.playerRole == "Hunter" ? this.player.sprite.anims.play('hunterUse', true) : this.player.sprite.anims.play('huntedUse', true);
+                this.player.activeTools.push(new WornHat(this.player.scene, this.player.sprite.x, this.player.sprite.y));
+                break;
+        }
+    }
+
+    checkCriteria() {
+
     }
 }

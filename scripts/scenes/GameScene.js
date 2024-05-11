@@ -28,7 +28,9 @@ class GameScene extends Phaser.Scene {
     this.load.spritesheet('HuntedCrouch', 'resources/player/crouch/adventurer-crouch-spritesheet-20x22.png', { frameWidth: 60, frameHeight: 66 });
     this.load.spritesheet('HuntedStand', 'resources/player/stand/adventurer-stand-spritesheet-30x17.png', { frameWidth: 90, frameHeight: 51 });
     this.load.spritesheet('HuntedSlide', 'resources/player/slide/adventurer-slide-spritesheet-34x15.png', { frameWidth: 102, frameHeight: 45 });
-    
+    this.load.spritesheet('HuntedCast', 'resources/player/cast/adventurer-cast-spritesheet-27x26.png', { frameWidth: 81, frameHeight: 78 });
+    this.load.spritesheet('HuntedUse', 'resources/player/items/adventurer-items-spritesheet-22x26.png', { frameWidth: 66, frameHeight: 78 })
+
     // Load the hunter spritesheets
     this.load.spritesheet('HunterIdle', 'resources/player/idle/adventurer-invert-idle-spritesheet-21x30.png', { frameWidth: 63, frameHeight: 90 });
     this.load.spritesheet('HunterRun', 'resources/player/run/adventurer-invert-run-spritesheet-24x29.png', { frameWidth: 72, frameHeight: 87 });
@@ -37,6 +39,8 @@ class GameScene extends Phaser.Scene {
     this.load.spritesheet('HunterCrouch', 'resources/player/crouch/adventurer-invert-crouch-spritesheet-20x22.png', { frameWidth: 60, frameHeight: 66 });
     this.load.spritesheet('HunterStand', 'resources/player/stand/adventurer-invert-stand-spritesheet-30x17.png', { frameWidth: 90, frameHeight: 51 });
     this.load.spritesheet('HunterSlide', 'resources/player/slide/adventurer-invert-slide-spritesheet-34x15.png', { frameWidth: 102, frameHeight: 45 });
+    this.load.spritesheet('HunterCast', 'resources/player/cast/adventurer-invert-cast-spritesheet-27x26.png', { frameWidth: 81, frameHeight: 78 });
+    this.load.spritesheet('HunterUse', 'resources/player/items/adventurer-invert-items-spritesheet-22x26.png', { frameWidth: 66, frameHeight: 78 });
 
     //load the portal spritesheet
     this.load.spritesheet('portal', 'resources/portal/Portal-spritesheet.png', { frameWidth: 18, frameHeight: 32 });
