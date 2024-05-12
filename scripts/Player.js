@@ -619,7 +619,7 @@ class DeadState extends State {
         });
 
         this.animation.on('animationcomplete', () => {
-            this.player.scene.time.delayedCall(1000, () => {
+            this.player.scene.time.delayedCall(2000, () => {
                 this.animation.off('animationcomplete');
                 //Change scene
                 this.player.scene.scene.start('EndScene');
