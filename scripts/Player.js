@@ -389,9 +389,6 @@ class JumpState extends State{  // Create a jump state class that extends the st
     }
 
     checkCriteria(){
-        if (hasEnded && winner != this.player.playerName) {
-            this.player.changeState(this.player.DeadState);
-        }
         if (this.player.sprite.body.onFloor()) {
             this.player.changeState(this.player.idleState);
         }
@@ -427,9 +424,6 @@ class FallState extends State {
     }
 
     checkCriteria() {
-        if (hasEnded && winner != this.player.playerName) {
-            this.player.changeState(this.player.DeadState);
-        }
         if (this.player.crouchKey.isDown && this.player.sprite.body.onFloor()) {
             this.player.changeState(this.player.enterSlideState);
         }
@@ -597,7 +591,7 @@ class CastState extends State {
     }
 
     checkCriteria() {
-        if (hasEnded && winner != this.player.playerName) {
+        if (hasEnded && winner != this.player.playerName && this.player.sprite.body.onFloor()) {
             this.player.changeState(this.player.DeadState);
         }
     }
