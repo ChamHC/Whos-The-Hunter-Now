@@ -1,4 +1,5 @@
 import { Tools, DadBelt, DashyFeather, SlimyBoot, SuspiciousMushroom, WoodenBuckler, WornHat } from './Tools.js';
+import { hasEnded, winner } from './GameStats.js';
 
 export default class Player{
     constructor(scene, x, y, playerName, playerRole){
@@ -121,9 +122,16 @@ export default class Player{
                 frameRate: 15,
                 repeat: 0
             });
+        if (!this.scene.anims.exists('hunterDeath'))
+            this.scene.anims.create({
+                key: 'hunterDeath',
+                frames: this.scene.anims.generateFrameNumbers('HunterDeath', { start: 0, end: 6 }),
+                frameRate: 15,
+                repeat: 0
+            });
 
         // Create the animations for the Hunted
-            if (!this.scene.anims.exists('huntedIdle'))
+        if (!this.scene.anims.exists('huntedIdle'))
             this.scene.anims.create({
                 key: 'huntedIdle',
                 frames: this.scene.anims.generateFrameNumbers('HuntedIdle', { start: 0, end: 3 }),
@@ -186,6 +194,13 @@ export default class Player{
                 frameRate: 15,
                 repeat: 0
             });
+        if (!this.scene.anims.exists('huntedDeath'))
+            this.scene.anims.create({
+                key: 'huntedDeath',
+                frames: this.scene.anims.generateFrameNumbers('HuntedDeath', { start: 0, end: 6 }),
+                frameRate: 15,
+                repeat: 0
+            });
 
         // Create the state machine for the player
         this.currentState = null;  // Set current state to null
@@ -197,6 +212,7 @@ export default class Player{
         this.enterSlideState = new EnterSlideState(this);    // Create stand state
         this.slideState = new SlideState(this);    // Create slide state
         this.castState = new CastState(this);    // Create cast state   
+        this.DeadState = new DeadState(this);    // Create dead state
         this.changeState(this.idleState);   // Set initial state to idle state
         this.tools = null;
         this.activeTools = [];
@@ -278,6 +294,9 @@ class IdleState extends State{  // Create an idle state class that extends the s
     }
 
     checkCriteria(){
+        if (hasEnded && winner != this.player.playerName) {
+            this.player.changeState(this.player.DeadState);
+        }
         if (this.player.moveLeftKey.isDown || this.player.moveRightKey.isDown) {
             this.player.changeState(this.player.runState);
         }
@@ -323,6 +342,9 @@ class RunState extends State{   // Create a run state class that extends the sta
 
     checkCriteria(){
         const elapsedTime = this.player.scene.time.now - this.startTime;
+        if (hasEnded && winner != this.player.playerName) {
+            this.player.changeState(this.player.DeadState);
+        }
         if (!this.player.moveLeftKey.isDown && !this.player.moveRightKey.isDown) {
             this.player.changeState(this.player.idleState);
         }
@@ -367,6 +389,9 @@ class JumpState extends State{  // Create a jump state class that extends the st
     }
 
     checkCriteria(){
+        if (hasEnded && winner != this.player.playerName) {
+            this.player.changeState(this.player.DeadState);
+        }
         if (this.player.sprite.body.onFloor()) {
             this.player.changeState(this.player.idleState);
         }
@@ -402,6 +427,9 @@ class FallState extends State {
     }
 
     checkCriteria() {
+        if (hasEnded && winner != this.player.playerName) {
+            this.player.changeState(this.player.DeadState);
+        }
         if (this.player.crouchKey.isDown && this.player.sprite.body.onFloor()) {
             this.player.changeState(this.player.enterSlideState);
         }
@@ -430,6 +458,9 @@ class CrouchState extends State {
     }
 
     checkCriteria() {
+        if (hasEnded && winner != this.player.playerName) {
+            this.player.changeState(this.player.DeadState);
+        }
         if (!this.player.crouchKey.isDown) {
             this.player.changeState(this.player.idleState);
         }
@@ -452,9 +483,6 @@ class EnterSlideState extends State {
             this.animation.off('animationcomplete');
             this.player.changeState(this.player.slideState);
         });
-
-        // Remove the animation complete listener
-
     }
 
     stateUpdate() {
@@ -470,7 +498,9 @@ class EnterSlideState extends State {
     }
 
     checkCriteria() {
-
+        if (hasEnded && winner != this.player.playerName) {
+            this.player.changeState(this.player.DeadState);
+        }
     }
 }
 
@@ -501,6 +531,9 @@ class SlideState extends State {
     }
 
     checkCriteria() {
+        if (hasEnded && winner != this.player.playerName) {
+            this.player.changeState(this.player.DeadState);
+        }
         if ((this.player.sprite.body.velocity.x < 0 && this.player.moveRightKey.isDown) ||
             (this.player.sprite.body.velocity.x > 0 && this.player.moveLeftKey.isDown) ||
             (!this.player.moveRightKey.isDown && !this.player.moveLeftKey.isDown) ||
@@ -515,7 +548,6 @@ class SlideState extends State {
 
 class CastState extends State {
     stateEnter() {
-        this.animation = null;
         this.activateTools();
         this.player.sprite.body.setSize(this.player.sprite.anims.width, this.player.sprite.anims.height);
 
@@ -565,6 +597,47 @@ class CastState extends State {
     }
 
     checkCriteria() {
+        if (hasEnded && winner != this.player.playerName) {
+            this.player.changeState(this.player.DeadState);
+        }
+    }
+}
 
+class DeadState extends State {
+    stateEnter() {
+        if (this.player.playerRole == "Hunter")
+            this.animation = this.player.sprite.anims.play('hunterDeath', true);
+        else
+            this.animation = this.player.sprite.anims.play('huntedDeath', true);
+
+        this.player.sprite.body.setSize(this.player.sprite.anims.width, this.player.sprite.anims.height);
+
+        // Alternate between black and white tint every 250ms
+        let isWhite = true;
+        this.player.scene.time.addEvent({
+            delay: 250,
+            callback: () => {
+                this.player.sprite.clearTint();
+                this.player.sprite.setTintFill(isWhite ? 0xffffff : 0x000000);
+                isWhite = !isWhite;
+            },
+            loop: true
+        });
+
+        this.animation.on('animationcomplete', () => {
+            this.player.scene.time.delayedCall(1000, () => {
+                this.animation.off('animationcomplete');
+                //Change scene
+                this.player.scene.scene.start('EndScene');
+            });
+        });
+    }
+
+    stateUpdate() {
+        this.player.sprite.setVelocityX(0);
+    }
+
+    checkCriteria() {
+        
     }
 }

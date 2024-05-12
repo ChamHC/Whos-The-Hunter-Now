@@ -1,4 +1,4 @@
-import {winner, gameDuration, gameRounds} from '../GameStats.js';
+import {winner, gameDuration, gameRounds, setHasEnded} from '../GameStats.js';
 
 class EndScene extends Phaser.Scene{
     constructor() {
@@ -22,12 +22,12 @@ class EndScene extends Phaser.Scene{
     create(){
         // Create background images
         this.config = this.sys.game.config;
-        this.winner = winner;
+        this.winner = winner.replace("Player", "Player ");
         this.duration = gameDuration;
         this.rounds = gameRounds;
 
         this.backgroundConfig();
-        
+
         // Create Title
         this.writeText(this.config.width / 2, this.config.height / 2 - 200, this.winner + " Wins", 100, 'ThaleahFat', '#ffffff', 0.5);
         this.writeText(this.config.width / 2, this.config.height / 2 - 100, "Duration: " + this.duration + " seconds", 30, 'ThaleahFat', '#ffffff', 0.5);
@@ -147,6 +147,7 @@ class EndScene extends Phaser.Scene{
     restartButtonClicked(scene){
         scene.cameras.main.fade(1000, 0, 0, 0, false, (camera, progress) => {
             if (progress === 1) {
+                setHasEnded(false);
                 scene.scene.start('GameScene');
             }
         });

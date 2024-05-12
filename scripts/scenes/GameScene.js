@@ -30,6 +30,7 @@ class GameScene extends Phaser.Scene {
     this.load.spritesheet('HuntedSlide', 'resources/player/slide/adventurer-slide-spritesheet-34x15.png', { frameWidth: 102, frameHeight: 45 });
     this.load.spritesheet('HuntedCast', 'resources/player/cast/adventurer-cast-spritesheet-27x26.png', { frameWidth: 81, frameHeight: 78 });
     this.load.spritesheet('HuntedUse', 'resources/player/items/adventurer-items-spritesheet-22x26.png', { frameWidth: 66, frameHeight: 78 })
+    this.load.spritesheet('HuntedDeath', 'resources/player/die/adventurer-die-spritesheet-22x24.png', { frameWidth: 66, frameHeight: 72 })
 
     // Load the hunter spritesheets
     this.load.spritesheet('HunterIdle', 'resources/player/idle/adventurer-invert-idle-spritesheet-21x30.png', { frameWidth: 63, frameHeight: 90 });
@@ -41,6 +42,7 @@ class GameScene extends Phaser.Scene {
     this.load.spritesheet('HunterSlide', 'resources/player/slide/adventurer-invert-slide-spritesheet-34x15.png', { frameWidth: 102, frameHeight: 45 });
     this.load.spritesheet('HunterCast', 'resources/player/cast/adventurer-invert-cast-spritesheet-27x26.png', { frameWidth: 81, frameHeight: 78 });
     this.load.spritesheet('HunterUse', 'resources/player/items/adventurer-invert-items-spritesheet-22x26.png', { frameWidth: 66, frameHeight: 78 });
+    this.load.spritesheet('HunterDeath', 'resources/player/die/adventurer-invert-die-spritesheet-22x24.png', { frameWidth: 66, frameHeight: 72 });
 
     //load the portal spritesheet
     this.load.spritesheet('portal', 'resources/portal/Portal-spritesheet.png', { frameWidth: 18, frameHeight: 32 });

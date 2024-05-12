@@ -1,4 +1,4 @@
-import {setWinner, setDuration, setRounds} from './GameStats.js';
+import {setWinner, setDuration, setRounds, setHasEnded} from './GameStats.js';
 
 export default class Goal {
     constructor(scene, playerA, playerB, platform) {
@@ -33,14 +33,14 @@ export default class Goal {
         this.scene.physics.add.collider(this.portalA, this.platforms.platforms);
         
         //end scene if playerA and playerB overlap each other
-        this.scene.physics.add.overlap(this.playerA.sprite, this.playerB.sprite, ()=> this.endScene(false), null, this);
+        this.scene.physics.add.overlap(this.playerA.sprite, this.playerB.sprite, ()=> this.endGame(false), null, this);
 
         this.duration = new Date();
     }
 
     update(){
         if (Phaser.Math.Distance.Between(this.playerA.sprite.x, this.playerA.sprite.y, this.playerB.sprite.x, this.playerB.sprite.y) > 1450){
-            this.endScene(true);
+            this.endGame(true);
         }
     }
 
@@ -81,20 +81,20 @@ export default class Goal {
     }
 
 
-    endScene(outOfRange = false){ 
+    endGame(outOfRange = false){ 
         this.elapsed = (new Date() - this.duration) / 1000;
 
         this.rounds = Math.floor(this.roleSwitchCounter / 2);
 
         if(outOfRange ? this.playerA.playerRole == "Hunted" : this.playerA.playerRole == "Hunter"){
             // Player A wins
-            setWinner("Player A");
+            setWinner("PlayerA");
         }
         else{
-            setWinner("Player B");
+            setWinner("PlayerB");
         }
         setDuration(this.elapsed.toFixed(1));
         setRounds(this.rounds);
-        this.scene.scene.start('EndScene');
+        setHasEnded(true);
     }
 }
