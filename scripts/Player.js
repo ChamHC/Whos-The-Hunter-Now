@@ -433,6 +433,9 @@ class CrouchState extends State {
         if (!this.player.crouchKey.isDown) {
             this.player.changeState(this.player.idleState);
         }
+        if (this.player.castKey.isDown && this.player.tools != null) {
+            this.player.changeState(this.player.castState);
+        }
     }
 }
 
