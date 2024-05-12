@@ -212,7 +212,7 @@ export default class Player{
         this.enterSlideState = new EnterSlideState(this);    // Create stand state
         this.slideState = new SlideState(this);    // Create slide state
         this.castState = new CastState(this);    // Create cast state   
-        this.DeadState = new DeadState(this);    // Create dead state
+        this.deadState = new DeadState(this);    // Create dead state
         this.changeState(this.idleState);   // Set initial state to idle state
         this.tools = null;
         this.activeTools = [];
@@ -295,7 +295,7 @@ class IdleState extends State{  // Create an idle state class that extends the s
 
     checkCriteria(){
         if (hasEnded && winner != this.player.playerName) {
-            this.player.changeState(this.player.DeadState);
+            this.player.changeState(this.player.deadState);
         }
         if (this.player.moveLeftKey.isDown || this.player.moveRightKey.isDown) {
             this.player.changeState(this.player.runState);
@@ -343,7 +343,7 @@ class RunState extends State{   // Create a run state class that extends the sta
     checkCriteria(){
         const elapsedTime = this.player.scene.time.now - this.startTime;
         if (hasEnded && winner != this.player.playerName) {
-            this.player.changeState(this.player.DeadState);
+            this.player.changeState(this.player.deadState);
         }
         if (!this.player.moveLeftKey.isDown && !this.player.moveRightKey.isDown) {
             this.player.changeState(this.player.idleState);
@@ -453,7 +453,7 @@ class CrouchState extends State {
 
     checkCriteria() {
         if (hasEnded && winner != this.player.playerName) {
-            this.player.changeState(this.player.DeadState);
+            this.player.changeState(this.player.deadState);
         }
         if (!this.player.crouchKey.isDown) {
             this.player.changeState(this.player.idleState);
@@ -526,7 +526,7 @@ class SlideState extends State {
 
     checkCriteria() {
         if (hasEnded && winner != this.player.playerName) {
-            this.player.changeState(this.player.DeadState);
+            this.player.changeState(this.player.deadState);
         }
         if ((this.player.sprite.body.velocity.x < 0 && this.player.moveRightKey.isDown) ||
             (this.player.sprite.body.velocity.x > 0 && this.player.moveLeftKey.isDown) ||
@@ -592,7 +592,7 @@ class CastState extends State {
 
     checkCriteria() {
         if (hasEnded && winner != this.player.playerName && this.player.sprite.body.onFloor()) {
-            this.player.changeState(this.player.DeadState);
+            this.player.changeState(this.player.deadState);
         }
     }
 }
