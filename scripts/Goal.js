@@ -39,7 +39,7 @@ export default class Goal {
     }
 
     update(){
-        if (Phaser.Math.Distance.Between(this.playerA.sprite.x, this.playerA.sprite.y, this.playerB.sprite.x, this.playerB.sprite.y) > 750){
+        if (Phaser.Math.Distance.Between(this.playerA.sprite.x, this.playerA.sprite.y, this.playerB.sprite.x, this.playerB.sprite.y) > 1450){
             this.endScene(true);
         }
     }
