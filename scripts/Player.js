@@ -10,7 +10,7 @@ export default class Player{
         this.create();  // Call the create method
 
         this.moveSpeed = 2; // Set the move speed of the player
-        this.jumpHeight = 2;    // Set the jump height of the player
+        this.jumpHeight = 2.5;    // Set the jump height of the player
         this.slideFriction = 0.2;   // Set the slide friction of the player
         this.slideMultiplier = 2;   // Set the slide multiplier of the player
         this.slideThreshold = 500;    // Set the run to slide threshold of the player in ms
