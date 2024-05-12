@@ -78,49 +78,49 @@ export default class Player{
                 frames: this.scene.anims.generateFrameNumbers('HunterJump', { start: 0, end: 3 }),
                 frameRate: 15,
                 repeat: 0
-            })
+            });
         if (!this.scene.anims.exists('hunterFall'))
             this.scene.anims.create({
                 key: 'hunterFall',
                 frames: this.scene.anims.generateFrameNumbers('HunterFall', { start: 0, end: 1 }),
                 frameRate: 15,
                 repeat: 0
-            })
+            });
         if (!this.scene.anims.exists('hunterCrouch'))
             this.scene.anims.create({
                 key: 'hunterCrouch',
                 frames: this.scene.anims.generateFrameNumbers('HunterCrouch', { start: 0, end: 3 }),
                 frameRate: 5,
                 repeat: -1
-            })
+            });
         if (!this.scene.anims.exists('hunterStand'))
             this.scene.anims.create({
                 key: 'hunterStand',
                 frames: this.scene.anims.generateFrameNumbers('HunterStand', { start: 0, end: 2 }),
                 frameRate: 15,
                 repeat: 0
-            })
+            });
         if (!this.scene.anims.exists('hunterSlide'))
             this.scene.anims.create({
                 key: 'hunterSlide',
                 frames: this.scene.anims.generateFrameNumbers('HunterSlide', { start: 0, end: 1 }),
                 frameRate: 15,
                 repeat: -1
-            })
+            });
         if (!this.scene.anims.exists('hunterCast'))
             this.scene.anims.create({
                 key: 'hunterCast',
                 frames: this.scene.anims.generateFrameNumbers('HunterCast', { start: 0, end: 3 }),
                 frameRate: 15,
                 repeat: 0
-            })
+            });
         if (!this.scene.anims.exists('hunterUse'))
             this.scene.anims.create({
                 key: 'hunterUse',
                 frames: this.scene.anims.generateFrameNumbers('HunterUse', { start: 0, end: 2 }),
                 frameRate: 15,
                 repeat: 0
-            })
+            });
 
         // Create the animations for the Hunted
             if (!this.scene.anims.exists('huntedIdle'))
@@ -143,49 +143,49 @@ export default class Player{
                 frames: this.scene.anims.generateFrameNumbers('HuntedJump', { start: 0, end: 3 }),
                 frameRate: 15,
                 repeat: 0
-            })
+            });
         if (!this.scene.anims.exists('huntedFall'))
             this.scene.anims.create({
                 key: 'huntedFall',
                 frames: this.scene.anims.generateFrameNumbers('HuntedFall', { start: 0, end: 1 }),
                 frameRate: 15,
                 repeat: 0
-            })
+            });
         if (!this.scene.anims.exists('huntedCrouch'))
             this.scene.anims.create({
                 key: 'huntedCrouch',
                 frames: this.scene.anims.generateFrameNumbers('HuntedCrouch', { start: 0, end: 3 }),
                 frameRate: 5,
                 repeat: -1
-            })
+            });
         if (!this.scene.anims.exists('huntedStand'))
             this.scene.anims.create({
                 key: 'huntedStand',
                 frames: this.scene.anims.generateFrameNumbers('HuntedStand', { start: 0, end: 2 }),
                 frameRate: 15,
                 repeat: 0
-            })
+            });
         if (!this.scene.anims.exists('huntedSlide'))
             this.scene.anims.create({
                 key: 'huntedSlide',
                 frames: this.scene.anims.generateFrameNumbers('HuntedSlide', { start: 0, end: 1 }),
                 frameRate: 15,
                 repeat: -1
-            })
+            });
         if (!this.scene.anims.exists('huntedCast'))
             this.scene.anims.create({
                 key: 'huntedCast',
                 frames: this.scene.anims.generateFrameNumbers('HuntedCast', { start: 0, end: 3 }),
                 frameRate: 15,
                 repeat: 0
-            })
+            });
         if (!this.scene.anims.exists('huntedUse'))
             this.scene.anims.create({
                 key: 'huntedUse',
                 frames: this.scene.anims.generateFrameNumbers('HuntedUse', { start: 0, end: 2 }),
                 frameRate: 15,
                 repeat: 0
-            })
+            });
 
         // Create the state machine for the player
         this.currentState = null;  // Set current state to null
@@ -197,9 +197,11 @@ export default class Player{
         this.enterSlideState = new EnterSlideState(this);    // Create stand state
         this.slideState = new SlideState(this);    // Create slide state
         this.castState = new CastState(this);    // Create cast state   
-        this.changeState(this.runState);   // Set initial state to idle state
+        this.changeState(this.idleState);   // Set initial state to idle state
         this.tools = null;
         this.activeTools = [];
+
+        this.sprite.setOrigin(0.5, 1);
     }
 
     update(){
@@ -211,7 +213,6 @@ export default class Player{
         this.text.x = this.sprite.x;
         this.text.y = this.sprite.y - this.sprite.body.height - 30;
 
-        this.dynamicColliderSize();  // Change the collider size to fit the sprite [NOTE: REMOVE IF USING STANDARDIZED DIMENSIONS]
         this.displayColliderOrigin();    // Display the collider origin [NOTE: FOR DEBUGGING ONLY]
         
         if (this.activeTools) {
@@ -227,12 +228,6 @@ export default class Player{
         //console.log("Changing state to " + state.constructor.name);
         this.currentState = state;  // Set the current state to the new state
         this.currentState.stateEnter(); // Enter the new state
-    }
-
-    dynamicColliderSize(){
-        // Change collider size to fit the sprite
-        this.sprite.setOrigin(0.5, 1);
-        this.sprite.body.setSize(this.sprite.anims.width, this.sprite.anims.height);
     }
 
     displayColliderOrigin(){
@@ -273,6 +268,8 @@ class IdleState extends State{  // Create an idle state class that extends the s
             this.player.sprite.anims.play('hunterIdle', true);
         else
             this.player.sprite.anims.play('huntedIdle', true);
+
+        this.player.sprite.body.setSize(this.player.sprite.anims.width, this.player.sprite.anims.height);
     }
 
     stateUpdate(){
@@ -306,6 +303,8 @@ class RunState extends State{   // Create a run state class that extends the sta
             this.player.sprite.anims.play('hunterRun', true);
         else
             this.player.sprite.anims.play('huntedRun', true);
+
+        this.player.sprite.body.setSize(this.player.sprite.anims.width, this.player.sprite.anims.height);
 
         this.startTime = this.player.scene.time.now;
     }
@@ -348,6 +347,8 @@ class JumpState extends State{  // Create a jump state class that extends the st
             this.player.sprite.anims.play('hunterJump', true);
         else
             this.player.sprite.anims.play('huntedJump', true);
+
+        this.player.sprite.body.setSize(this.player.sprite.anims.width, this.player.sprite.anims.height);
     }
 
     stateUpdate(){
@@ -362,9 +363,6 @@ class JumpState extends State{  // Create a jump state class that extends the st
         if (this.player.jumpKey.isDown && this.player.sprite.body.onFloor()) {
             this.player.sprite.setVelocityY(-this.player.jumpHeight * 100);
         }
-        if (this.player.castKey.isDown && this.player.tools != null) {
-            this.player.changeState(this.player.castState);
-        }
         this.checkCriteria();
     }
 
@@ -375,6 +373,9 @@ class JumpState extends State{  // Create a jump state class that extends the st
         if (this.player.sprite.body.velocity.y > 0 && !this.player.sprite.body.onFloor()) {
             this.player.changeState(this.player.fallState);
         }
+        if (this.player.castKey.isDown && this.player.tools != null) {
+            this.player.changeState(this.player.castState);
+        }
     }
 }
 
@@ -384,6 +385,8 @@ class FallState extends State {
             this.player.sprite.anims.play('hunterFall', true);
         else
             this.player.sprite.anims.play('huntedFall', true);
+
+        this.player.sprite.body.setSize(this.player.sprite.anims.width, this.player.sprite.anims.height);
     }
 
     stateUpdate() {
@@ -395,9 +398,6 @@ class FallState extends State {
             this.player.sprite.setVelocityX(this.player.moveSpeed * 100);
             this.player.sprite.flipX = false;
         }
-        if (this.player.castKey.isDown && this.player.tools != null) {
-            this.player.changeState(this.player.castState);
-        }
         this.checkCriteria();
     }
 
@@ -408,6 +408,9 @@ class FallState extends State {
         else if (this.player.sprite.body.onFloor()) {
             this.player.changeState(this.player.idleState);
         }
+        if (this.player.castKey.isDown && this.player.tools != null) {
+            this.player.changeState(this.player.castState);
+        }
     }
 }
 
@@ -417,6 +420,8 @@ class CrouchState extends State {
             this.player.sprite.anims.play('hunterCrouch', true);
         else
             this.player.sprite.anims.play('huntedCrouch', true);
+
+        this.player.sprite.body.setSize(this.player.sprite.anims.width, this.player.sprite.anims.height);
     }
 
     stateUpdate() {
@@ -438,9 +443,15 @@ class EnterSlideState extends State {
         else
             this.animation = this.player.sprite.anims.play('huntedStand', true);
 
+        this.player.sprite.body.setSize(this.player.sprite.anims.width, this.player.sprite.anims.height);
+
         this.animation.on('animationcomplete', () => {
+            this.animation.off('animationcomplete');
             this.player.changeState(this.player.slideState);
         });
+
+        // Remove the animation complete listener
+
     }
 
     stateUpdate() {
@@ -466,8 +477,14 @@ class SlideState extends State {
             this.player.sprite.anims.play('hunterSlide', true);
         else
             this.player.sprite.anims.play('huntedSlide', true);
+
+        this.player.sprite.body.setSize(this.player.sprite.anims.width, this.player.sprite.anims.height);
         
-        this.defaultVelocity = this.player.sprite.body.velocity.x;
+        if (this.player.sprite.body.velocity.x > 0)
+            this.defaultVelocity = this.player.moveSpeed * 100;
+        else
+            this.defaultVelocity = -this.player.moveSpeed * 100;
+
         this.player.sprite.setVelocityX(this.defaultVelocity * this.player.slideMultiplier);
     }
 
@@ -477,7 +494,6 @@ class SlideState extends State {
         if (this.player.moveRightKey.isDown)
             this.player.sprite.body.velocity.x -= this.player.slideFriction * 10;
 
-        //console.log(this.player.sprite.body.velocity.x);
         this.checkCriteria();
     }
 
@@ -498,10 +514,12 @@ class CastState extends State {
     stateEnter() {
         this.animation = null;
         this.activateTools();
+        this.player.sprite.body.setSize(this.player.sprite.anims.width, this.player.sprite.anims.height);
 
         this.animation.on('animationcomplete', () => {
             this.player.scene.time.delayedCall(100, () => {
                 this.player.tools = null;
+                this.animation.off('animationcomplete');
                 this.player.changeState(this.player.idleState);
             });
         });
