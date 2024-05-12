@@ -155,6 +155,7 @@ class EndScene extends Phaser.Scene{
     mainMenuButtonClicked(scene){
         scene.cameras.main.fade(1000, 0, 0, 0, false, (camera, progress) => {
             if (progress === 1) {
+                setHasEnded(false);
                 scene.scene.start('MenuScene');
             }
         });
