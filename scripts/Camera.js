@@ -16,7 +16,8 @@ export default class Camera {
     create(){
         this.config = this.scene.sys.game.config;
         this.target = {x: 0, y: 0};
-        
+        this.zoomRange = {min: 1, max: 1.5};
+
         const leftX = this.background.bgImages[0].x - this.background.bgImages[0].width / 2;
         const rightX = this.background.bgImages[0].width;
         this.scene.cameras.main.setBounds(leftX, 0, rightX, this.config.height);
@@ -32,7 +33,7 @@ export default class Camera {
         // Set Dynamic Zoom based on distance between players, with a minimum zoom of 1 and maximum zoom of 1.5
         // The camera will zoom out as the players move further apart, and zoom in as they move closer together
         const distance = Phaser.Math.Distance.Between(this.playerA.sprite.x, this.playerA.sprite.y, this.playerB.sprite.x, this.playerB.sprite.y);
-        const zoom = Phaser.Math.Clamp(1.5 - distance / 1000, 1, 1.5);
+        const zoom = Phaser.Math.Clamp(this.zoomRange.max - distance / 2000, this.zoomRange.min, this.zoomRange.max);
         this.scene.cameras.main.setZoom(zoom);
     }
 }
