@@ -39,8 +39,10 @@ export class DadBelt extends Tools {
         this.drawLine();
         
         // If the belt intersects with enemy
-        if ((this.player.flipX && this.player.x - this.length.current < this.enemy.x && this.player.x > this.enemy.x)||
-            (!this.player.flipX && this.player.x + this.length.current > this.enemy.x && this.player.x < this.enemy.x)){
+        if ((this.player.flipX && this.player.x - this.length.current < this.enemy.x && this.player.x > this.enemy.x) &&
+            (this.player.y - this.player.height / 3 < this.enemy.y && this.player.y + this.player.height / 3 > this.enemy.y) ||
+            (!this.player.flipX && this.player.x + this.length.current > this.enemy.x && this.player.x < this.enemy.x) &&
+            (this.player.y - this.player.height / 3 < this.enemy.y && this.player.y + this.player.height / 3 > this.enemy.y)) {
             this.onOverlap();
         }
 

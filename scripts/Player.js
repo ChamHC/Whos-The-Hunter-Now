@@ -243,9 +243,6 @@ export default class Player{
                 }
             });
         }
-        if (this.activeTools.length == 0){
-            console.log ("No active tools");
-        }
     }
 
     changeState(state){ // Change the state of the player
@@ -303,6 +300,10 @@ class IdleState extends State{  // Create an idle state class that extends the s
         }
         else if (this.player.sprite.body.velocity.x < 0) {
             this.player.sprite.body.velocity.x += this.player.friction;
+        }
+
+        if (this.player.sprite.body.velocity.x < 10 && this.player.sprite.body.velocity.x > -10) {
+            this.player.sprite.body.velocity.x = 0;
         }
 
         this.checkCriteria();    // Check the criteria for changing the state
