@@ -64,11 +64,11 @@ We would like to thank our lecturer for their guidance and support throughout th
 ## Group Members
 ### 1. Cham Hao Cheng (1211304951)
     - Write Documentations (README.md)
-    - Main Menu (Play, Option, How To Play)
-    - End Screen (Winner Name, Game Duration, Cycle Count, Back To Menu, Restart)
-    - Player Behaviours (Move, Jump, Slide, Crouch, Use Tools)
+    - Main Menu (Play, How To Play, Exit)
+    - End Screen (Winner, Game Duration, Cycle Count, Back To Menu, Restart, Exit)
+    - Player Behaviours (Idle, Move, Jump, Fall, Crouch, Slide, Death, Use Items)
     - Elimination Mechanics (Out of Screen, Tagging)
-    - Camera Orientation (Follow Player)
+    - Camera Behaviours (Follow Players, Dynamic Zoom)
     - Tools:
         - Dad's Belt
         - Dashy Feather
