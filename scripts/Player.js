@@ -213,6 +213,7 @@ export default class Player{
         this.slideState = new SlideState(this);    // Create slide state
         this.castState = new CastState(this);    // Create cast state   
         this.deadState = new DeadState(this);    // Create dead state
+        this.stunState = new StunState(this);    // Create stun state
         this.changeState(this.idleState);   // Set initial state to idle state
         this.tools = null;
         this.activeTools = [];
@@ -565,27 +566,27 @@ class CastState extends State {
         switch (this.player.tools) {
             case 'Dad Belt':
                 this.animation = this.player.playerRole == "Hunter" ? this.player.sprite.anims.play('hunterCast', true) : this.player.sprite.anims.play('huntedCast', true);
-                this.player.activeTools.push(new DadBelt(this.player.scene, this.player.sprite.x, this.player.sprite.y));
+                this.player.activeTools.push(new DadBelt(this.player.scene, this.player.sprite));
                 break;
             case 'Dashy Feather':
                 this.animation = this.player.playerRole == "Hunter" ? this.player.sprite.anims.play('hunterUse', true) : this.player.sprite.anims.play('huntedUse', true);
-                this.player.activeTools.push(new DashyFeather(this.player.scene, this.player.sprite.x, this.player.sprite.y));
+                this.player.activeTools.push(new DashyFeather(this.player.scene, this.player.sprite));
                 break;
             case 'Slimy Boot':
                 this.animation = this.player.playerRole == "Hunter" ? this.player.sprite.anims.play('hunterUse', true) : this.player.sprite.anims.play('huntedUse', true);
-                this.player.activeTools.push(new SlimyBoot(this.player.scene, this.player.sprite.x, this.player.sprite.y));
+                this.player.activeTools.push(new SlimyBoot(this.player.scene, this.player.sprite));
                 break;
             case 'Suspicious Mushroom':
                 this.animation = this.player.playerRole == "Hunter" ? this.player.sprite.anims.play('hunterCast', true) : this.player.sprite.anims.play('huntedCast', true);
-                this.player.activeTools.push(new SuspiciousMushroom(this.player.scene, this.player.sprite.x, this.player.sprite.y));
+                this.player.activeTools.push(new SuspiciousMushroom(this.player.scene, this.player.sprite));
                 break;
             case 'Wooden Buckler':
                 this.animation = this.player.playerRole == "Hunter" ? this.player.sprite.anims.play('hunterUse', true) : this.player.sprite.anims.play('huntedUse', true);
-                this.player.activeTools.push(new WoodenBuckler(this.player.scene, this.player.sprite.x, this.player.sprite.y));
+                this.player.activeTools.push(new WoodenBuckler(this.player.scene, this.player.sprite));
                 break;
             case 'Worn Hat':
                 this.animation = this.player.playerRole == "Hunter" ? this.player.sprite.anims.play('hunterUse', true) : this.player.sprite.anims.play('huntedUse', true);
-                this.player.activeTools.push(new WornHat(this.player.scene, this.player.sprite.x, this.player.sprite.y));
+                this.player.activeTools.push(new WornHat(this.player.scene, this.player.sprite));
                 break;
         }
     }
@@ -594,6 +595,7 @@ class CastState extends State {
         if (hasEnded && winner != this.player.playerName && this.player.sprite.body.onFloor()) {
             this.player.changeState(this.player.deadState);
         }
+
     }
 }
 
@@ -633,5 +635,46 @@ class DeadState extends State {
 
     checkCriteria() {
         
+    }
+}
+
+class StunState extends State{
+    stateEnter(){
+        // Set animation to idle
+        if (this.player.playerRole == "Hunter")
+            this.animation = this.player.sprite.anims.play('hunterIdle', true);
+        else
+            this.animation = this.player.sprite.anims.play('huntedIdle', true);
+
+        this.player.sprite.body.setSize(this.player.sprite.anims.width, this.player.sprite.anims.height);
+
+        // Create tween to shake the player
+        // DO SMTHING HERE
+
+        // Create blinking effect
+        let isWhite = true;
+        this.player.scene.time.addEvent({
+            delay: 250,
+            callback: () => {
+                this.player.sprite.clearTint();
+                this.player.sprite.setTintFill(isWhite ? 0xffffff : 0x000000);
+                isWhite = !isWhite;
+            },
+            loop: true
+        });
+
+        this.player.sprite.setVelocityX(0);
+    }
+
+    stateUpdate(){
+        this.player.sprite.setVelocityX(0);
+    }
+
+    checkCriteria(){
+        // if (Stunned FInished){
+            this.player.scene.time.delayedCall(2000, () => {
+                this.player.changeState(this.player.idleState); // Change state to idle
+            });
+        //}
     }
 }
