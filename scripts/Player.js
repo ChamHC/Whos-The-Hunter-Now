@@ -17,6 +17,7 @@ export default class Player{
         this.slideFriction = 2; // Set the slide friction of the player
         this.slideMultiplier = 2;   // Set the slide multiplier of the player
         this.slideThreshold = 200;    // Set the speed threshold for player to slide
+        this.airMultiplier = 0.5;   // Set the air multiplier of the player
     }
 
     create(){
@@ -219,10 +220,6 @@ export default class Player{
         this.changeState(this.idleState);   // Set initial state to idle state
         this.tools = null;
         this.activeTools = [];
-
-        // TESTING
-        this.tools = "Dad Belt";
-        // TESTING
         
         this.sprite.setOrigin(0.5, 1);
     }
@@ -241,9 +238,13 @@ export default class Player{
         if (this.activeTools) {
             this.activeTools.forEach(tool => {
                 tool.update();
-                if (tool.isCompleted)
+                if (tool.isCompleted){
                     this.activeTools.splice(this.activeTools.indexOf(tool), 1);
+                }
             });
+        }
+        if (this.activeTools.length == 0){
+            console.log ("No active tools");
         }
     }
 
@@ -352,8 +353,6 @@ class RunState extends State{   // Create a run state class that extends the sta
                 this.player.sprite.body.velocity.x += this.player.acceleration;
         }
         this.checkCriteria();
-
-        console.log("Player Velocity: " + this.player.sprite.body.velocity.x);
     }
 
     checkCriteria(){
@@ -392,12 +391,12 @@ class JumpState extends State{  // Create a jump state class that extends the st
         if (this.player.moveLeftKey.isDown) {
             this.player.sprite.flipX = true;
             if (this.player.sprite.body.velocity.x > -this.player.maxSpeed)
-                this.player.sprite.body.velocity.x -= this.player.acceleration;
+                this.player.sprite.body.velocity.x -= this.player.acceleration * this.player.airMultiplier;
         }
         if (this.player.moveRightKey.isDown) {
             this.player.sprite.flipX = false;
             if (this.player.sprite.body.velocity.x < this.player.maxSpeed)
-                this.player.sprite.body.velocity.x += this.player.acceleration;
+                this.player.sprite.body.velocity.x += this.player.acceleration * this.player.airMultiplier;
         }
         if (this.player.jumpKey.isDown && this.player.sprite.body.onFloor()) {
             this.player.sprite.body.velocity.y = -this.player.jumpHeight;
@@ -432,12 +431,12 @@ class FallState extends State {
         if (this.player.moveLeftKey.isDown) {
             this.player.sprite.flipX = true;
             if (this.player.sprite.body.velocity.x > -this.player.maxSpeed)
-                this.player.sprite.body.velocity.x -= this.player.acceleration;
+                this.player.sprite.body.velocity.x -= this.player.acceleration * this.player.airMultiplier;
         }
         if (this.player.moveRightKey.isDown) {
             this.player.sprite.flipX = false;
             if (this.player.sprite.body.velocity.x < this.player.maxSpeed)
-                this.player.sprite.body.velocity.x += this.player.acceleration;
+                this.player.sprite.body.velocity.x += this.player.acceleration * this.player.airMultiplier;
         }
         this.checkCriteria();
     }
