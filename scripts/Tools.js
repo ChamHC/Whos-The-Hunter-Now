@@ -1,8 +1,7 @@
 export class Tools {
-    constructor(scene, player, tool){
+    constructor(scene, player){
         this.scene = scene;
         this.player = player;
-        this.tool = tool;
         this.isCompleted = false;
 
         this.create();
@@ -18,8 +17,8 @@ export class Tools {
 }
 
 export class DadBelt extends Tools {
-    constructor(scene, player, tool){
-        super(scene, player, tool);
+    constructor(scene, player){
+        super(scene, player);
     }
 
     create(){
@@ -35,8 +34,8 @@ export class DadBelt extends Tools {
 }
 
 export class DashyFeather extends Tools {
-    constructor(scene, player, tool){
-        super(scene, player, tool);
+    constructor(scene, player){
+        super(scene, player);
     }
 
     create(){
@@ -51,8 +50,8 @@ export class DashyFeather extends Tools {
 }
 
 export class SlimyBoot extends Tools {
-    constructor(scene, player, tool){
-        super(scene, player, tool);
+    constructor(scene, player){
+        super(scene, player);
     }
 
     create(){
@@ -67,8 +66,8 @@ export class SlimyBoot extends Tools {
 }
 
 export class SuspiciousMushroom extends Tools {
-    constructor(scene, player, tool){
-        super(scene, player, tool);
+    constructor(scene, player){
+        super(scene, player);
     }
 
     create(){
@@ -83,8 +82,8 @@ export class SuspiciousMushroom extends Tools {
 }
 
 export class WoodenBuckler extends Tools {
-    constructor(scene, player, tool){
-        super(scene, player, tool);
+    constructor(scene, player){
+        super(scene, player);
     }
 
     create(){
@@ -99,8 +98,8 @@ export class WoodenBuckler extends Tools {
 }
 
 export class WornHat extends Tools {
-    constructor(scene, player, tool){
-        super(scene, player, tool);
+    constructor(scene, player){
+        super(scene, player);
     }
 
     create(){
