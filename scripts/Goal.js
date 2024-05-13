@@ -82,6 +82,11 @@ export default class Goal {
 
 
     endGame(outOfRange = false){ 
+        if ((this.playerA.playerRole == "Hunted" && this.playerA.activeTools.some(tool => tool.constructor.name === "WoodenBuckler")) ||
+            (this.playerB.playerRole == "Hunted" && this.playerB.activeTools.some(tool => tool.constructor.name === "WoodenBuckler"))) {
+            return;
+        }
+        
         this.elapsed = (new Date() - this.duration) / 1000;
 
         this.rounds = Math.floor(this.roleSwitchCounter / 2);
