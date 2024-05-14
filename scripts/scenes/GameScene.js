@@ -74,10 +74,12 @@ class GameScene extends Phaser.Scene {
     console.log("Player A is the", playerRole);
     console.log("Player B is the", playerRole2);
 
+
+    this.physics.world.setBounds(0, 0, 5000, 5000); 
     this.background = new Background(this, this.playerA); // creates background and updates movement based on player parsed
     this.platform = new Platform(this, this.playerA, this.playerB); // creates platform and sets collision with player parsed
-    this.waypoints =  this.platform.getWaypoints();
-    this.camera = new Camera(this, this.playerA, this.playerB, this.background); // camera only follows playerA
+    this.waypoints =  this.platform.getWaypoints('Spawner');
+    this.camera = new Camera(this, this.playerA, this.playerB, this.background, this.platform); // camera only follows playerA
     this.spawner = new Spawner(this, this.waypoints, this.platform, this.playerA, this.playerB);
     this.goal = new Goal(this, this.playerA, this.playerB, this.platform); // creates the goal portal
 
