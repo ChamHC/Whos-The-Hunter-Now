@@ -1,9 +1,10 @@
 export default class Camera {
-    constructor(scene, playerA, playerB, background) {
+    constructor(scene, playerA, playerB, background, platform) {
         this.scene = scene;
         this.playerA = playerA;
         this.playerB = playerB;
         this.background = background;
+        this.platform = platform;
         this.create();
     }
     
