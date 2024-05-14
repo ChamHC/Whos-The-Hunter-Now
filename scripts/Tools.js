@@ -80,7 +80,7 @@ export class DadBelt extends Tools {
     }
 
     onOverlap(){
-        this.enemy.setVelocityX(500 * this.playerDirection);
+        this.enemy.body.velocity.x += 100 * this.playerDirection;
         this.lineGraphics.clear();
         this.hasCompleted = true;
     }
@@ -170,18 +170,22 @@ export class WoodenBuckler extends Tools {
         if (this.hasTriggered) return;
         if (this.player === this.scene.playerA.sprite && this.scene.playerA.playerRole === "Hunted"){
             if (this.scene.playerA.sprite.x < this.scene.playerB.sprite.x){
-                this.scene.playerB.sprite.setVelocityX(500);
+                this.scene.playerA.sprite.body.velocity.x -= 500;
+                this.scene.playerB.sprite.body.velocity.x += 500;
             }
             else {
-                this.scene.playerB.sprite.setVelocityX(-500);
+                this.scene.playerA.sprite.body.velocity.x += 500;
+                this.scene.playerB.sprite.body.velocity.x -= 500;
             }
         }
         else if (this.player === this.scene.playerB.sprite && this.scene.playerB.playerRole === "Hunted"){
             if (this.scene.playerB.sprite.x < this.scene.playerA.sprite.x){
-                this.scene.playerA.sprite.setVelocityX(500);
+                this.scene.playerB.sprite.body.velocity.x -= 500;
+                this.scene.playerA.sprite.body.velocity.x += 500;
             }
             else {
-                this.scene.playerA.sprite.setVelocityX(-500);
+                this.scene.playerB.sprite.body.velocity.x += 500;
+                this.scene.playerA.sprite.body.velocity.x -= 500;
             }
         }
         this.hasTriggered = true;
