@@ -11,10 +11,10 @@ export default class Player{
         this.create();  // Call the create method
 
         this.maxSpeed = 300; // Set the max speed of the player
-        this.acceleration = 5; // Set the acceleration of the player
-        this.jumpHeight = 300;    // Set the jump height of the player
-        this.friction = 10;   // Set the friction of the player
-        this.slideFriction = 2; // Set the slide friction of the player
+        this.acceleration = 10; // Set the acceleration of the player
+        this.jumpHeight = 350;    // Set the jump height of the player
+        this.drag = 500;   // Set the friction of the player
+        this.slideDrag = 200; // Set the slide friction of the player
         this.slideMultiplier = 2;   // Set the slide multiplier of the player
         this.slideThreshold = 200;    // Set the speed threshold for player to slide
         this.airMultiplier = 0.5;   // Set the air multiplier of the player
@@ -220,6 +220,7 @@ export default class Player{
         this.changeState(this.idleState);   // Set initial state to idle state
         this.tools = null;
         this.activeTools = [];
+        this.tools = "Wooden Buckler";
         
         this.sprite.setOrigin(0.5, 1);
     }
@@ -243,6 +244,12 @@ export default class Player{
                 }
             });
         }
+
+        let speed = Math.abs(this.sprite.body.velocity.x);
+        if (this.currentState == this.slideState)
+            this.sprite.setDragX(this.slideDrag + speed);
+        else
+            this.sprite.setDragX(this.drag + speed);
     }
 
     changeState(state){ // Change the state of the player
@@ -294,18 +301,6 @@ class IdleState extends State{  // Create an idle state class that extends the s
     }
 
     stateUpdate(){
-        // If current velocity is not 0, gradually decrease the velocity
-        if (this.player.sprite.body.velocity.x > 0) {
-            this.player.sprite.body.velocity.x -= this.player.friction;
-        }
-        else if (this.player.sprite.body.velocity.x < 0) {
-            this.player.sprite.body.velocity.x += this.player.friction;
-        }
-
-        if (this.player.sprite.body.velocity.x < 10 && this.player.sprite.body.velocity.x > -10) {
-            this.player.sprite.body.velocity.x = 0;
-        }
-
         this.checkCriteria();    // Check the criteria for changing the state
     }
 
@@ -466,12 +461,6 @@ class CrouchState extends State {
     }
 
     stateUpdate() {
-        if (this.player.sprite.body.velocity.x > 0) {
-            this.player.sprite.body.velocity.x -= this.player.friction;
-        }
-        else if (this.player.sprite.body.velocity.x < 0) {
-            this.player.sprite.body.velocity.x += this.player.friction;
-        }
         this.checkCriteria();
     }
 
@@ -507,12 +496,12 @@ class EnterSlideState extends State {
         if (this.player.moveLeftKey.isDown) {
             this.player.sprite.flipX = true;
             if (this.player.sprite.body.velocity.x > -this.player.maxSpeed)
-                this.player.sprite.setVelocityX(this.player.sprite.body.velocity.x - this.player.acceleration);
+                this.player.sprite.body.velocity.x -= this.player.acceleration;
         }
         if (this.player.moveRightKey.isDown) {
             this.player.sprite.flipX = false;
             if (this.player.sprite.body.velocity.x < this.player.maxSpeed)
-                this.player.sprite.setVelocityX(this.player.sprite.body.velocity.x + this.player.acceleration);
+                this.player.sprite.body.velocity.x += this.player.acceleration;
         }
         this.checkCriteria();
     }
@@ -537,13 +526,6 @@ class SlideState extends State {
     }
 
     stateUpdate() {
-        if (this.player.sprite.body.velocity.x > 0) {
-            this.player.sprite.body.velocity.x -= this.player.slideFriction;
-        }
-        else if (this.player.sprite.body.velocity.x < 0) {
-            this.player.sprite.body.velocity.x += this.player.slideFriction;
-        }
-
         this.checkCriteria();
     }
 
@@ -578,12 +560,16 @@ class CastState extends State {
     }
 
     stateUpdate() {
-        if(this.player.sprite.body.onFloor()){
-            if (this.player.sprite.body.velocity.x > 0) {
-                this.player.sprite.body.velocity.x -= this.player.friction;
+        if (!this.player.sprite.body.onFloor()){
+            if (this.player.moveLeftKey.isDown) {
+                this.player.sprite.flipX = true;
+                if (this.player.sprite.body.velocity.x > -this.player.maxSpeed)
+                    this.player.sprite.body.velocity.x -= this.player.acceleration * this.player.airMultiplier;
             }
-            else if (this.player.sprite.body.velocity.x < 0) {
-                this.player.sprite.body.velocity.x += this.player.friction;
+            if (this.player.moveRightKey.isDown) {
+                this.player.sprite.flipX = false;
+                if (this.player.sprite.body.velocity.x < this.player.maxSpeed)
+                    this.player.sprite.body.velocity.x += this.player.acceleration * this.player.airMultiplier;
             }
         }
         this.checkCriteria();
@@ -692,12 +678,7 @@ class StunState extends State{
     }
 
     stateUpdate(){
-        if (this.player.sprite.body.velocity.x > 0) {
-            this.player.sprite.body.velocity.x -= this.player.slideFriction;
-        }
-        else if (this.player.sprite.body.velocity.x < 0) {
-            this.player.sprite.body.velocity.x += this.player.slideFriction;
-        }
+
     }
 
     checkCriteria(){
