@@ -14,16 +14,32 @@ export default class Goal {
 
     create(){
 
-        this.portalA = this.scene.physics.add.sprite(200, 500, 'portal');
+        this.spawnPointA = this.platforms.getWaypoints('Portal Spawn A');
+        this.spawnPointB = this.platforms.getWaypoints('Portal Spawn B');
+
+
+        // Randomly select a spawn point from spawnPointA array
+        const randomIndexA = Phaser.Math.Between(0, this.spawnPointA.length - 1);
+        const spawnPointA = this.spawnPointA[randomIndexA];
+
+        // Spawn portalA at the selected spawn point
+        this.portalA = this.scene.physics.add.sprite(spawnPointA.x, spawnPointA.y, 'portal');
         this.portalA.anims.play('portal');
         this.portalA.setScale(2);
         this.portalA.setCollideWorldBounds(true);
-        
-        this.portalB = this.scene.physics.add.sprite(1200, 500, 'portal');
+
+        // Randomly select a spawn point from spawnPointB array
+        const randomIndexB = Phaser.Math.Between(0, this.spawnPointB.length - 1);
+        const spawnPointB = this.spawnPointB[randomIndexB];
+
+        // Spawn portalB at the selected spawn point
+
+        console.log(spawnPointB.x + " kimak why here " + spawnPointB.y);
+        this.portalB = this.scene.physics.add.sprite(spawnPointB.x, spawnPointB.y, 'portal');
         this.portalB.anims.play('portal');
         this.portalB.setScale(2);
         this.portalB.setCollideWorldBounds(true);
-        
+
         //overlap code for playerA and portalB
         this.scene.physics.add.overlap(this.playerA.sprite, this.portalA, this.playerAhunter, null, this);
         this.scene.physics.add.collider(this.portalB, this.platforms.platforms);
@@ -47,39 +63,30 @@ export default class Goal {
     playerAhunter(playerASprite, portalB){
         if(this.playerA.playerRole == "Hunted"){
             console.log("Player A is now the hunter");
-            // Change player A to hunter
             this.playerA.playerRole = "Hunter";
-
-            // Change player A animation to hunter
             this.playerA.sprite.anims.play(`${this.playerA.sprite.anims.currentAnim.key.replace('hunted', 'hunter')}`, true);
-            // Change player B to hunted
             this.playerB.playerRole = "Hunted";
-
-            // Change player B animation to hunted
             this.playerB.sprite.anims.play(`${this.playerB.sprite.anims.currentAnim.key.replace('hunter', 'hunted')}`, true);
 
             this.roleSwitchCounter++;
+            setRounds(Math.floor(this.roleSwitchCounter / 2));
+            console.log("Role switch counter: " + this.roleSwitchCounter);
         }
     }
 
     playerBhunter(playerBSprite, portalA){
         if(this.playerB.playerRole == "Hunted"){
             console.log("Player B is now the hunter");
-            // Change player B to hunter
             this.playerB.playerRole = "Hunter";
-
-            // Change player B animation to hunter
             this.playerB.sprite.anims.play(`${this.playerB.sprite.anims.currentAnim.key.replace('hunted', 'hunter')}`, true);
-            // Change player A to hunted
             this.playerA.playerRole = "Hunted";
-
-            // Change player A animation to hunted
             this.playerA.sprite.anims.play(`${this.playerA.sprite.anims.currentAnim.key.replace('hunter', 'hunted')}`, true);
 
             this.roleSwitchCounter++;
+            setRounds(Math.floor(this.roleSwitchCounter / 2));
+            console.log("Role switch counter: " + this.roleSwitchCounter);
         }
     }
-
 
     endGame(outOfRange = false){ 
         if ((this.playerA.playerRole == "Hunted" && this.playerA.activeTools.some(tool => tool.constructor.name === "WoodenBuckler")) ||
