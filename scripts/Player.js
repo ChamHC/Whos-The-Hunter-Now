@@ -12,7 +12,7 @@ export default class Player{
 
         this.maxSpeed = 300; // Set the max speed of the player
         this.acceleration = 5; // Set the acceleration of the player
-        this.jumpHeight = 250;    // Set the jump height of the player
+        this.jumpHeight = 300;    // Set the jump height of the player
         this.friction = 10;   // Set the friction of the player
         this.slideFriction = 2; // Set the slide friction of the player
         this.slideMultiplier = 2;   // Set the slide multiplier of the player
