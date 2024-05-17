@@ -77,7 +77,7 @@ We would like to thank our lecturer for their guidance and support throughout th
     - Find Game Assets (Itch.io)
     - SFX Design (Sound Effect and Ambient Sound)
     - Level Design (Parallax Background, Platform Layout, Collision Boxes)
-    - Core Mechanics (Goal, Role Switch, Tools Spawner)
+    - Core Mechanics (Goal, Role Switch, Random Tool Spawning, Tool Reset)
     - Player UI (Equipped Tools, Control Keys) 
     - Tools:
         - Slimy Boots
