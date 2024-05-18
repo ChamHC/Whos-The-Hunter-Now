@@ -1,4 +1,4 @@
-import {setWinner, setDuration, setRounds, setHasEnded} from './GameStats.js';
+import {setWinner, setDuration, setRounds, setHasEnded, getRounds} from './GameStats.js';
 
 export default class Goal {
     constructor(scene, playerA, playerB, platform) {
@@ -33,8 +33,6 @@ export default class Goal {
         const spawnPointB = this.spawnPointB[randomIndexB];
 
         // Spawn portalB at the selected spawn point
-
-        console.log(spawnPointB.x + " kimak why here " + spawnPointB.y);
         this.portalB = this.scene.physics.add.sprite(spawnPointB.x, spawnPointB.y, 'portal');
         this.portalB.anims.play('portal');
         this.portalB.setScale(2);
@@ -62,7 +60,7 @@ export default class Goal {
 
     playerAhunter(playerASprite, portalB){
         if(this.playerA.playerRole == "Hunted"){
-            console.log("Player A is now the hunter");
+            //console.log("Player A is now the hunter");
             this.playerA.playerRole = "Hunter";
             this.playerA.sprite.anims.play(`${this.playerA.sprite.anims.currentAnim.key.replace('hunted', 'hunter')}`, true);
             this.playerB.playerRole = "Hunted";
@@ -70,13 +68,13 @@ export default class Goal {
 
             this.roleSwitchCounter++;
             setRounds(Math.floor(this.roleSwitchCounter / 2));
-            console.log("Role switch counter: " + this.roleSwitchCounter);
+            console.log("Role switch counter: " + getRounds());
         }
     }
 
     playerBhunter(playerBSprite, portalA){
         if(this.playerB.playerRole == "Hunted"){
-            console.log("Player B is now the hunter");
+            //console.log("Player B is now the hunter");
             this.playerB.playerRole = "Hunter";
             this.playerB.sprite.anims.play(`${this.playerB.sprite.anims.currentAnim.key.replace('hunted', 'hunter')}`, true);
             this.playerA.playerRole = "Hunted";
@@ -84,7 +82,7 @@ export default class Goal {
 
             this.roleSwitchCounter++;
             setRounds(Math.floor(this.roleSwitchCounter / 2));
-            console.log("Role switch counter: " + this.roleSwitchCounter);
+            //console.log("Role switch counter: " + getRounds()) ;
         }
     }
 
