@@ -12,7 +12,7 @@ export default class Player{
 
         this.maxSpeed = 300; // Set the max speed of the player
         this.acceleration = 10; // Set the acceleration of the player
-        this.jumpHeight = 350;    // Set the jump height of the player
+        this.jumpHeight = 380;    // Set the jump height of the player
         this.drag = 500;   // Set the friction of the player
         this.slideDrag = 200; // Set the slide friction of the player
         this.slideMultiplier = 2;   // Set the slide multiplier of the player
@@ -220,7 +220,7 @@ export default class Player{
         this.changeState(this.idleState);   // Set initial state to idle state
         this.tools = null;
         this.activeTools = [];
-        this.tools = "Wooden Buckler";
+        this.tools = "Worn Hat";
         
         this.sprite.setOrigin(0.5, 1);
     }
@@ -318,7 +318,6 @@ class IdleState extends State{  // Create an idle state class that extends the s
             this.player.changeState(this.player.fallState);
         }
         if (this.player.crouchKey.isDown) {
-            console.log("Crouching");
             this.player.changeState(this.player.crouchState);
         }
         if (this.player.castKey.isDown && this.player.tools != null) {
@@ -637,6 +636,8 @@ class DeadState extends State {
             this.player.scene.time.delayedCall(2000, () => {
                 this.animation.off('animationcomplete');
                 //Change scene
+                this.player.scene.game.events.emit('shutdown');
+                this.player.scene.scene.stop('UIScene');
                 this.player.scene.scene.start('EndScene');
             });
         });
@@ -666,7 +667,7 @@ class StunState extends State{
 
         // Create blinking effect
         let isWhite = true;
-        this.player.scene.time.addEvent({
+        this.blinkingEvent = this.player.scene.time.addEvent({
             delay: 250,
             callback: () => {
                 this.player.sprite.clearTint();
@@ -678,14 +679,18 @@ class StunState extends State{
     }
 
     stateUpdate(){
-
+        this.checkCriteria();
     }
 
     checkCriteria(){
-        // if (Stunned FInished){
-            this.player.scene.time.delayedCall(2000, () => {
-                this.player.changeState(this.player.idleState); // Change state to idle
+        this.player.scene.time.delayedCall(800, () => {
+            // Change state to idle after the delay
+            this.player.changeState(this.player.idleState);
+            
+            this.player.scene.time.delayedCall(800, () => {
+                this.blinkingEvent.remove();
+                this.player.sprite.clearTint();
             });
-        //}
+        });
     }
 }
