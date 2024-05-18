@@ -15,8 +15,12 @@ function setRounds(rounds){
     gameRounds = rounds;
 }
 
+function getRounds(rounds){
+    return gameRounds;
+}
+
 function setHasEnded(bool){
     hasEnded = bool;
 }
 
-export { gameDuration, gameRounds, winner, hasEnded, setWinner, setDuration, setRounds, setHasEnded };
+export { gameDuration, gameRounds, winner, hasEnded, setWinner, setDuration, setRounds, setHasEnded, getRounds };
