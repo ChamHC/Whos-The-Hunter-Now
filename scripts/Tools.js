@@ -14,6 +14,21 @@ export class Tools {
     update(){
 
     }
+
+    removeToolUI() {
+        // Emit event to UIScene to remove the tool
+        if (this.player === this.scene.playerA.sprite) {
+            //emit a delayed call before calling remove tool, if not the tool might crash the UI
+            this.delayCall = this.scene.time.delayedCall(1000, () => {
+                this.scene.game.events.emit('removePlayer1Tool');
+            });
+        } else if (this.player === this.scene.playerB.sprite) {
+
+            this.delayCall = this.scene.time.delayedCall(1000, () => {
+                this.scene.game.events.emit('removePlayer2Tool');
+            });
+        }
+    }
 }
 
 export class DadBelt extends Tools {
@@ -32,6 +47,9 @@ export class DadBelt extends Tools {
         else if (this.player === this.scene.playerB.sprite){
             this.enemy = this.scene.playerA.sprite;
         }
+        
+        console.log("Hello! im being called")
+        this.removeToolUI();
     }
 
     update(){
@@ -105,12 +123,15 @@ export class DashyFeather extends Tools {
             else
                 this.player.body.velocity.x += 200;
         }
+
+        this.removeToolUI();
     }
 
     update(){
         this.isCompleted = true;
     }
 }
+
 
 export class SlimyBoot extends Tools {
     constructor(scene, player){
@@ -119,6 +140,8 @@ export class SlimyBoot extends Tools {
 
     create(){
         console.log("Slimy Boot created");
+        this.player.body.velocity.y -= 200;
+        this.removeToolUI();
     }
 
     update(){
@@ -133,8 +156,70 @@ export class SuspiciousMushroom extends Tools {
         super(scene, player);
     }
 
-    create(){
+    create() {
         console.log("Suspicious Mushroom created");
+
+        if (this.player === this.scene.playerA.sprite) {
+            this.enemy = this.scene.playerB;
+            this.playerObj = this.scene.playerA;
+        } else if (this.player === this.scene.playerB.sprite) {
+            this.enemy = this.scene.playerA;
+            this.playerObj = this.scene.playerB;
+        }
+
+        // Create the mushroom sprite
+        this.sprite = this.scene.physics.add.sprite(this.playerObj.sprite.x, this.playerObj.sprite.y, 'Suspicious Mushroom Outline');
+
+        let throwVelocityX = this.playerObj.sprite.flipX ? -200 : 200;
+        let throwVelocityY = -300;
+
+        this.sprite.setVelocity(throwVelocityX, throwVelocityY);
+        this.sprite.setGravityY(500); 
+
+        this.scene.physics.add.collider(this.sprite, this.scene.platform.platforms, this.OnFloor, null, this);
+        this.scene.physics.add.overlap(this.sprite, this.enemy.sprite, this.onOverlap, null, this);
+
+        this.removeToolUI();
+    }
+
+    OnFloor() {
+        this.sprite.setVelocity(0, 0);
+        this.sprite.setGravityY(0);
+    }
+
+    onOverlap(){
+        console.log("Suspicious Mushroom Overlap");
+        this.invertKeys(this.enemy);
+        this.sprite.destroy();
+    }
+
+    invertKeys(player) {
+        if (this.isInverted) return;
+        this.isInverted = true;
+
+        // Save original keys
+        this.originalKeys = {
+            moveLeftKey: player.moveLeftKey,
+            moveRightKey: player.moveRightKey,
+            jumpKey: player.jumpKey,
+            crouchKey: player.crouchKey,
+            castKey: player.castKey
+        };
+
+        // invert key bindings
+        player.moveLeftKey = this.originalKeys.moveRightKey;
+        player.moveRightKey = this.originalKeys.moveLeftKey;
+        player.jumpKey = this.originalKeys.crouchKey;
+        player.crouchKey = this.originalKeys.jumpKey;
+
+        // Revert keys back after 3 seconds
+        this.scene.time.delayedCall(3000, () => {
+            player.moveLeftKey = this.originalKeys.moveLeftKey;
+            player.moveRightKey = this.originalKeys.moveRightKey;
+            player.jumpKey = this.originalKeys.jumpKey;
+            player.crouchKey = this.originalKeys.crouchKey;
+            this.isInverted = false;
+        }, [], this);
     }
 
     update(){
@@ -154,6 +239,8 @@ export class WoodenBuckler extends Tools {
         this.hasTriggered = false;
         this.delayCall = null
         this.scene.physics.add.overlap(this.scene.playerA.sprite, this.scene.playerB.sprite, this.onOverlap, null, this);
+
+        this.removeToolUI();
     }
 
     update(){
@@ -199,6 +286,16 @@ export class WornHat extends Tools {
 
     create(){
         console.log("Worn Hat created");
+        if (this.player === this.scene.playerA.sprite){
+            this.enemy = this.scene.playerB;
+        }
+        else if (this.player === this.scene.playerB.sprite){
+            this.enemy = this.scene.playerA;
+        }
+
+        this.enemy.changeState(this.enemy.stunState);
+        this.removeToolUI();
+        
     }
 
     update(){
