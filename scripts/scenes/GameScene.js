@@ -54,6 +54,8 @@ class GameScene extends Phaser.Scene {
     this.load.image('Dashy Feather', 'resources/icons/Monster Part/Feather.png');
     this.load.image('Wooden Buckler', 'resources/icons/Weapon & Tool/Wooden Shield.png');
     this.load.image('Slimy Boot', 'resources/icons/Equipment/Iron Boot.png');
+    this.load.image('Suspicious Mushroom Outline', 'resources/icons/Food/Mushroom Outline.png');
+
     
 
     // Load Misc
@@ -74,12 +76,13 @@ class GameScene extends Phaser.Scene {
     console.log("Player A is the", playerRole);
     console.log("Player B is the", playerRole2);
 
+    this.scene.launch('UIScene'); // Create UI for both Players
 
     this.physics.world.setBounds(0, 0, 5000, 5000); 
     this.background = new Background(this, this.playerA); // creates background and updates movement based on player parsed
     this.platform = new Platform(this, this.playerA, this.playerB); // creates platform and sets collision with player parsed
     this.waypoints =  this.platform.getWaypoints('Spawner');
-    this.camera = new Camera(this, this.playerA, this.playerB, this.background, this.platform); // camera only follows playerA
+    this.camera = new Camera(this, this.playerA, this.playerB, this.background, this.platform, this.player1Text, this.player2Text); // camera only follows playerA
     this.spawner = new Spawner(this, this.waypoints, this.platform, this.playerA, this.playerB);
     this.goal = new Goal(this, this.playerA, this.playerB, this.platform); // creates the goal portal
 
@@ -89,6 +92,7 @@ class GameScene extends Phaser.Scene {
       
     this.cameras.main.fadeIn(1000, 0, 0, 0);  //Tween entire screen tint black to white
   }
+  
 
   update() {
     this.background.update();
@@ -99,6 +103,7 @@ class GameScene extends Phaser.Scene {
     this.platform.update();
     this.camera.update();
     this.goal.update();
+    this.spawner.update();
   }
 
   loadFont(name, url){
@@ -110,4 +115,6 @@ class GameScene extends Phaser.Scene {
     });
   }
 }
+
 export default GameScene;
+
