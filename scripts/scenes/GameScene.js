@@ -82,7 +82,7 @@ class GameScene extends Phaser.Scene {
     this.background = new Background(this, this.playerA); // creates background and updates movement based on player parsed
     this.platform = new Platform(this, this.playerA, this.playerB); // creates platform and sets collision with player parsed
     this.waypoints =  this.platform.getWaypoints('Spawner');
-    this.camera = new Camera(this, this.playerA, this.playerB, this.background, this.platform, this.player1Text, this.player2Text); // camera only follows playerA
+    this.camera = new Camera(this, this.playerA, this.playerB, this.background, this.platform); // camera only follows playerA
     this.spawner = new Spawner(this, this.waypoints, this.platform, this.playerA, this.playerB);
     this.goal = new Goal(this, this.playerA, this.playerB, this.platform); // creates the goal portal
 
