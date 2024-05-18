@@ -1,6 +1,7 @@
 import GameScene from './scripts/scenes/GameScene.js';
 import MenuScene from './scripts/scenes/MenuScene.js';
 import EndScene from './scripts/scenes/EndScene.js';
+import UIScene from './scripts/scenes/UIScene.js';
 
 const config = {
   type: Phaser.AUTO,
@@ -10,11 +11,11 @@ const config = {
   physics: {
     default: 'arcade',
     arcade: {
-      gravity: { y: 300 },
+      gravity: { y: 500 },
       enableBody: true,
     }
   },
-  scene: [MenuScene, GameScene, EndScene]
+  scene: [MenuScene, GameScene, EndScene, UIScene]
 }
 
 const game = new Phaser.Game(config);
