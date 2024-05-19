@@ -60,6 +60,7 @@ We would like to thank our lecturer for their guidance and support throughout th
 - **[Fantasy UI Borders](https://kenney-assets.itch.io/fantasy-ui-borders)** by ***Kenney***
 - **[Free Pixel Font - Thaleah](https://tinyworlds.itch.io/free-pixel-font-thaleah)** by ***Tiny Worlds***
 - **[Pixel Dimensional Portal 32x32](https://pixelnauta.itch.io/pixel-dimensional-portal-32x32)** by ***Pixelnauta***
+- **[FilmCow Recorded SFX](https://filmcow.itch.io/filmcow-sfx)** by ***FilmCow***
 
 ## Group Members
 ### 1. Cham Hao Cheng (1211304951)
@@ -74,11 +75,11 @@ We would like to thank our lecturer for their guidance and support throughout th
         - Dashy Feather
         - Wooden Buckler
 ### 2. Muhammad Lutfi Bin Mohd Izzat (1201100521)
-    - Find Game Assets (Itch.io)
-    - SFX Design (Sound Effect and Ambient Sound)
+    - Find Game and Sound Assets (Itch.io, Zapsplat)
+    - SFX Design (Soundtrack, Player Sound Effects, Tool Sound Effects)
     - Level Design (Parallax Background, Platform Layout, Collision Boxes)
     - Core Mechanics (Goal, Role Switch, Random Tool Spawning, Tool Reset)
-    - Player UI (Equipped Tools, Control Keys) 
+    - Player UI (Equipped Tools) 
     - Tools:
         - Slimy Boots
         - Suspicious Mushroom
