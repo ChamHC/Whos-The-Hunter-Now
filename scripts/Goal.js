@@ -67,6 +67,7 @@ export default class Goal {
             this.playerB.sprite.anims.play(`${this.playerB.sprite.anims.currentAnim.key.replace('hunter', 'hunted')}`, true);
 
             this.roleSwitchCounter++;
+            this.playerA.playSound('portal', 0.3);
             setRounds(Math.floor(this.roleSwitchCounter / 2));
             console.log("Role switch counter: " + getRounds());
         }
@@ -81,6 +82,7 @@ export default class Goal {
             this.playerA.sprite.anims.play(`${this.playerA.sprite.anims.currentAnim.key.replace('hunter', 'hunted')}`, true);
 
             this.roleSwitchCounter++;
+            this.playerA.playSound('portal', 0.3);
             setRounds(Math.floor(this.roleSwitchCounter / 2));
             //console.log("Role switch counter: " + getRounds()) ;
         }
