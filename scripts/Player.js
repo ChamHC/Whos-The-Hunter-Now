@@ -17,7 +17,7 @@ export default class Player{
         this.slideDrag = 200; // Set the slide friction of the player
         this.slideMultiplier = 2;   // Set the slide multiplier of the player
         this.slideThreshold = 200;    // Set the speed threshold for player to slide
-        this.airMultiplier = 0.5;   // Set the air multiplier of the player
+        this.airMultiplier = 0.5;   // Set the air multiplier of the player 
     }
 
     create(){
@@ -220,7 +220,8 @@ export default class Player{
         this.changeState(this.idleState);   // Set initial state to idle state
         this.tools = null;
         this.activeTools = [];
-        this.tools = "Worn Hat";
+        this.gruntSounds = ["grunt1", "grunt2"];
+        //this.tools = "Worn Hat";
         
         this.sprite.setOrigin(0.5, 1);
     }
@@ -269,6 +270,12 @@ export default class Player{
         // Draw a red dots on sprite origin
         this.graphics.fillStyle(0xff0000, 1);
         this.graphics.fillCircle(this.sprite.x, this.sprite.y, 3);
+    }
+
+    playSound(keyName, volume) {
+        const sound = this.scene.sound.add(keyName);
+        sound.setVolume(volume);
+        sound.play();
     }
 }
 
@@ -379,6 +386,7 @@ class JumpState extends State{  // Create a jump state class that extends the st
         else
             this.player.sprite.anims.play('huntedJump', true);
 
+        
         this.player.sprite.body.setSize(this.player.sprite.anims.width, this.player.sprite.anims.height);
     }
 
@@ -395,6 +403,7 @@ class JumpState extends State{  // Create a jump state class that extends the st
         }
         if (this.player.jumpKey.isDown && this.player.sprite.body.onFloor()) {
             this.player.sprite.body.velocity.y = -this.player.jumpHeight;
+            this.player.playSound("grunt1", 0.05);
         }
         this.checkCriteria();
     }
@@ -441,6 +450,7 @@ class FallState extends State {
             this.player.changeState(this.player.enterSlideState);
         }
         else if (this.player.sprite.body.onFloor()) {
+            this.player.playSound("ground", 0.2);
             this.player.changeState(this.player.idleState);
         }
         if (this.player.castKey.isDown && this.player.tools != null) {
@@ -619,6 +629,7 @@ class DeadState extends State {
             this.animation = this.player.sprite.anims.play('huntedDeath', true);
 
         this.player.sprite.body.setSize(this.player.sprite.anims.width, this.player.sprite.anims.height);
+        this.player.playSound("death", 0.2);
 
         // Alternate between black and white tint every 250ms
         let isWhite = true;
@@ -636,9 +647,11 @@ class DeadState extends State {
             this.player.scene.time.delayedCall(2000, () => {
                 this.animation.off('animationcomplete');
                 //Change scene
+                this.player.scene.backgroundMusic.stop();
                 this.player.scene.game.events.emit('shutdown');
                 this.player.scene.scene.stop('UIScene');
                 this.player.scene.scene.start('EndScene');
+
             });
         });
     }
@@ -694,3 +707,6 @@ class StunState extends State{
         });
     }
 }
+
+
+
