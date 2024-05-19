@@ -108,7 +108,6 @@ class MenuScene extends Phaser.Scene{
         this.portalB.anims.play('portal');
         this.portalA.setScale(3);
         this.portalB.setScale(3);
-        this.writeText(spritePortal.x + 50, spritePortal.y - 40, 'Role Switch', 40, 'ThaleahFat', '#ffffff', 0);
         this.writeText(spritePortal.x + 90, spritePortal.y + 0, 'Portal', 40, 'ThaleahFat', '#ffffff', 0);
         this.writeText(spritePortal.x - 60, spritePortal.y + 50, 'Reach the portal as The Hunted\n to switch roles', 30, 'ThaleahFat', '#ffffff', 0);
 
@@ -123,10 +122,10 @@ class MenuScene extends Phaser.Scene{
 
         const playerB = this.playerBKeys(this.config.width*2 + 850, 170);
         this.writeText(playerB.x - 70, playerB.y - 150, 'Player B Controls', 60, 'ThaleahFat', '#ffffff', 0);
-        this.writeText(playerB.x + 100, playerB.y - 85, 'Up: Move Left', 40, 'ThaleahFat', '#ffffff', 0);
-        this.writeText(playerB.x + 100, playerB.y - 45, 'Down: Move Right', 40, 'ThaleahFat', '#ffffff', 0);
-        this.writeText(playerB.x + 100, playerB.y - 5, 'Left: Jump', 40, 'ThaleahFat', '#ffffff', 0);
-        this.writeText(playerB.x + 100, playerB.y + 35, 'Right: Crouch / Slide', 40, 'ThaleahFat', '#ffffff', 0);
+        this.writeText(playerB.x + 100, playerB.y - 85, 'Left: Move Left', 40, 'ThaleahFat', '#ffffff', 0);
+        this.writeText(playerB.x + 100, playerB.y - 45, 'Right: Move Right', 40, 'ThaleahFat', '#ffffff', 0);
+        this.writeText(playerB.x + 100, playerB.y - 5, 'Up: Jump', 40, 'ThaleahFat', '#ffffff', 0);
+        this.writeText(playerB.x + 100, playerB.y + 35, 'Down: Crouch / Slide', 40, 'ThaleahFat', '#ffffff', 0);
         this.writeText(playerB.x + 100, playerB.y + 75, 'Enter: Use Tool', 40, 'ThaleahFat', '#ffffff', 0);
         
         const tools = this.toolsIcons(this.config.width*2 + 80, 350);
