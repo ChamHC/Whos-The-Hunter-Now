@@ -19,12 +19,12 @@ export class Tools {
         // Emit event to UIScene to remove the tool
         if (this.player === this.scene.playerA.sprite) {
             //emit a delayed call before calling remove tool, if not the tool might crash the UI
-            this.delayCall = this.scene.time.delayedCall(1000, () => {
+            this.delay = this.scene.time.delayedCall(1000, () => {
                 this.scene.game.events.emit('removePlayer1Tool');
             });
         } else if (this.player === this.scene.playerB.sprite) {
 
-            this.delayCall = this.scene.time.delayedCall(1000, () => {
+            this.delay = this.scene.time.delayedCall(1000, () => {
                 this.scene.game.events.emit('removePlayer2Tool');
             });
         }
@@ -40,6 +40,8 @@ export class DadBelt extends Tools {
         console.log("Dad Belt created");
         this.length = {current: 0, max: 200};
         this.lineGraphics = this.scene.add.graphics();
+
+        this.scene.playerA.playSound('whip', 0.3);
         
         if (this.player === this.scene.playerA.sprite){
             this.enemy = this.scene.playerB.sprite;
@@ -47,6 +49,7 @@ export class DadBelt extends Tools {
         else if (this.player === this.scene.playerB.sprite){
             this.enemy = this.scene.playerA.sprite;
         }
+        
         
         console.log("Hello! im being called")
         this.removeToolUI();
@@ -111,6 +114,9 @@ export class DashyFeather extends Tools {
 
     create(){
         // Player dash forward
+
+        this.scene.playerA.playSound('woosh', 0.5);
+
         if (this.player.flipX){
             if (this.player.body.onFloor())
                 this.player.body.velocity.x -= 500;
@@ -141,6 +147,7 @@ export class SlimyBoot extends Tools {
     create(){
         console.log("Slimy Boot created");
         this.player.body.velocity.y -= 200;
+        this.scene.playerA.playSound('woosh', 0.5);
         this.removeToolUI();
     }
 
@@ -158,7 +165,6 @@ export class SuspiciousMushroom extends Tools {
 
     create() {
         console.log("Suspicious Mushroom created");
-
         if (this.player === this.scene.playerA.sprite) {
             this.enemy = this.scene.playerB;
             this.playerObj = this.scene.playerA;
@@ -179,6 +185,8 @@ export class SuspiciousMushroom extends Tools {
         this.scene.physics.add.collider(this.sprite, this.scene.platform.platforms, this.OnFloor, null, this);
         this.scene.physics.add.overlap(this.sprite, this.enemy.sprite, this.onOverlap, null, this);
 
+        this.scene.playerA.playSound('put', 1);
+
         this.removeToolUI();
     }
 
@@ -190,6 +198,7 @@ export class SuspiciousMushroom extends Tools {
     onOverlap(){
         console.log("Suspicious Mushroom Overlap");
         this.invertKeys(this.enemy);
+        this.playerObj.playSound('mushroom', 0.4);   
         this.sprite.destroy();
     }
 
@@ -229,6 +238,8 @@ export class SuspiciousMushroom extends Tools {
     }
 }
 
+
+
 export class WoodenBuckler extends Tools {
     constructor(scene, player){
         super(scene, player);
@@ -236,6 +247,7 @@ export class WoodenBuckler extends Tools {
 
     create(){
         console.log("Wooden Buckler created");
+        this.scene.playerA.playSound('equipshield', 0.3);
         this.hasTriggered = false;
         this.delayCall = null
         this.scene.physics.add.overlap(this.scene.playerA.sprite, this.scene.playerB.sprite, this.onOverlap, null, this);
@@ -248,13 +260,14 @@ export class WoodenBuckler extends Tools {
             console.log("Delaying call");
             this.delayCall = this.scene.time.delayedCall(1000, () => {
                 this.isCompleted = true;
+                console.log("Triggered!")
             });
         }
-
     }
 
     onOverlap(){
         if (this.hasTriggered) return;
+        this.scene.playerA.playSound('shield', 0.3);
         if (this.player === this.scene.playerA.sprite && this.scene.playerA.playerRole === "Hunted"){
             if (this.scene.playerA.sprite.x < this.scene.playerB.sprite.x){
                 this.scene.playerA.sprite.body.velocity.x -= 500;
@@ -286,6 +299,7 @@ export class WornHat extends Tools {
 
     create(){
         console.log("Worn Hat created");
+        this.scene.playerA.playSound('lightning', 0.7);
         if (this.player === this.scene.playerA.sprite){
             this.enemy = this.scene.playerB;
         }

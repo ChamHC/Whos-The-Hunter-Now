@@ -32,12 +32,21 @@ class MenuScene extends Phaser.Scene{
         this.load.spritesheet('playerIdle', 'resources/player/idle/adventurer-idle-spritesheet-21x30.png', { frameWidth: 63, frameHeight: 90 });
         this.load.spritesheet('playerIdleInvert', 'resources/player/idle/adventurer-invert-idle-spritesheet-21x30.png', { frameWidth: 63, frameHeight: 90 });
         this.load.spritesheet('portal', 'resources/portal/Portal-spritesheet.png', { frameWidth: 18, frameHeight: 32 });
+
+        this.load.audio('menuMusic', 'resources/audio/music/MenuMusic.ogg');
     }
 
     create(){
         // Create background images
         this.config = this.sys.game.config;
         this.backgroundConfig();
+
+        this.backgroundMusic = this.sound.add("menuMusic", {
+          volume: 0.2,  // Adjust volume here
+          loop: true
+        });
+        
+        this.backgroundMusic.play();
         
         // Create Title
         this.writeText(this.config.width / 2, this.config.height / 2 - 150, 'Who\'s The Hunter Now?', 100, 'ThaleahFat', '#ffffff', 0.5);
@@ -243,6 +252,7 @@ class MenuScene extends Phaser.Scene{
     playButtonClicked(scene){
         scene.cameras.main.fade(1000, 0, 0, 0, false, (camera, progress) => {
             if (progress === 1) {
+                scene.backgroundMusic.stop();
                 scene.scene.start('GameScene');
             }
         });

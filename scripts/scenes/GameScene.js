@@ -29,8 +29,8 @@ class GameScene extends Phaser.Scene {
     this.load.spritesheet('HuntedStand', 'resources/player/stand/adventurer-stand-spritesheet-30x17.png', { frameWidth: 90, frameHeight: 51 });
     this.load.spritesheet('HuntedSlide', 'resources/player/slide/adventurer-slide-spritesheet-34x15.png', { frameWidth: 102, frameHeight: 45 });
     this.load.spritesheet('HuntedCast', 'resources/player/cast/adventurer-cast-spritesheet-27x26.png', { frameWidth: 81, frameHeight: 78 });
-    this.load.spritesheet('HuntedUse', 'resources/player/items/adventurer-items-spritesheet-22x26.png', { frameWidth: 66, frameHeight: 78 })
-    this.load.spritesheet('HuntedDeath', 'resources/player/die/adventurer-die-spritesheet-22x24.png', { frameWidth: 66, frameHeight: 72 })
+    this.load.spritesheet('HuntedUse', 'resources/player/items/adventurer-items-spritesheet-22x26.png', { frameWidth: 66, frameHeight: 78 });
+    this.load.spritesheet('HuntedDeath', 'resources/player/die/adventurer-die-spritesheet-22x24.png', { frameWidth: 66, frameHeight: 72 });
 
     // Load the hunter spritesheets
     this.load.spritesheet('HunterIdle', 'resources/player/idle/adventurer-invert-idle-spritesheet-21x30.png', { frameWidth: 63, frameHeight: 90 });
@@ -56,23 +56,43 @@ class GameScene extends Phaser.Scene {
     this.load.image('Slimy Boot', 'resources/icons/Equipment/Iron Boot.png');
     this.load.image('Suspicious Mushroom Outline', 'resources/icons/Food/Mushroom Outline.png');
 
-    
+    //tool sound effects
+    this.load.audio('mushroom', 'resources/audio/sfx/tools/mushroom.wav');
+    this.load.audio('woosh', 'resources/audio/sfx/tools/woosh.mp3');
+    this.load.audio('whip', 'resources/audio/sfx/tools/whip.mp3');
+    this.load.audio('getItem', 'resources/audio/sfx/tools/getItem.wav');
+    this.load.audio('shield', 'resources/audio/sfx/tools/shield.wav');
+    this.load.audio('equipshield', 'resources/audio/sfx/tools/equipshield.wav');
+    this.load.audio('put', 'resources/audio/sfx/tools/put.wav');
+    this.load.audio('lightning', 'resources/audio/sfx/tools/lightning.mp3');
+
+    // Load the background music
+    this.load.audio('backgroundMusic1', 'resources/audio/music/GameMusic1.mp3');
+    this.load.audio('backgroundMusic2', 'resources/audio/music/GameMusic2.mp3');
+
+    // player sound effects
+    this.load.audio('grunt1', 'resources/audio/sfx/player/grunt1.wav');
+    this.load.audio('death', 'resources/audio/sfx/player/death.mp3');
+    this.load.audio('ground', 'resources/audio/sfx/player/ground.wav');
 
     // Load Misc
     this.loadFont('ThaleahFat', 'resources/font/ThaleahFat.ttf');
     this.load.image('Arrow', 'resources/ui/Play.png');
+
+    //Misc sfx
+    this.load.audio('portal', 'resources/audio/sfx/misc/portal.wav');
   }
 
   create(){
     const config = this.sys.game.config; 
 
-    // Create two players with randomized roles, if 1 player takes the role of hunter, the other player will be hunted\
+    // Create two players with randomized roles, if 1 player takes the role of hunter, the other player will be hunted
     const Roles = ["Hunter", "Hunted"];
     const randomRole = Phaser.Math.Between(0, 1);
     const playerRole = Roles[randomRole];
     const playerRole2 = Roles[(randomRole + 1) % 2];
-    this.playerA = new Player(this, 400, 450, "PlayerA", playerRole);
-    this.playerB = new Player(this, 1000, 450, "PlayerB", playerRole2);
+    this.playerA = new Player(this, 1500, 450, "PlayerA", playerRole);
+    this.playerB = new Player(this, 2100, 450, "PlayerB", playerRole2);
     console.log("Player A is the", playerRole);
     console.log("Player B is the", playerRole2);
 
@@ -86,9 +106,13 @@ class GameScene extends Phaser.Scene {
     this.spawner = new Spawner(this, this.waypoints, this.platform, this.playerA, this.playerB);
     this.goal = new Goal(this, this.playerA, this.playerB, this.platform); // creates the goal portal
 
-    for (let i = 0; i < this.waypoints.length; i++) {
-      console.log(this.waypoints[i].x + " " + this.waypoints[i].y);
-    }
+    const musicKey = Phaser.Math.Between(0, 1) === 0 ? 'backgroundMusic1' : 'backgroundMusic2';
+    this.backgroundMusic = this.sound.add(musicKey, {
+      volume: 0.1,  // Adjust volume here
+      loop: true
+    });
+    
+    this.backgroundMusic.play();
       
     this.cameras.main.fadeIn(1000, 0, 0, 0);  //Tween entire screen tint black to white
   }
@@ -117,4 +141,3 @@ class GameScene extends Phaser.Scene {
 }
 
 export default GameScene;
-

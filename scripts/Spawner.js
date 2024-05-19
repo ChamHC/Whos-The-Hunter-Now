@@ -48,6 +48,7 @@ export default class Spawner {
             this.removeSprite(sprite);
             this.playerA.tools = powerup;
             console.log("Player A picked up " + this.playerA.tools);
+            this.playerA.playSound('getItem', 0.3);
 
             // Emit event to UIScene to show the tool
             this.scene.game.events.emit('showPlayer1Tool', powerup);
@@ -61,6 +62,7 @@ export default class Spawner {
             this.removeSprite(sprite);
             this.playerB.tools = powerup;
             console.log("Player B picked up " + this.playerB.tools);
+            this.playerA.playSound('getItem', 0.3);
 
             // Emit event to UIScene to show the tool
             this.scene.game.events.emit('showPlayer2Tool', powerup);
