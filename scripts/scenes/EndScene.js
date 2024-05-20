@@ -17,6 +17,11 @@ class EndScene extends Phaser.Scene{
         this.load.image('buttonBorder', 'resources/ui/menu-border.png');
         // Load border
         this.load.image('border', 'resources/ui/menu-border-6x.png');
+
+        this.load.audio('buttonSound', 'resources/audio/sfx/misc/button.wav');
+
+        this.load.audio('endMusic1', 'resources/audio/music/EndMusic1.ogg');
+        this.load.audio('endMusic2', 'resources/audio/music/EndMusic2.ogg');
     }
 
     create(){
@@ -26,6 +31,14 @@ class EndScene extends Phaser.Scene{
         this.duration = gameDuration;
         this.rounds = gameRounds;
 
+        const endMusic = Phaser.Math.Between(1, 2);
+        this.backgroundMusic = this.sound.add('endMusic' + endMusic, { 
+            volume: 0.1,
+            loop: true 
+        });
+
+        this.backgroundMusic.play();
+          
         this.backgroundConfig();
 
         // Create Title
@@ -117,7 +130,10 @@ class EndScene extends Phaser.Scene{
         });
 
         // Button click event
-        button.on('pointerdown', function() {
+        button.on('pointerdown', () => {
+            const sound = this.sound.add('buttonSound');
+            sound.play();
+
             button.setStyle({ color: '#AAFF00' });
             buttonBorder.setTint(0xAAFF00);
 
@@ -148,6 +164,7 @@ class EndScene extends Phaser.Scene{
         scene.cameras.main.fade(1000, 0, 0, 0, false, (camera, progress) => {
             if (progress === 1) {
                 setHasEnded(false);
+                scene.backgroundMusic.stop();
                 scene.scene.start('GameScene');
             }
         });
@@ -156,6 +173,7 @@ class EndScene extends Phaser.Scene{
         scene.cameras.main.fade(1000, 0, 0, 0, false, (camera, progress) => {
             if (progress === 1) {
                 setHasEnded(false);
+                scene.backgroundMusic.stop();
                 scene.scene.start('MenuScene');
             }
         });
