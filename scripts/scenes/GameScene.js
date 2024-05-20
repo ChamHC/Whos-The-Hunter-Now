@@ -74,6 +74,7 @@ class GameScene extends Phaser.Scene {
     this.load.audio('grunt1', 'resources/audio/sfx/player/grunt1.wav');
     this.load.audio('death', 'resources/audio/sfx/player/death.mp3');
     this.load.audio('ground', 'resources/audio/sfx/player/ground.wav');
+    this.load.audio('slide', 'resources/audio/sfx/player/slide.wav');
 
     // Load Misc
     this.loadFont('ThaleahFat', 'resources/font/ThaleahFat.ttf');
@@ -81,6 +82,22 @@ class GameScene extends Phaser.Scene {
 
     //Misc sfx
     this.load.audio('portal', 'resources/audio/sfx/misc/portal.wav');
+
+    // Footstep sfx
+    this.load.audio('footstep1', 'resources/audio/sfx/player/footsteps/footstep1.wav');
+    this.load.audio('footstep2', 'resources/audio/sfx/player/footsteps/footstep2.wav');
+    this.load.audio('footstep3', 'resources/audio/sfx/player/footsteps/footstep3.wav');
+    this.load.audio('footstep4', 'resources/audio/sfx/player/footsteps/footstep4.wav');
+    this.load.audio('footstep5', 'resources/audio/sfx/player/footsteps/footstep5.wav');
+    this.load.audio('footstep6', 'resources/audio/sfx/player/footsteps/footstep6.wav');
+    this.load.audio('footstep7', 'resources/audio/sfx/player/footsteps/footstep7.wav');
+    this.load.audio('footstep8', 'resources/audio/sfx/player/footsteps/footstep8.wav');
+    this.load.audio('footstep9', 'resources/audio/sfx/player/footsteps/footstep9.wav');
+    this.load.audio('footstep10', 'resources/audio/sfx/player/footsteps/footstep10.wav');
+    this.load.audio('footstep11', 'resources/audio/sfx/player/footsteps/footstep11.wav');
+    this.load.audio('footstep12', 'resources/audio/sfx/player/footsteps/footstep12.wav');
+    this.load.audio('footstep13', 'resources/audio/sfx/player/footsteps/footstep13.wav');
+    this.load.audio('footstep14', 'resources/audio/sfx/player/footsteps/footstep14.wav');
   }
 
   create(){
