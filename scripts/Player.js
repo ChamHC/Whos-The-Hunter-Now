@@ -256,6 +256,7 @@ export default class Player{
     changeState(state){ // Change the state of the player
         //console.log("Changing state to " + state.constructor.name);
         this.currentState = state;  // Set the current state to the new state
+        if (this.currentState == null) return;    // If the current state is null, return
         this.currentState.stateEnter(); // Enter the new state
     }
 
@@ -341,6 +342,11 @@ class RunState extends State{   // Create a run state class that extends the sta
             this.player.sprite.anims.play('huntedRun', true);
 
         this.player.sprite.body.setSize(this.player.sprite.anims.width, this.player.sprite.anims.height);
+        
+        // Play random footstep sound
+        let random = Phaser.Math.Between(1, 14);
+        this.footstep = this.player.scene.sound.add('footstep' + random);
+        this.footstep.play({ volume: 0.3 });
     }
 
     stateUpdate(){
@@ -353,6 +359,14 @@ class RunState extends State{   // Create a run state class that extends the sta
             this.player.sprite.flipX = false;
             if (this.player.sprite.body.velocity.x < this.player.maxSpeed)
                 this.player.sprite.body.velocity.x += this.player.acceleration;
+        }
+
+
+        // If this.footstep finish playing, play another footstep sound
+        if (!this.footstep.isPlaying) {
+            let random = Phaser.Math.Between(1, 14);
+            this.footstep = this.player.scene.sound.add('footstep' + random);
+            this.footstep.play({ volume: 0.3 });
         }
         this.checkCriteria();
     }
@@ -499,6 +513,8 @@ class EnterSlideState extends State {
             this.animation.off('animationcomplete');
             this.player.changeState(this.player.slideState);
         });
+
+        this.player.playSound("slide", 0.5);
     }
 
     stateUpdate() {
@@ -674,9 +690,6 @@ class StunState extends State{
             this.animation = this.player.sprite.anims.play('huntedIdle', true);
 
         this.player.sprite.body.setSize(this.player.sprite.anims.width, this.player.sprite.anims.height);
-
-        // Create tween to shake the player
-        // DO SMTHING HERE
 
         // Create blinking effect
         let isWhite = true;
