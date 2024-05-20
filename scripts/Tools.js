@@ -118,16 +118,10 @@ export class DashyFeather extends Tools {
         this.scene.playerA.playSound('woosh', 0.5);
 
         if (this.player.flipX){
-            if (this.player.body.onFloor())
-                this.player.body.velocity.x -= 500;
-            else
-                this.player.body.velocity.x -= 200;
+            this.player.body.velocity.x -= 680;
         }
         else {
-            if (this.player.body.onFloor())
-                this.player.body.velocity.x += 500;
-            else
-                this.player.body.velocity.x += 200;
+            this.player.body.velocity.x += 680;
         }
 
         this.removeToolUI();
@@ -146,7 +140,7 @@ export class SlimyBoot extends Tools {
 
     create(){
         console.log("Slimy Boot created");
-        this.player.body.velocity.y -= 200;
+        this.player.body.velocity.y -= 380;
         this.scene.playerA.playSound('woosh', 0.5);
         this.removeToolUI();
     }
