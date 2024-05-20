@@ -207,6 +207,7 @@ export default class Player{
 
         // Create the state machine for the player
         this.currentState = null;  // Set current state to null
+        this.startState = new StartState(this);    // Create start state
         this.idleState = new IdleState(this);    // Create idle state
         this.runState = new RunState(this);  // Create run state
         this.jumpState = new JumpState(this);    // Create jump state
@@ -217,7 +218,7 @@ export default class Player{
         this.castState = new CastState(this);    // Create cast state   
         this.deadState = new DeadState(this);    // Create dead state
         this.stunState = new StunState(this);    // Create stun state
-        this.changeState(this.idleState);   // Set initial state to idle state
+        this.changeState(this.startState);   // Set initial state to idle state
         this.tools = null;
         this.activeTools = [];
         this.gruntSounds = ["grunt1", "grunt2"];
@@ -277,6 +278,8 @@ export default class Player{
         const sound = this.scene.sound.add(keyName);
         sound.setVolume(volume);
         sound.play();
+
+        return sound;
     }
 }
 
@@ -295,6 +298,38 @@ class State{    // Create a state class to handle the player states
 
     checkCriteria(){
         
+    }
+}
+
+class StartState extends State{
+    stateEnter(){
+        this.player.scene.time.delayedCall(1000, () => {
+            this.startSound = this.player.playSound("start", 0.1);
+
+            this.startSound.on('complete', () => {
+                this.startSound.stop();
+                this.player.changeState(this.player.idleState);
+                this.startSound.off('complete');
+            });
+        });
+        
+        console.log(this.startSound);
+        if (this.player.playerRole == "Hunter")
+            this.player.sprite.anims.play('hunterIdle', true);
+        else
+            this.player.sprite.anims.play('huntedIdle', true);
+
+        if (this.player.playerName == "PlayerA")
+            this.player.sprite.flipX = false;
+        else
+            this.player.sprite.flipX = true;
+    }
+
+    stateUpdate(){
+        this.checkCriteria();
+    }
+
+    checkCriteria(){
     }
 }
 
