@@ -645,6 +645,10 @@ class DeadState extends State {
             this.animation = this.player.sprite.anims.play('huntedDeath', true);
 
         this.player.sprite.body.setSize(this.player.sprite.anims.width, this.player.sprite.anims.height);
+        
+        this.random = Phaser.Math.Between(1, 2);
+        this.player.playSound("gameOver"+this.random, 0.2)
+
         this.player.playSound("death", 0.2);
 
         // Alternate between black and white tint every 250ms

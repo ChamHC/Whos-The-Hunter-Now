@@ -82,6 +82,8 @@ class GameScene extends Phaser.Scene {
 
     //Misc sfx
     this.load.audio('portal', 'resources/audio/sfx/misc/portal.wav');
+    this.load.audio('gameOver1', 'resources/audio/sfx/misc/gameOver1.wav');
+    this.load.audio('gameOver2', 'resources/audio/sfx/misc/gameOver2.wav');
 
     // Footstep sfx
     this.load.audio('footstep1', 'resources/audio/sfx/player/footsteps/footstep1.wav');
