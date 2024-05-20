@@ -34,6 +34,7 @@ class MenuScene extends Phaser.Scene{
         this.load.spritesheet('portal', 'resources/portal/Portal-spritesheet.png', { frameWidth: 18, frameHeight: 32 });
 
         this.load.audio('menuMusic', 'resources/audio/music/MenuMusic.ogg');
+        this.load.audio('buttonSound', 'resources/audio/sfx/misc/button.wav');
     }
 
     create(){
@@ -59,24 +60,28 @@ class MenuScene extends Phaser.Scene{
         this.createButton(this.config.width / 2 + this.config.width + 150, this.config.height / 2 + 230, 'Next', this.nextButtonClicked, this);
         this.createButton(this.config.width / 2 + this.config.width*2, this.config.height / 2 + 230, 'Back', this.howToPlayButtonClicked, this);
         
-        this.anims.create({   // Create the idle animation
-            key: 'idle',    
-            frames: this.anims.generateFrameNumbers('playerIdle', { start: 0, end: 3 }),
-            frameRate: 10,
-            repeat: -1
-        });
-        this.anims.create({   // Create the idle animation
-            key: 'idleInvert',    
-            frames: this.anims.generateFrameNumbers('playerIdleInvert', { start: 0, end: 3 }),
-            frameRate: 10,
-            repeat: -1
-        });
-        this.anims.create({   // Create the idle animation
-            key: 'portal',    
-            frames: this.anims.generateFrameNumbers('portal', { start: 0, end: 5 }),
-            frameRate: 10,
-            repeat: -1
-        });
+        if (!this.anims.get('idle')) 
+            this.anims.create({   // Create the idle animation
+                key: 'idle',    
+                frames: this.anims.generateFrameNumbers('playerIdle', { start: 0, end: 3 }),
+                frameRate: 10,
+                repeat: -1
+            });
+        if (!this.anims.get('idleInvert'))
+            this.anims.create({   // Create the idle animation
+                key: 'idleInvert',    
+                frames: this.anims.generateFrameNumbers('playerIdleInvert', { start: 0, end: 3 }),
+                frameRate: 10,
+                repeat: -1
+            });
+        if (!this.anims.get('portal'))
+            this.anims.create({   // Create the idle animation
+                key: 'portal',    
+                frames: this.anims.generateFrameNumbers('portal', { start: 0, end: 5 }),
+                frameRate: 10,
+                repeat: -1
+            });
+            
         const spriteHunter = {x : 250 + this.config.width, y : 100};
         this.spriteAHunter = this.add.sprite(spriteHunter.x + 0, spriteHunter.y + 0, 'playerIdleInvert');
         this.spriteBHunter = this.add.sprite(spriteHunter.x + 290, spriteHunter.y + 0, 'playerIdle');
@@ -221,7 +226,10 @@ class MenuScene extends Phaser.Scene{
         });
 
         // Button click event
-        button.on('pointerdown', function() {
+        button.on('pointerdown', () => {
+            const sound = this.sound.add('buttonSound');
+            sound.play();
+            
             button.setStyle({ color: '#AAFF00' });
             buttonBorder.setTint(0xAAFF00);
 
@@ -271,7 +279,7 @@ class MenuScene extends Phaser.Scene{
     nextButtonClicked(scene){
         //console.log("Next Button Clicked");
         scene.cameras.main.pan(scene.config.width / 2 + scene.config.width*2, scene.config.height / 2, 1000, 'Quad.easeOut', false, function(camera, progress){});
-    }
+    }   
 
     createControlKeys(x, y, key){
         this.Key = this.add.image(x, y, key).setScale(2);
