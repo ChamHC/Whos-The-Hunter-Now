@@ -12,7 +12,8 @@ Throughout the game, players will encounter various random tools placed in the a
 - ### Installation: 
     Simply download the game files and open the index.html file in a web browser.
 - ### Objective
-    Reach your goal while avoiding your opponent. Once you reach the goal, become the hunter and capture your opponent.
+    1. As The Hunter, stop The Hunted from reaching the portal and capture him.
+    2. As The Hunted, reach the portal to become The Hunter or put enough distance so that The Hunter can no longer tracks you.
 - ### Controls
     Basic controls for players:
 
@@ -35,15 +36,8 @@ Throughout the game, players will encounter various random tools placed in the a
     | Wooden Buckler        | Block 1 Attack                   |
     | Worn Hat              | Stun The Oppponent               |
 
-## Demo
-![Main Menu](resources/mainMenu.png)
-
-![In Game](resources/inGame.png)
-
-[Watch Gameplay](https://google.com)
-
 ## Acknowledgement
-We would like to thank our lecturer for their guidance and support throughout the development of this project.
+We would like to thank our lecturer for his guidance and support throughout the development of this project.
 
 ## References
 - Phaser Framework: [https://phaser.io/](https://phaser.io/)
@@ -85,3 +79,13 @@ We would like to thank our lecturer for their guidance and support throughout th
         - Suspicious Mushroom
         - Worn Hat
 
+## Demo
+![Main Menu](resources/demo/MainMenu.png)
+
+![How To Play 1](resources/demo/HowToPlay1.png)
+
+![How To Play 2](resources/demo/HowToPlay2.png)
+
+![In Game 1](resources/demo/InGame1.png)
+
+[Watch Gameplay](https://google.com)
