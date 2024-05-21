@@ -236,7 +236,7 @@ export default class Player{
         this.text.x = this.sprite.x;
         this.text.y = this.sprite.y - this.sprite.body.height - 30;
 
-        this.displayColliderOrigin();    // Display the collider origin [NOTE: FOR DEBUGGING ONLY]
+        //this.displayColliderOrigin();    // Display the collider origin [NOTE: FOR DEBUGGING ONLY]
         
         if (this.activeTools) {
             this.activeTools.forEach(tool => {
