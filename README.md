@@ -2,9 +2,9 @@
 Who's The Hunter Now? is a local multiplayer 2D platformer game revolves around the concept of Chase Tagging, where players alternate between being the hunter and the hunted.
 
 ## Overview
-Player navigates through an arena, trying to reach his goal while being relentlessly hunted by his opponent. Upon reaching the goal, the player switches role and become the hunter. 
+The Hunted navigates through an arena, trying to reach his goal while being relentlessly hunted by The Hunter. Upon reaching the goal, The Hunted switches role and become The Hunter. 
 
-The dynamics of the game shift as the previous hunter now becomes the hunted. The hunted opponent must now quickly adapt and navigate to a new goal, allowing them to reclaim their role as the hunter. This cycle continues until one player emerges victorious by successfully hunting down his opponent. 
+The dynamics of the game shift as the previous hunter now becomes The Hunted. The new Hunted must now quickly adapt and navigate to a new goal, allowing him to reclaim his role as The Hunter. This cycle continues until one player emerges victorious. 
 
 Throughout the game, players will encounter various random tools placed in the arena, providing opportunities to outmaneuver and outplay their opponents in this intense game of chase and strategy.
 
@@ -94,5 +94,5 @@ We would like to thank our lecturer for his guidance and support throughout the 
 
 
 
-### Watch Game
-[Watch Gameplay](https://google.com)
+### Watch Gameplay
+[YouTube Link](https://google.com)
