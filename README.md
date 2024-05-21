@@ -80,12 +80,19 @@ We would like to thank our lecturer for his guidance and support throughout the 
         - Worn Hat
 
 ## Demo
+### Main Menu
 ![Main Menu](resources/demo/MainMenu.png)
 
 ![How To Play 1](resources/demo/HowToPlay1.png)
 
 ![How To Play 2](resources/demo/HowToPlay2.png)
 
+
+
+### In Game
 ![In Game 1](resources/demo/InGame1.png)
 
+
+
+### Watch Game
 [Watch Gameplay](https://google.com)
