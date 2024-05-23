@@ -79,20 +79,27 @@ We would like to thank our lecturer for his guidance and support throughout the 
         - Suspicious Mushroom
         - Worn Hat
 
-## Demo
-### Main Menu
-![Main Menu](resources/demo/MainMenu.png)
+## Video Demo
+<video controls src="resources/demo/DemoVideo.mp4" title="Title"></video>
 
-![How To Play 1](resources/demo/HowToPlay1.png)
+Watch it on YouTube: [https://youtu.be/6Hc-llJl7Is](https://youtu.be/6Hc-llJl7Is)
 
-![How To Play 2](resources/demo/HowToPlay2.png)
-
-
-
-### In Game
-![In Game 1](resources/demo/InGame1.png)
-
-
-
-### Watch Gameplay
-[YouTube Link](https://google.com)
+## Screenshots
+<table>
+  <tr>
+    <td><img src="resources/demo/MainMenu.png" alt="Main Menu"></td>
+    <td><img src="resources/demo/EndScreen.png" alt="End Screen"></td>
+  </tr>
+  <tr>
+    <td><img src="resources/demo/HowToPlay1.png" alt="How To Play 1"></td>
+    <td><img src="resources/demo/HowToPlay2.png" alt="How To Play 2"></td>
+  </tr>
+  <tr>
+    <td><img src="resources/demo/InGame1.png" alt="In Game 1"></td>
+    <td><img src="resources/demo/InGame2.png" alt="In Game 2"></td>
+  </tr>
+  <tr>
+    <td><img src="resources/demo/InGame3.png" alt="In Game 3"></td>
+    <td><img src="resources/demo/InGame4.png" alt="In Game 4"></td>
+  </tr>
+</table>
