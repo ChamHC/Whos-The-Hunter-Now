@@ -58,22 +58,26 @@ We would like to thank our lecturer for his guidance and support throughout the 
 
 ## Group Members
 ### 1. Cham Hao Cheng (1211304951)
+    - Game Design
     - Write Documentations (README.md)
     - Main Menu (Play, How To Play, Exit)
     - End Screen (Winner, Game Duration, Cycle Count, Back To Menu, Restart, Exit)
     - Player Behaviours (Idle, Move, Jump, Fall, Crouch, Slide, Death, Use Items)
     - Elimination Mechanics (Out of Screen, Tagging)
     - Camera Behaviours (Follow Players, Dynamic Zoom)
+    - Screenshots and Video Demo
     - Tools:
         - Dad's Belt
         - Dashy Feather
         - Wooden Buckler
 ### 2. Muhammad Lutfi Bin Mohd Izzat (1201100521)
+    - Game Design
     - Find Game and Sound Assets (Itch.io, Zapsplat)
     - SFX Design (Soundtrack, Player Sound Effects, Tool Sound Effects)
     - Level Design (Parallax Background, Platform Layout, Collision Boxes)
     - Core Mechanics (Portal, Role Switch, Random Tool Spawning, Tool Reset)
     - Player UI (Equipped Tools) 
+    - Screenshots and Video Demo
     - Tools:
         - Slimy Boots
         - Suspicious Mushroom
