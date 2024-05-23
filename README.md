@@ -63,7 +63,7 @@ We would like to thank our lecturer for his guidance and support throughout the 
     - Main Menu (Play, How To Play, Exit)
     - End Screen (Winner, Game Duration, Cycle Count, Back To Menu, Restart, Exit)
     - Player Behaviours (Idle, Move, Jump, Fall, Crouch, Slide, Death, Use Items)
-    - Elimination Mechanics (Out of Screen, Tagging)
+    - Elimination Mechanic (Out of Screen)
     - Camera Behaviours (Follow Players, Dynamic Zoom)
     - Screenshots and Video Demo
     - Tools:
@@ -76,6 +76,7 @@ We would like to thank our lecturer for his guidance and support throughout the 
     - SFX Design (Soundtrack, Player Sound Effects, Tool Sound Effects)
     - Level Design (Parallax Background, Platform Layout, Collision Boxes)
     - Core Mechanics (Portal, Role Switch, Random Tool Spawning, Tool Reset)
+    - Elimination Mechanic (Tagging)
     - Player UI (Equipped Tools) 
     - Screenshots and Video Demo
     - Tools:
