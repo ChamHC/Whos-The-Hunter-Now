@@ -159,6 +159,10 @@ export default class UIScene extends Phaser.Scene {
             this.player2ToolSprite.destroy();
             this.player2ToolSprite = null;
         }
+        this.arrow.destroy();
+        this.text.destroy();
+        this.playerArole = null;
+        this.playerBrole = null;
     }
     
     updateArrow() {
