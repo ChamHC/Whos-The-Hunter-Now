@@ -55,6 +55,7 @@ We would like to thank our lecturer for his guidance and support throughout the 
 - **[Free Pixel Font - Thaleah](https://tinyworlds.itch.io/free-pixel-font-thaleah)** by ***Tiny Worlds***
 - **[Pixel Dimensional Portal 32x32](https://pixelnauta.itch.io/pixel-dimensional-portal-32x32)** by ***Pixelnauta***
 - **[FilmCow Recorded SFX](https://filmcow.itch.io/filmcow-sfx)** by ***FilmCow***
+- **[Music Loop Bundle](https://tallbeard.itch.io/music-loop-bundle)** by **Tallbeard Studios**
 
 ## Group Members
 ### 1. Cham Hao Cheng (1211304951)
