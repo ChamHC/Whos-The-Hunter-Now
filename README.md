@@ -2,9 +2,9 @@
 Who's The Hunter Now? is a local multiplayer 2D platformer game revolves around the concept of Chase Tagging, where players alternate between being the hunter and the hunted.
 
 ## Overview
-The Hunted navigates through an arena, trying to reach his goal while being relentlessly hunted by The Hunter. Upon reaching the goal, The Hunted switches role and become The Hunter. 
+The Hunted navigates through an arena, trying to reach the portal while being relentlessly hunted by The Hunter. Upon reaching the portal, The Hunted switches role and become The Hunter. 
 
-The dynamics of the game shift as the previous hunter now becomes The Hunted. The new Hunted must now quickly adapt and navigate to a new goal, allowing him to reclaim his role as The Hunter. This cycle continues until one player emerges victorious. 
+The dynamics of the game shift as the previous hunter now becomes The Hunted. The new Hunted must now quickly adapt and navigate to a new portal, allowing him to reclaim his role as The Hunter. This cycle continues until one player emerges victorious. 
 
 Throughout the game, players will encounter various random tools placed in the arena, providing opportunities to outmaneuver and outplay their opponents in this intense game of chase and strategy.
 
@@ -72,7 +72,7 @@ We would like to thank our lecturer for his guidance and support throughout the 
     - Find Game and Sound Assets (Itch.io, Zapsplat)
     - SFX Design (Soundtrack, Player Sound Effects, Tool Sound Effects)
     - Level Design (Parallax Background, Platform Layout, Collision Boxes)
-    - Core Mechanics (Goal, Role Switch, Random Tool Spawning, Tool Reset)
+    - Core Mechanics (Portal, Role Switch, Random Tool Spawning, Tool Reset)
     - Player UI (Equipped Tools) 
     - Tools:
         - Slimy Boots
