@@ -4,7 +4,8 @@ export default class UIScene extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('arrow', 'resources/ui/Arrow.png');
+        this.load.image('arrow', 'resources/ui/Play.png');
+        this.loadFont('ThaleahFat', 'resources/font/ThaleahFat.ttf');
     }
   
     create() {
@@ -37,14 +38,21 @@ export default class UIScene extends Phaser.Scene {
         //shutdown listener
         this.game.events.on('shutdown', this.shutdown, this);
 
-        // // Create arrow sprite and set its initial visibility to false
-        // this.arrow = this.add.image(0, 0, 'arrow');
-        // this.arrow.setOrigin(0.5, 0.5);
-        // this.arrow.setVisible(false);
+        // Create arrow sprite and set its initial visibility to false
+        this.arrow = this.add.image(0, 0, 'arrow');
+        this.arrow.setOrigin(0.5, 0.5);
+        this.arrow.setVisible(false);
+
+        this.text = this.add.text(100, 100, "Portal", {
+            fontSize: 30,
+            fontFamily: 'ThaleahFat',
+            color: '#ffffff',
+            align: 'center'
+        }).setOrigin(0.5);
     }
     
     update(time, delta) {
-        //this.updateArrow();
+        this.updateArrow();
     }
     
     updatePlayer1Text(text) {
@@ -153,41 +161,84 @@ export default class UIScene extends Phaser.Scene {
         }
     }
     
-    // updateArrow() {
-    //     const gameScene = this.scene.get('GameScene');
-    //     if (!gameScene || !gameScene.goal) {
-    //         return;
-    //     }
+    updateArrow() {
+        const gameScene = this.scene.get('GameScene');
+        if (!gameScene || !gameScene.goal) {
+            return;
+        }
 
-    //     const playerA = gameScene.playerA;
-    //     const playerB = gameScene.playerB;
-    //     const portalA = gameScene.goal.portalA;
-    //     const portalB = gameScene.goal.portalB;
+        const playerA = gameScene.playerA;
+        const playerB = gameScene.playerB;
+        const portalA = gameScene.goal.portalA;
+        const portalB = gameScene.goal.portalB;
 
-    //     console.log("portal A x: " + portalA.x + " y: " + portalA.y);
-    //     console.log("portal B x: " + portalB.x + " y: " + portalB.y);
+        if (this.playerArole !== playerA.playerRole || this.playerBrole !== playerB.playerRole) {
+            if (playerA.playerRole === 'Hunted') {
+                this.text.setPosition(120, 295);
+                this.arrow.setPosition(50, 300);
+                this.arrow.setRotation(180 * (Math.PI / 180));
+                this.tweenValue = '+=10';
+            } else {
+                this.text.setPosition(1280, 295);
+                this.arrow.setPosition(1350, 300);
+                this.arrow.setRotation(0 * (Math.PI / 180));
+                this.tweenValue = '-=10';
+            }
+            this.arrow.setScale(0.8);
+            if (this.arrowTween){
+                this.arrowTween.stop();
+                this.arrowTween.remove();
+            }
+            if (this.textTween){
+                this.textTween.stop();
+                this.textTween.remove();
+            }
+        }
 
-    //     let targetPortal;
-    //     let player;
+        // Calculate distance between PlayerA and portalA
+        const distanceA = Phaser.Math.Distance.Between(playerA.sprite.x, playerA.sprite.y, portalA.x, portalA.y);
+        const distanceB = Phaser.Math.Distance.Between(playerB.sprite.x, playerB.sprite.y, portalB.x, portalB.y);
+        if (( playerA.playerRole === "Hunted" && distanceA < 400) || ( playerB.playerRole === "Hunted" && distanceB < 400)){
+            this.arrow.setVisible(false);
+            this.text.setVisible(false);
+        }
+        else {
+            this.arrow.setVisible(true);
+            this.text.setVisible(true);
+        }
 
-    //     if (playerA.playerRole === 'Hunted') {
-    //         targetPortal = portalA;
-    //         player = playerA;
-    //         //this.arrow.setTint(0x00ff00); // Green for hunted
-    //     } else {
-    //         targetPortal = portalB;
-    //         player = playerB;
-    //         //this.arrow.setTint(0xff0000); // Red for hunter
-    //     }
+        this.playerArole = playerA.playerRole;
+        this.playerBrole = playerB.playerRole;
 
-    //     // Calculate the direction to the portal
-    //     const dx = targetPortal.x - player.x;
-    //     const dy = targetPortal.y - player.y;
-    //     const angle = Math.atan2(dy, dx);
+        if (!this.arrowTween || !this.arrowTween.isPlaying()) {
+            this.arrowTween = this.tweens.add({
+                targets: this.arrow,
+                x: this.tweenValue,  
+                yoyo: true,  
+                repeat: -1, 
+                ease: 'Power1',  
+                duration: 500 
+            });
+        }
 
-    //     // Position the arrow near the player and point it towards the portal
-    //     this.arrow.setPosition(player.x, player.y - 50); // Adjust the offset as needed
-    //     this.arrow.setRotation(angle);
-    //     this.arrow.setVisible(true);
-    // }
+        if (!this.textTween || !this.textTween.isPlaying()) {
+            this.textTween = this.tweens.add({
+                targets: this.text,
+                x: this.tweenValue,  
+                yoyo: true,  
+                repeat: -1, 
+                ease: 'Power1',  
+                duration: 500 
+            });
+        }
+    }
+
+    loadFont(name, url){
+        const newFont = new FontFace(name, `url(${url})`);
+        newFont.load().then(function(loadedFont){
+            document.fonts.add(loadedFont);
+        }).catch(function(error){
+            return error;
+        });
+    }
 }
