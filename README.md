@@ -78,13 +78,9 @@ We would like to thank our lecturer for his guidance and support throughout the 
         - Slimy Boots
         - Suspicious Mushroom
         - Worn Hat
-
-## Video Demo
-<video controls src="resources/demo/DemoVideo.mp4" title="Title"></video>
-
-Watch it on YouTube: [https://youtu.be/6Hc-llJl7Is](https://youtu.be/6Hc-llJl7Is)
-
-## Screenshots
+        
+## Video Demo and Screenshots
+Watch Video Demo on YouTube: [https://youtu.be/6Hc-llJl7Is](https://youtu.be/6Hc-llJl7Is)
 <table>
   <tr>
     <td><img src="resources/demo/MainMenu.png" alt="Main Menu"></td>
