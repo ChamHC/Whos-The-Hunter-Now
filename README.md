@@ -10,7 +10,7 @@ Throughout the game, players will encounter various random tools placed in the a
 
 ## User Manual
 - ### Installation: 
-    Simply download the game files and open the index.html file in a web browser.
+    Simply download the game files and launch index.html with a local web server.
 - ### Objective
     1. As The Hunter, stop The Hunted from reaching the portal and capture him.
     2. As The Hunted, reach the portal to become The Hunter or put enough distance so that The Hunter can no longer tracks you.
