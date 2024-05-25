@@ -10,7 +10,7 @@ Throughout the game, players will encounter various random tools placed in the a
 
 ## User Manual
 - ### Installation: 
-    Simply download the game files and open the index.html file in a web browser.
+    Simply download the game files and launch index.html with a local web server.
 - ### Objective
     1. As The Hunter, stop The Hunted from reaching the portal and capture him.
     2. As The Hunted, reach the portal to become The Hunter or put enough distance so that The Hunter can no longer tracks you.
@@ -54,26 +54,32 @@ We would like to thank our lecturer for his guidance and support throughout the 
 - **[Fantasy UI Borders](https://kenney-assets.itch.io/fantasy-ui-borders)** by ***Kenney***
 - **[Free Pixel Font - Thaleah](https://tinyworlds.itch.io/free-pixel-font-thaleah)** by ***Tiny Worlds***
 - **[Pixel Dimensional Portal 32x32](https://pixelnauta.itch.io/pixel-dimensional-portal-32x32)** by ***Pixelnauta***
-- **[FilmCow Recorded SFX](https://filmcow.itch.io/filmcow-sfx)** by ***FilmCow***
+- **[FilmCow SFX](https://filmcow.itch.io/filmcow-sfx)** by ***FilmCow***
+- **[Music Loop Bundle](https://tallbeard.itch.io/music-loop-bundle)** by ***Tallbeard Studios***
 
 ## Group Members
 ### 1. Cham Hao Cheng (1211304951)
+    - Game Design
     - Write Documentations (README.md)
     - Main Menu (Play, How To Play, Exit)
     - End Screen (Winner, Game Duration, Cycle Count, Back To Menu, Restart, Exit)
     - Player Behaviours (Idle, Move, Jump, Fall, Crouch, Slide, Death, Use Items)
-    - Elimination Mechanics (Out of Screen, Tagging)
+    - Elimination Mechanic (Out of Screen)
     - Camera Behaviours (Follow Players, Dynamic Zoom)
+    - Screenshots and Video Demo
     - Tools:
         - Dad's Belt
         - Dashy Feather
         - Wooden Buckler
 ### 2. Muhammad Lutfi Bin Mohd Izzat (1201100521)
+    - Game Design
     - Find Game and Sound Assets (Itch.io, Zapsplat)
     - SFX Design (Soundtrack, Player Sound Effects, Tool Sound Effects)
     - Level Design (Parallax Background, Platform Layout, Collision Boxes)
     - Core Mechanics (Portal, Role Switch, Random Tool Spawning, Tool Reset)
+    - Elimination Mechanic (Tagging)
     - Player UI (Equipped Tools) 
+    - Screenshots and Video Demo
     - Tools:
         - Slimy Boots
         - Suspicious Mushroom
