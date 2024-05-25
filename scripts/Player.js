@@ -382,9 +382,15 @@ class RunState extends State{   // Create a run state class that extends the sta
         let random = Phaser.Math.Between(1, 14);
         this.footstep = this.player.scene.sound.add('footstep' + random);
         this.footstep.play({ volume: 0.3 });
+
+        this.readyToSlide = false;
+        this.player.scene.time.delayedCall(500, () => {
+            this.readyToSlide = true;
+        });
     }
 
     stateUpdate(){
+
         if (this.player.moveLeftKey.isDown) {
             this.player.sprite.flipX = true;
             if (this.player.sprite.body.velocity.x > -this.player.maxSpeed)
@@ -419,7 +425,7 @@ class RunState extends State{   // Create a run state class that extends the sta
         if (this.player.sprite.body.velocity.y > 0 && !this.player.sprite.body.onFloor()) {
             this.player.changeState(this.player.fallState);
         }
-        if (this.player.crouchKey.isDown && (this.player.sprite.body.velocity.x >= this.player.slideThreshold || this.player.sprite.body.velocity.x <= -this.player.slideThreshold)) {
+        if ( this.readyToSlide && this.player.crouchKey.isDown && (this.player.sprite.body.velocity.x >= this.player.slideThreshold || this.player.sprite.body.velocity.x <= -this.player.slideThreshold)) {
             this.player.changeState(this.player.enterSlideState);
         }
         if (this.player.castKey.isDown && this.player.tools != null) {
